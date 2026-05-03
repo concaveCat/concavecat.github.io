@@ -1,4 +1,90 @@
-<!DOCTYPE html><meta charset="utf-8"><h1 id="this-is-a-new-post">This is a new post.</h1>
-<blockquote>
-<p>anything on this post will be treated as void and have no actual meaning.</p>
-</blockquote>
+<!DOCTYPE html><meta charset="utf-8"><h1 id="oscillation">Oscillation</h1>
+<p><strong>Reason for oscillation</strong> is for any potential function $U$, in the neighbourhood of the equilibrium, the function can be approximated as a quadratic function.</p>
+<p>$$
+U(x)=U(x_{0})+\frac{dU}{dx}(x-x_{0})+\frac{1}{2} \frac{d^{2}U}{dx^{2}}(x-x_{0})^{2}+\dots
+$$</p>
+<p>Based on which we arrive at the condition</p>
+<p>$$
+\begin{cases}
+U=\frac{1}{2}kx^{2} \
+F=-kx
+\end{cases}
+$$</p>
+<h3 id="eg1-buoyant-on-water">eg1. Buoyant on Water</h3>
+<p>A buoyant is floating on the surface of the water. Find the oscillation period if we press this buoyant down into the water by $\Delta x$.</p>
+<p><em>Solution.</em></p>
+<p>We find the expression of the force</p>
+<p>$$
+F=-\rho_{0}\cdot A\cdot\Delta x
+$$
+and we arrive at the oscillation period.</p>
+<h3 id="eg2-gas-tank">eg2. Gas Tank</h3>
+<p>A gas tank of area $A$ has a lid  of mass $m$. Find the oscillation period around the equilibrium.</p>
+<p><em>Solution.</em></p>
+<p>$$
+PV=const.
+$$
+Take the derivative,</p>
+<p>$$
+dP=-\frac{const.}{V^{2}}dV
+$$</p>
+<p>Hence, calculate the force:</p>
+<p>$$
+F=dP\cdot A=- \frac{const.}{V^{2}}\cdot A\cdot Adx
+$$
+$$
+F=- \frac{const.}{L_{0}^{2}}dx
+$$</p>
+<p>At equilibrium,</p>
+<p>$$
+PA=mg+P_{0}A
+$$</p>
+<p>And it can be solved.</p>
+<h2 id="different-cases-of-oscillation">Different Cases of Oscillation</h2>
+<p>$$
+\text{Oscillations}\begin{cases}
+\text{overdamped} \
+\text{critical damped} \
+\text{damped oscillation} \
+\text{free oscillation} \
+\text{driven oscillation}
+\end{cases}
+$$</p>
+<p><strong>The Math:</strong> solving ODEs.</p>
+<h3 id="general-model">General Model</h3>
+<p>We consider a horizontally placed spring connecting at one end to a wall and the other to a mass $m$. We now introduce friction on the ground.</p>
+<p>$$
+m \ddot{x}=-kx-b\dot{x}
+$$</p>
+<p>This is a standard second-order ODE. We rearrange the equation:</p>
+<p>$$
+\ddot{x}+\gamma \dot{x}+\omega_{0}^{2}x=0.
+$$</p>
+<p>where</p>
+<p>$$
+\begin{cases}
+\omega_{0}^{2}=\frac{k}{m} \
+\gamma=\frac{b}{m}
+\end{cases}
+$$</p>
+<p>$\omega_{0}$ is called <strong>natural frequency</strong> and $\gamma$ ( $\frac{\gamma}{2}$? ) is called the <strong>damping factor</strong>.</p>
+<p>We consider the general second-order ODE in the following form.</p>
+<p>$$
+\frac{d^{2}x}{dt^{2}}+P \frac{dx}{dt}+Q=0
+$$</p>
+<ul>
+<li>Natural Frequancy $\omega_{0}=\sqrt{ Q }$.</li>
+<li>Damping Ratio $\xi=\frac{P}{2\sqrt{ Q }}$.</li>
+<li>Damping Factor $\sigma=\frac{P}{2}$.</li>
+<li>Damped Natural Frequency $\omega_{d}=\sqrt{ \omega_{0}^{2}-\sigma^{2} }$</li>
+</ul>
+<p>We give the solution directly:</p>
+<p>$$
+x(t)=\begin{cases}
+Ae^{\lambda_{1}t}+Be^{\lambda_{2}t},,,,(\text{overdamped}) \
+(At+B)e^{-\lambda t},,,,(\text{critical damped}) \
+e^{-\sigma t}\cdot A\cos(\omega_{d},t+\varphi),,,,(\text{underdamped})
+\end{cases}
+$$</p>
+<p>where $\begin{cases}\lambda=-\xi,\omega_{0}\pm \omega_{0}\sqrt{ \xi^{2}-1 } \  \sigma=\xi ,\omega_{0} \  \omega_{d}=\sqrt{ \omega_{0}^{2}-\sigma^{2} },,,,(\text{if }\xi \text{ &#x3C;1})\end{cases}$.</p>
+<h3 id="eg1-shock-absorption-of-an-automobile">eg1. Shock Absorption of an Automobile</h3>
