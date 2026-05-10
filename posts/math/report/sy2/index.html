@@ -1,0 +1,742 @@
+<!DOCTYPE html><html dir="ltr" lang="zh-CN" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://concavecat.github.io/posts/math/report/sy2/"><meta name="generator" content="Astro v5.18.1"><!-- Load Font --><style>@font-face{font-family:LXGW-1ba7671b43f5374f;src:url("/_astro/fonts/ae2ba2eebed0b135.ttf") format("truetype");font-display:swap;font-weight:300;font-style:normal;}@font-face{font-family:LXGW-1ba7671b43f5374f;src:url("/_astro/fonts/fcefd1d813c7e4c1.ttf") format("truetype");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:LXGW-1ba7671b43f5374f;src:url("/_astro/fonts/7912a2f2186b594b.ttf") format("truetype");font-display:swap;font-weight:500;font-style:normal;}@font-face{font-family:"LXGW-1ba7671b43f5374f fallback: Arial";src:local("Arial");font-display:swap;font-weight:300;font-style:normal;size-adjust:107.8957%;ascent-override:86.009%;descent-override:23.7266%;line-gap-override:0%;}@font-face{font-family:"LXGW-1ba7671b43f5374f fallback: Arial";src:local("Arial");font-display:swap;font-weight:400;font-style:normal;size-adjust:107.8957%;ascent-override:86.009%;descent-override:23.7266%;line-gap-override:0%;}@font-face{font-family:"LXGW-1ba7671b43f5374f fallback: Arial";src:local("Arial");font-display:swap;font-weight:500;font-style:normal;size-adjust:107.8957%;ascent-override:86.009%;descent-override:23.7266%;line-gap-override:0%;}:root{--font-sans:LXGW-1ba7671b43f5374f,"LXGW-1ba7671b43f5374f fallback: Arial",sans-serif;}</style><style>@font-face{font-family:Quicksand-0ab48f02a52517d3;src:url("/_astro/fonts/a34b6797184b2a46.ttf") format("truetype");font-display:swap;font-weight:500;font-style:normal;}@font-face{font-family:Quicksand-0ab48f02a52517d3;src:url("/_astro/fonts/a34b6797184b2a46.ttf") format("truetype");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:"Quicksand-0ab48f02a52517d3 fallback: Arial";src:local("Arial");font-display:swap;font-weight:500;font-style:normal;size-adjust:102.5122%;ascent-override:97.5494%;descent-override:24.3874%;line-gap-override:0%;}@font-face{font-family:"Quicksand-0ab48f02a52517d3 fallback: Arial";src:local("Arial");font-display:swap;font-weight:400;font-style:normal;size-adjust:102.5122%;ascent-override:97.5494%;descent-override:24.3874%;line-gap-override:0%;}:root{--font-quicksand:Quicksand-0ab48f02a52517d3,"Quicksand-0ab48f02a52517d3 fallback: Arial",sans-serif;}</style><!-- General Meta Tags --><title>实验三   生物电信号采集与数据处理   实验报告 | DivergentCatTree</title><meta name="title" content="实验三   生物电信号采集与数据处理   实验报告 | DivergentCatTree"><meta name="description" content="实验2实验报告"><meta name="author" content="Ggggork"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="实验三   生物电信号采集与数据处理   实验报告 | DivergentCatTree"><meta property="og:description" content="实验2实验报告"><meta property="og:url" content="https://concavecat.github.io/posts/math/report/sy2/"><meta property="og:image" content="https://concavecat.github.io/posts/math/report/sy2/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2026-05-10T12:00:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://concavecat.github.io/posts/math/report/sy2/"><meta property="twitter:title" content="实验三   生物电信号采集与数据处理   实验报告 | DivergentCatTree"><meta property="twitter:description" content="实验2实验报告"><meta property="twitter:image" content="https://concavecat.github.io/posts/math/report/sy2/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"实验三   生物电信号采集与数据处理   实验报告 | DivergentCatTree","image":"https://concavecat.github.io/posts/math/report/sy2/index.png","datePublished":"2026-05-10T12:00:00.000Z","author":[{"@type":"Person","name":"Ggggork"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="DivergentCatTree" href="https://concavecat.github.io/rss.xml"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CDGfc0hd.js"></script><!-- Minimal inline script to prevent FOUC - sets theme immediately --><script>
+      (function () {
+        const initialColorScheme = ""; // "light" | "dark"
+        const currentTheme = localStorage.getItem("theme");
+
+        function getPreferTheme() {
+          if (currentTheme) return currentTheme;
+          if (initialColorScheme) return initialColorScheme;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+
+        const themeValue = getPreferTheme();
+
+        // Set theme immediately to prevent flash
+        document.firstElementChild?.setAttribute("data-theme", themeValue);
+
+        // Export minimal API for external script
+        window.theme = {
+          themeValue: themeValue,
+          getTheme: () => window.theme.themeValue,
+          setTheme: val => {
+            window.theme.themeValue = val;
+          },
+        };
+      })();
+    </script><link rel="stylesheet" href="/_astro/about.Dso80c5z.css">
+<style>:where([data-astro-image]){object-fit:var(--fit);object-position:var(--pos);height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}
+@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media(prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
+</style><style>[data-astro-transition-scope="astro-fam6wyqg-1"] { view-transition-name: \5B9E\9A8C\4E09-\751F\7269\7535\4FE1\53F7\91C7\96C6\4E0E\6570\636E\5904\7406-\5B9E\9A8C\62A5\544A; }@layer astro { ::view-transition-old(\5B9E\9A8C\4E09-\751F\7269\7535\4FE1\53F7\91C7\96C6\4E0E\6570\636E\5904\7406-\5B9E\9A8C\62A5\544A) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(\5B9E\9A8C\4E09-\751F\7269\7535\4FE1\53F7\91C7\96C6\4E0E\6570\636E\5904\7406-\5B9E\9A8C\62A5\544A) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(\5B9E\9A8C\4E09-\751F\7269\7535\4FE1\53F7\91C7\96C6\4E0E\6570\636E\5904\7406-\5B9E\9A8C\62A5\544A) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(\5B9E\9A8C\4E09-\751F\7269\7535\4FE1\53F7\91C7\96C6\4E0E\6570\636E\5904\7406-\5B9E\9A8C\62A5\544A) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"> <body> <div class="main-container flex flex-col min-h-screen">  <a id="skip-to-content" href="#main-content" class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4">
+Skip to content
+</a> <header class="header-container app-layout flex flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="py-1 sm:py-1 relative w-full bg-background flex items-baseline justify-between sm:items-center"> <a href="/" class="flex items-center gap-3 absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"> <!-- 1. 左侧：限制好尺寸的 SVG 图标 --> <span class="inline-block w-8 h-8 sm:w-10 sm:h-10"> <svg viewBox="0 1.219 119.973 118.766" width="800px" height="800px" class="w-full h-full object-contain dark:invert">
+  <path d="M 51.309 87.289 C 29.912 87.289 12.567 69.941 12.567 48.546 C 12.567 27.149 29.912 9.804 51.309 9.804 C 59.228 9.804 66.591 12.18 72.728 16.259 L 70.363 20.895 C 64.949 17.157 58.387 14.969 51.309 14.969 C 32.764 14.969 17.732 30.001 17.732 48.546 C 17.732 67.09 32.764 82.123 51.309 82.123 C 64.677 82.123 76.221 74.309 81.624 63.002 L 87.264 63.002 C 87.264 63.003 87.263 63.004 87.263 63.005 L 88.597 63.005 L 88.597 63.009 L 88.68 63.009 L 88.745 63.134 L 88.597 63.134 L 88.597 63.168 L 88.763 63.168 L 94.463 73.039 L 94.424 73.039 L 95.819 75.454 C 98.484 76.179 100.94 77.593 102.929 79.579 C 105.933 82.582 107.619 86.655 107.619 90.901 L 107.614 90.904 C 107.614 95.15 105.928 99.223 102.924 102.227 C 99.92 105.231 95.847 106.917 91.601 106.917 C 89.878 106.917 88.182 106.638 86.575 106.11 L 90.157 112.313 L 85.477 112.313 L 80.415 103.542 C 80.695 103.402 80.969 103.26 81.244 103.115 C 82.917 102.238 84.547 101.287 86.125 100.265 C 87.773 101.227 89.661 101.749 91.603 101.749 C 94.481 101.749 97.239 100.607 99.274 98.572 C 101.309 96.537 102.452 93.779 102.452 90.901 C 102.452 88.025 101.309 85.266 99.274 83.23 C 97.758 81.715 95.836 80.691 93.767 80.27 L 91.128 75.697 L 91.1 75.697 L 85.717 66.37 C 79.265 78.798 66.279 87.289 51.309 87.289 Z M 72.21 112.497 L 68.978 112.497 L 68.978 108.075 C 70.068 107.778 71.145 107.45 72.21 107.095 L 72.21 112.497 Z M 33.651 96.637 C 33.651 97.095 33.47 97.532 33.147 97.855 C 32.824 98.177 32.388 98.359 31.93 98.359 C 30.98 98.359 30.21 97.589 30.21 96.637 C 30.21 95.688 30.98 94.918 31.93 94.918 C 32.388 94.918 32.824 95.098 33.147 95.421 C 33.47 95.744 33.651 96.181 33.651 96.637 Z M 21.729 90.72 C 21.729 91.178 21.548 91.615 21.225 91.938 C 20.902 92.261 20.465 92.44 20.008 92.44 C 19.058 92.44 18.288 91.671 18.288 90.72 C 18.288 89.77 19.058 89 20.008 89 C 20.465 89 20.902 89.182 21.225 89.505 C 21.548 89.827 21.729 90.264 21.729 90.72 Z" style="stroke: rgb(0, 0, 0);" />
+</svg> </span> <!-- 2. 右侧：你的自定义文字 --> <span class="text-gray-800 dark:text-gray-100 text-2xl font-[500] font-heading">Ggggork</span> <!-- (如果你想直接读取 config.ts 里的配置，可以把上面那行换成下面这行：) --> <!-- <span class="text-gray-800 dark:text-gray-100">{SITE.title}</span> --> </a> <button id="menu-btn" class="focus-outline self-end p-2 sm:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&#38;>li>a]:block [&#38;>li>a]:px-4 [&#38;>li>a]:py-3 [&#38;>li>a]:text-center [&#38;>li>a]:font-medium [&#38;>li>a]:hover:text-accent sm:[&#38;>li>a]:px-2 sm:[&#38;>li>a]:py-1 hidden sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/tree" class="active-nav"> <p class="text-base font-[500] font-sans">笔记</p> </a> </li> <!-- 
+        <li class="col-span-2">
+          <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
+            <p class="text-base font-[500] font-heading">Tags</p>
+          </a>
+        </li>
+        --> <li class="col-span-2"> <a href="/about"> <p class="text-base font-[500] font-sans">关于</p> </a> </li>  <li class="col-span-1 flex items-center justify-center"> <a href="/search" title="Search" aria-label="search" class="group inline-flex items-center gap-1 hover:text-accent focus-outline flex p-3 sm:p-1">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span class="sr-only">Search</span>  </a> </li> <li class="col-span-1 flex items-center justify-center"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent" title="Toggles light & dark" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> </ul> </div> </header> <script type="module">function s(){const e=document.querySelector("#menu-btn"),t=document.querySelector("#menu-items"),n=document.querySelector("#menu-icon"),o=document.querySelector("#close-icon");!e||!t||!n||!o||e.addEventListener("click",()=>{const c=e.getAttribute("aria-expanded")==="true";e.setAttribute("aria-expanded",c?"false":"true"),e.setAttribute("aria-label",c?"Open Menu":"Close Menu"),t.classList.toggle("hidden"),n.classList.toggle("hidden"),o.classList.toggle("hidden")})}s();document.addEventListener("astro:after-swap",s);</script> <div class="app-layout flex items-center justify-start"><a id="back-button" href="/" class="group inline-flex items-center gap-1 hover:text-accent focus-outline -ms-2 mt-8 mb-2 hover:text-foreground/75"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg><span>返回</span> </a></div><script type="module">function o(){const t=document.querySelector("#back-button"),e=sessionStorage.getItem("backUrl");e&&t&&(t.href=e)}document.addEventListener("astro:page-load",o);o();</script> <main id="main-content" class="app-layout pb-12" data-pagefind-body> <h1 class="inline-block text-2xl font-bold text-accent sm:text-3xl" data-astro-transition-scope="astro-fam6wyqg-1"> 实验三   生物电信号采集与数据处理   实验报告 </h1> <div class="my-2 flex items-center gap-2"> <div class="flex items-center gap-x-2 opacity-80">  <time class="text-sm sm:text-base" datetime="2026-05-10T12:00:00.000Z">2026年5月10日</time> </div> <span aria-hidden="true" class="max-sm:hidden hidden">|</span>  </div> <article id="article" class="app-prose mt-8 w-full max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"> <h1 id="一实验目的">一、实验目的</h1>
+<p>本次实验通过采集并分析心电信号，旨在了解心电信号特性和采集心电数据的方法，学习使用口袋仪器产生测试信号的方法，运用Matlab软件进行数据分析，定量检验数据的可靠性，同时理解处理ECG的诸多算法和流程。借此实验，探究“模拟信号验证 - 真实信号采集”的实验思想，拓宽生物电信号处理的工程视野，培养耐心细致的实验素养、逐步排查问题的逻辑思想，激发对电电理论课的探索热情。具体实验目的如下。</p>
+<h2 id="一-知识理解与技能掌握">（一） 知识理解与技能掌握</h2>
+<ol>
+<li>了解心电图（Electrocardiograph, ECG）的特征与采集方法，学习使用 <code>ADS1292R</code> 生物电信号采集芯片从人体获取 ECG 信号，了解不同导联的信号特征。</li>
+<li>熟悉口袋仪器（<code>Analog Discovery 3</code>）的基本原理和功能，学会运用此仪器产生给定波形数据的测试信号。</li>
+<li>学习Matlab软件的基本功能和使用方法，利用该软件进行初步数据处理和分析，为后续其他研究打下基础。</li>
+<li>掌握心电信号采集设备的操作规范和调试技巧，从而确保数据的准确性和可靠性。</li>
+</ol>
+<h2 id="二-实验探究与知识拓展">（二） 实验探究与知识拓展</h2>
+<ol>
+<li>贯彻“先模拟验证，后真实采集”的工程逻辑。通过 <code>Analog Discovery 3</code> 导入预设的 <code>.csv</code> 格式模拟心电（ECG）信号作为标准源，对 <code>ADS1292R</code> 采集系统的还原准确性进行定量验证。在接入人体生理信号前，排除硬件电路自身潜在故障，确保不存在硬件误差导致的实验偏差。</li>
+<li>进一步拓宽生物医学信号处理的工程视野，要求掌握 ECG 采集套件各硬件模块的功能机理，并实践基于 Matlab 的信号处理全流程，包括调用峰值检测函数、 PanTompkins 算法等。</li>
+</ol>
+<h2 id="三情感与素养">（三）情感与素养</h2>
+<p>培养“耐心采集、细致记录”的实验态度，学会主动逐步排障，增强在复杂工程环境下的抗挫折能力与系统化思维。通过生物电信号、模拟电路与数字算法的交叉应用，促进跨学科知识的深度融合与综合素养提升，领悟学科魅力，激发对电电理论课的学习兴趣和探索热情。</p>
+<h1 id="二实验内容">二、实验内容</h1>
+<h2 id="一-验证-ads1292r-生物电信号采集芯片是否能正确采集-ecg-信号">（一） 验证 <code>ADS1292R</code> 生物电信号采集芯片是否能正确采集 ECG 信号</h2>
+<h3 id="1-心电信号-ecg">1. 心电信号 ECG</h3>
+<p>心电信号（Electrocardiogram, ECG）是心脏在生理活动过程中，由心肌细胞除极和复极所产生的生物电信号在体表的综合反映。该信号蕴含了人体心血管系统重要的生理与病理信息，是临床医生评估心脏健康状况、诊断心脏疾病（如心律失常、心肌缺血等）及制定治疗方案的核心依据。在实验或临床操作中，心电信号通过贴附在人体皮肤表面的电极进行采集。由于原始生物电信号极其微弱且伴有噪声干扰，获取后需经过专用电路进行放大与滤波处理，最终形成可供记录和分析的电压随时间变化的波形图。</p>
+<p>典型的心电信号在时间轴上呈现出显著的周期性，每个心动周期均由一系列具有特定生理含义的波形组成。其中，P波反映了心房肌的兴奋与收缩过程，通过观察其形态和持续时间可评估心房的健康状态；紧随其后的QRS波群代表心室肌的兴奋与收缩，是心电信号中振幅最大的部分，对于诊断各类心律失常具有核心价值；T波则对应心室肌的复极过程，其形态异常往往预示着心肌受损。除了特征波形外，PR间期衡量了兴奋从心房传导至心室的时间跨度，而QT间期则涵盖了心室肌从除极到复极的完整电活动周期。通过对这些波形的形态、振幅及时间间距进行综合分析，能够有效评估心脏的功能状态，并为心肌缺血、心律失常等病症的诊断提供科学依据。</p>
+<p>![ECG信号示意图。图片来源：Wikimedia Commons，由 Agateller 创建。](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\Pasted image 20260409142202.png)</p>
+<h3 id="2-心电数据集">2. 心电数据集</h3>
+<p>本实验所采用的数据源自国际公认的 MIT-BIH 心律失常数据库。该数据库由麻省理工学院提供，因其详尽的专家注释和标记，已成为心律失常分类及临床研究的标准数据集。数据库涵盖了 47 名受试者的 48 组、每组时长约 30 分钟的双导联心电记录，总计包含约 109,500 个心拍，其中异常心拍占比约 30%，涵盖了正常心跳、房颤及室上性早搏等多种典型波形。实验数据以 <code>.dat</code> 和 <code>.atr</code> 格式存储，通过文件编号对应不同个体的采集样本。本实验利用这些标准信号进行信号读取与检验，验证生物电信号采集芯片可以正确采集心电数据，同时通过对双导联数据的分析，实现对不同心电特征的准确提取与识别。</p>
+<h3 id="3-ads1292r-ecg数据采集套件">3. <code>ADS1292R</code> ECG数据采集套件</h3>
+<p>本实验采用一套集成化的生物电信号采集套件，可以实现心电信号的稳定获取与无线传输。系统硬件核心为 <code>ADS1292R</code> 生物电信号采集模块，该模块内置信号调理放大电路及 24 位高分辨率模数转换器，在本实验中设定采样率为 500sps，足够精确捕捉微弱的生物电变化。系统控制中枢采用 STM32F103C8T6 微控制器，通过 SPI 协议与 ADS1292R 进行同步通信，实时接收并缓存采集到的数字信号。数据处理后，利用 JDY18 蓝牙模块 经 USART 接口将数据无线传输至PC端的蓝牙适配器，完成数据的存储与管理。此外，系统配备了完善的充电与升压电路以保障电源供应。</p>
+<h3 id="4-analog-discovery-3-口袋仪器">4. <code>Analog Discovery 3</code> 口袋仪器</h3>
+<p>本实验采用 Digilent 公司的 <code>Analog Discovery 3</code> <code>(AD3)</code> 多功能测试设备作为信号源，用于模拟人体心电信号的输出。AD3 是一款集成度极高的“口袋仪器”，在本实验中主要利用其任意波形发生器（AWG）功能，输出 MIT-BIH 数据库中的心电波形。该设备拥有两个 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>14</mn></mrow><annotation encoding="application/x-tex">14</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">14</span></span></span></span> 位分辨率的差分输出通道，采样速率高达 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>125</mn><mi>M</mi><mi>S</mi><mi mathvariant="normal">/</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">125 MS/s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">125</span><span class="mord mathnormal" style="margin-right:0.109em;">M</span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span><span class="mord">/</span><span class="mord mathnormal">s</span></span></span></span>，支持 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>±</mo><mn>5</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">\pm5V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord">±</span><span class="mord">5</span><span class="mord mathnormal" style="margin-right:0.2222em;">V</span></span></span></span> 的输出范围，能够产生高精度的模拟微弱信号。实验过程中，通过配套的 <code>WaveForms</code> 软件 进行波形配置与控制，将预设的心电波形数据导入 <code>AD3</code>，经由数模转换（DAC）输出至采集系统前端。这一环节通过标准化的模拟信号输入，为验证 <code>ADS1292R</code> 采集模块的放大性能及模数转换的准确性提供了参考标准。</p>
+<h3 id="5-模拟信号产生与读取">5. 模拟信号产生与读取</h3>
+<p>本实验通过实验室电脑中已经存储的 ECG 信号文件，通过 WaveForms软件读取并使用 <code>Analog Discovery 3</code> 仪器生成波形，通过更改 <code>Nsample</code> 和 <code>index</code> 两个数据的方式生成不同心率的不同波形，最终利用 <code>ADS1292R</code> 芯片采集并记录生成的模拟信号，包含波形数据以 <code>csv</code>格式保存和截屏保存两个步骤。</p>
+<p>根据本实验步骤的脚本设置（<code>Wavegen.Channel1.Custom.SampleRate.value = 16000 * 360 / Nsample;</code>），生成的心率与 <code>Nsample</code> 的换算关系是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>R</mi><mo>=</mo><mfrac><mn>21600</mn><mrow><mi>N</mi><mi>s</mi><mi>a</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">HR=\frac{21600}{Nsample}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0813em;">H</span><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.3262em;vertical-align:-0.4811em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.109em;">N</span><span class="mord mathnormal mtight">s</span><span class="mord mathnormal mtight">am</span><span class="mord mathnormal mtight" style="margin-right:0.0197em;">pl</span><span class="mord mathnormal mtight">e</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">21600</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4811em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>。因此，当 <code>NSample</code> 设置为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>301</mn></mrow><annotation encoding="application/x-tex">301</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">301</span></span></span></span>时，心率应当为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>71</mn></mrow><annotation encoding="application/x-tex">71</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">71</span></span></span></span> 左右。通过设置不同的 <code>Nsample</code> 大小，可以调整生成心电波形的心率。</p>
+<h2 id="二人体-ecg-信号采集">（二）人体 ECG 信号采集</h2>
+<h3 id="1-导联方式">1. 导联方式</h3>
+<p>在人体 ECG信号采集过程中，可以采用不同的导联方式，即电极附在人体身上的不同部位。导联方式决定了波形特征和形状，亦有独特的医学用途。</p>
+<h4 id="a-标准肢体导联">a. 标准肢体导联</h4>
+<p>标准肢体导联属于双极导联，主要记录人体四肢中两点之间的电位差。它包括 Ⅰ、Ⅱ、Ⅲ 三个导联。Ⅰ 导联记录左上肢与右上肢之间的电位差，Ⅱ 导联记录左下肢与右上肢之间的电位差，Ⅲ 导联记录左下肢与左上肢之间的电位差。在生理实验中，由于 Ⅱ 导联的轴向与心脏除极的总电向量方向最为接近，通常能获取到振幅最明显、特征最清晰的 P 波与 R 波，常被选作基础心电监测的首选导联。</p>
+<h4 id="b-加压单极肢体导联">b. 加压单极肢体导联</h4>
+<p>加压单极肢体导联是一种单极测量方式，包括 aVR、aVL 和 aVF。其原理是将肢体中的两个电极通过电阻连接作为参考负极，以测量另一个肢体探测电极与该参考点之间的绝对电位变化。这类导联能够从额面角度提供补充的心电向量信息，有助于更全面地评估心脏电活动在不同空间方向上的投影。</p>
+<h4 id="c-标准胸前导联">c. 标准胸前导联</h4>
+<p>标准胸前导联（V1-V6）属于单极导联，通过将探测电极放置在胸壁的特定解剖位置，记录心脏电活动在水平面上的投影。胸前导联能够近距离观察心脏各部位（如右心室、室间隔、左心室壁）的电变化，对于诊断局部心肌梗死、心室肥大等病症具有不可替代的作用。</p>
+<h4 id="d-双极胸导联">d. 双极胸导联</h4>
+<p>双极胸导联是科研实验或运动心电监测中常用的简化导联方式，其电极均放置在胸壁。其记录的是胸腔表面两点间的电位差，而非相对于中心电端的绝对电位。这种方式通过缩短电极间距、避开肢体肌肉，能有效抑制肌电干扰等影响因素。由于电极位置的灵活性，其波形极性取决于正负电极相对于心脏电轴的具体位置。</p>
+<p>本实验选做部分采用的“左胸 - 右胸”的电极设置方式属于CC5导联，这是一种双极胸导联，也属于一种改良Ⅰ导联，这种导联方式常见于便携式心电检测或生物医学工程实验。必做部分采用的 MIT-BIH 数据库大部分采用改良 Ⅱ 导联与改良 V1 导联，这种双导联方式适合长时间观测、减少肌电干扰。因此，实验两个步骤记录的波形会有区别。</p>
+<h3 id="2-误差预测">2. 误差预测</h3>
+<p>在测量人体ECG信号时，主要的误差来源首先是工频干扰。这通常是由人体、导联线与周围电力设施（50Hz/60Hz）之间的电容耦合引起的。这种干扰会在波形上叠加一个高频率的正弦背景，可能会严重掩盖P波和T波等微弱特征。</p>
+<p>其次是肌电干扰。这主要源于受试者肢体紧张或不由自主的肌肉颤抖。由于肌电信号的频谱范围与ECG有重叠，这类干扰是不规则的高频杂波，会导致波形基线变得粗糙模糊。在实验过程中，保持受试者身体完全放松并采取舒适的坐姿或卧姿是减少此类物理误差的关键。</p>
+<p>基线漂移也是常见的误差，通常由受试者的呼吸运动或电极与皮肤接触点的电位变化引起。呼吸导致的胸廓起伏会使电极发生微小位移，使ECG波形在垂直方向上缓慢上下波动。这种低频干扰会影响对ST段偏移的准确判断，通常需要通过高通滤波器进行抑制。</p>
+<p>电极与皮肤的接触阻抗不均匀会导致共模干扰转化为差模干扰。如果皮肤表面的油脂或角质层未经过酒精清理，各电极间的阻抗匹配失衡，会直接降低放大电路的有效放大倍数，并增加随机热噪声。在电极安放前进行必要的皮肤预处理是确保信号信噪比的基础。</p>
+<p>最后是电磁兼容性引起的射频干扰。实验室环境中的手机、电脑或大型医疗设备的射频辐射可能通过空间耦合进入采集系统，表现为周期性或突发的尖峰脉冲。这类误差虽然不属于生物信号范畴，但在高增益的生理电放大电路中极易被放大，导致AD采集结果出现异常值或波形失真。</p>
+<p>在本次实验中，我们主要关注工频干扰、基线漂移、肌电干扰，这是三个最主要的干扰源。</p>
+<h3 id="3-人体ecg信号采集">3. 人体ECG信号采集</h3>
+<p>本实验通过特定的导联方式采集心电数据，重复必做部分的数据采集步骤，记录对应的 <code>csv</code> 数据，以便进一步分析。</p>
+<h2 id="三生物电信号数据处理">（三）生物电信号数据处理</h2>
+<p>在本实验中，选用Matlab软件对 <code>Analog Discovery3</code> 仪器生成的的心电信号进行分析、处理和图像绘制。首先用Matlab根据数据绘制ECG图像，观察并判断输出波形中是否有无效部分；随后设计算法，统计心电数据中 R 峰的位置，据此统计心率。最后利用实际的ECG信号，通过Pan-Tompkins算法等算法进行处理，再输出ECG信号图像，并标注出R峰的位置，从而进行心率统计。</p>
+<h1 id="三实验方案与步骤">三、实验方案与步骤</h1>
+<h2 id="一验证-ads1292r-生物电信号采集芯片是否能正确采集-ecg-信号">（一）验证 <code>ADS1292R</code> 生物电信号采集芯片是否能正确采集 ECG 信号</h2>
+<ol>
+<li>利用数据线将 <code>AD3</code> 与电脑连接，通过 <code>WaveForms</code> 软件读取位于 <code>D:/ ECG /ECG_generator</code> 的配置文件（<code>ECG_generator3.dwf3work</code>），使软件初始化。</li>
+<li>在 <code>Script</code> 界面，更改代码中包含的 <code>wave_p</code> 和 <code>wave_n</code> 波形文件路径为真实路径（<code>D:/ ECG /ECG_generator / ...</code>），确保波形文件可以被软件识别。</li>
+<li>更改 <code>Nsample</code> 和 <code>Index</code>，对应提供的五组不同实验者的心电数据。具体的变量值记录在表格中。</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">本实验波形编号</th><th align="center">#1</th><th align="center">#2</th><th align="center">#3</th><th align="center">#4</th><th align="center">#5</th></tr></thead><tbody><tr><td align="center"><code>Nsample</code></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>301</mn></mrow><annotation encoding="application/x-tex">301</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">301</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>311</mn></mrow><annotation encoding="application/x-tex">311</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">311</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>291</mn></mrow><annotation encoding="application/x-tex">291</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">291</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>280</mn></mrow><annotation encoding="application/x-tex">280</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">280</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>260</mn></mrow><annotation encoding="application/x-tex">260</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">260</span></span></span></span></td></tr><tr><td align="center"><code>Index</code></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn></mrow><annotation encoding="application/x-tex">100</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">100</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>101</mn></mrow><annotation encoding="application/x-tex">101</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">101</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>103</mn></mrow><annotation encoding="application/x-tex">103</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">103</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>105</mn></mrow><annotation encoding="application/x-tex">105</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">105</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>122</mn></mrow><annotation encoding="application/x-tex">122</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">122</span></span></span></span></td></tr></tbody></table>
+<ol start="4">
+<li>截屏记录 <code>WaveForms</code> 软件中的信号输出波形。</li>
+<li>将 <code>ADS1292R</code> 对应的蓝牙数据接收适配器插在电脑的 USB 接口上，识别到 <code>COM</code> 端口有 <code>CH340</code> 设备，记录这个端口编号。</li>
+<li>将导联线插入 <code>ADS1292R</code> 模块的信号输入端口，将 <code>ADS1292R</code> 模块插入 ECG 数据采集板上。</li>
+<li>连接 <code>ADS1292R</code> 和 <code>AD3</code> 模块。将黄色杜邦线母头和 <code>AD3</code> 的“<code>W1</code>”端口连接， 红色杜邦线与 <code>AD3</code> 的“<code>W2</code>”端口连接，绿色杜邦线与 <code>AD3</code> 的 ↓ 端口连接。</li>
+<li>打开 ECG的数据采集板电源开关，开始记录数据。确保蓝牙状态指示灯处于常亮状态，表示连接成功。</li>
+<li>在电脑端打开 <code>D:/ECG/serialplot-0.12.0-win32</code> 软件，选择 <code>File->Load Settings</code>，加载<code>D:/ECG/ECG_AD8232/AD8232.ini</code> 配置文件。</li>
+<li>选择对应的端口号，点击 <code>Open</code> 开始读取数据，此时应当得到连续的波形输出。</li>
+<li>在波形输出稳定时，截图保存波形图像。点击右侧红色记录按钮，指定保存的 <code>csv</code> 文件路径和名称。记录不少于 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>15</mn><mi>s</mi></mrow><annotation encoding="application/x-tex">15s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">15</span><span class="mord mathnormal">s</span></span></span></span>，点击红色按钮停止记录，数据记录成功。</li>
+<li>修改 <code>Nsample</code> 和 <code>index</code>，依次输出五组模拟ECG信号，分别完成信号采集、截屏保存和文件保存。</li>
+<li>将保存的数据导入Matlab进行分析，编写对应的代码，将原始数据对应的心率图像绘制在屏幕上。</li>
+<li>在Matlab进行分析，统计R峰的出现位置，计算心率，和设置的 <code>Nsample</code> 对应的心率进行比对。</li>
+<li>在Matlab进行分析，比较Pan-Tompkins算法和手动统计算法的误差。</li>
+</ol>
+<h2 id="二人体ecg信号采集">（二）人体ECG信号采集</h2>
+<ol>
+<li>按照如图所示的方式将电极贴在皮肤上，构成导联。</li>
+</ol>
+<p>![导联线连接示意，图源：实验指导书](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\Pasted image 20260409151907.png)</p>
+<ol start="2">
+<li>在 <code>serialplot</code> 软件中点击 <code>Open</code> 开始采集对应的人体 ECG 波形，待稳定时开始记录数据，记录 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>60</mn><mi>s</mi></mrow><annotation encoding="application/x-tex">60s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">60</span><span class="mord mathnormal">s</span></span></span></span> 左右的数据，截图保存波形图像。</li>
+<li>将保存的数据导入Matlab进行分析，将原始数据对应的心率图像绘制在屏幕上。</li>
+<li>在Matlab中利用手动统计法计算R峰的位置和心率，探究是否能准确统计。</li>
+<li>在Matlab中利用Pan-Tompkins算法对心电数据进行预处理。</li>
+<li>在Matlab进行分析，统计R峰的出现位置，计算心率，比较Pan-Tompkins算法和手动统计算法的误差。</li>
+</ol>
+<h1 id="四实验数据整理与分析">四、实验数据整理与分析</h1>
+<h2 id="一验证-ads1292r-生物电信号采集芯片是否能正确采集-ecg-信号-1">（一）验证 <code>ADS1292R</code> 生物电信号采集芯片是否能正确采集 ECG 信号</h2>
+<p>根据实验步骤准确采集了对应组别生成的信号数据，波形截图如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">波形编号</th><th align="center">波形图像</th></tr></thead><tbody><tr><td align="center">#1</td><td align="center">![](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Number1.png)</td></tr><tr><td align="center">#2</td><td align="center">![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Number2.png”)</td></tr><tr><td align="center">#3</td><td align="center">![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Number3.png”)</td></tr><tr><td align="center">#4</td><td align="center">![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Number4.png”)</td></tr><tr><td align="center">#5</td><td align="center">![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Number5.png”)</td></tr></tbody></table>
+<p>根据五组信号的截图可知，采集到的数据与心电数据形状相似，数据有效，可以进行下一步数据分析。测量得到的原始数据范围在 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>8</mn><mo>×</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">8\times10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span> 到 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>8.8</mn><mo>×</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">8.8\times 10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">8.8</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span> 之间。查阅资料可知，<code>ADS1292R</code> 产生的测试数据是24位整数，由此推测，系统可能采用的是偏移二进制码，或者是单片机在代码中主动加上了一定偏置以避免串口绘图仪无法处理负数，又或者是 <code>ADS1292R</code> 被配置为了单端输入并以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msub><mi>V</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mi>x</mi></mfrac></mrow><annotation encoding="application/x-tex">\frac{V_{ref}}{x}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3364em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9914em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.5131em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.2222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3488em;margin-left:-0.2222em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0278em;">r</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight" style="margin-right:0.1076em;">f</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2901em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> 作为参考。这能解释原始数据的偏置现象。由于单片机设置细节未知，无法进行进一步分析。</p>
+<p>将 <code>csv</code> 数据导入 Matlab 进行分析，编写如下的代码，将原始数据绘制在屏幕上。使用的Matlab版本为 R2025b。在代码内部加入了必要的注释，解释算法逻辑。这段代码读取了 <code>csv</code> 文件中的数据，依照数据点采样频率为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>500</mn></mrow><annotation encoding="application/x-tex">500</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">500</span></span></span></span>次/秒定义了时间轴的刻度，将纵轴定义为数据原始值，并标注了对应轴的名称，绘制出了波形图像，具体代码如下。其中，数据采样频率 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>500</mn></mrow><annotation encoding="application/x-tex">500</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">500</span></span></span></span> 次 / 秒是本次实验对 <code>ADS1292R</code> 设备的设置。</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="matlab"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 文件读取部分。因为存储的csv文件名均设置为Number*.csv，因此设置了index指示波形编号，这样对每个数据无需重新设置文件名。readtable(filename)调用函数读取csv表格。</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">index = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">filename = </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">...\Number</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> +</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> index </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">.csv</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data = readtable(filename);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 原始数据位于第一列，因此设置ECGsignal为表格的第一列所有元素。经过真实数据对照，判断出实际 ADS1292R 的采样频率应为每秒500次，据此换算具体的时间坐标，可以和心率计算的理论值吻合。</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">ECGsignal = data{:,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">};</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">fs =</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">500</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">Ndata = length( ECGsignal );</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">time = ( </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> :</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Ndata-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> fs;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 数据绘制区域。设置了time为横轴，采集信号的幅度为纵轴，设置了对应的标记。</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">figure;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">plot(time, ECGsignal, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">b</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">LineWidth</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1.2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">title(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">数据组</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> +</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> index </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">模拟信号绘制</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">xlabel(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">时间 / s</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">ylabel(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">信号幅度</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#C5E478">grid</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D"> on;</span></span></code></pre>
+<p>运行代码，生成了信号图像，截取波形稳定的部分得到的图像如下。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">波形编号</th><th align="center">图像</th></tr></thead><tbody><tr><td align="center">#1</td><td align="center">![](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\N1Mat.png)</td></tr><tr><td align="center">#2</td><td align="center">![](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\N2Mat.png)</td></tr><tr><td align="center">#3</td><td align="center">![](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\N3Mat.png)</td></tr><tr><td align="center">#4</td><td align="center">![](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\N4Mat.png)</td></tr><tr><td align="center">#5</td><td align="center">![](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\N5Mat.png)</td></tr></tbody></table>
+<p>为寻找R波波峰，应当先通过信号的幅度值筛选出R峰所在的区域，再计算出这部分区域的极大值。根据图像可知，在本次实验中，R峰的峰值都位于 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>8.7</mn><mo>×</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">8.7\times 10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">8.7</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span> 之上。因此，设定阈值 <code>vthreshold</code> 为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>8.7</mn><mo>×</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">8.7 \times 10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">8.7</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span>，在心电波形在 <code>vthreshold</code> 之上的区域寻找既大于左侧幅度值、又大于右侧幅度值的点，并用倒三角形绘制在波形图中。同时，记录两次波峰之间的平均值，以此计算心率，记录在波形图的标题处。</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="matlab"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">index = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">5</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">filename = </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">...\Number</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> +</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> index </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">.csv</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data = readtable(filename);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">ECGsignal = data{:,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">};</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">fs = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">500</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">Ndata = length( ECGsignal );</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">time = ( </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> :</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Ndata-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> fs;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 设置了心电幅度的高度阈值 vthreshold 和两个波峰之间的时间间隔阈值 hthreshold。只有当数据点处于高度阈值之上、和上一个数据点间隔 0.25s 以上，且幅度值高于其左边和右边的幅度值，才会被计入波峰。</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">vthreshold = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">8700000</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">hthreshold = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0.25</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">locs = [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">];  </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 记录波峰的数据点位置，初始设置为1避免访问错误</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> i = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> :</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Ndata </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  % 对所有数据点进行遍历</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">	if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ECGsignal(i) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">></span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> vthreshold </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x26;&#x26;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ECGsignal(i-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x3C;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ECGsignal (i) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x26;&#x26;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ECGsignal(i) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">></span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ECGsignal(i+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x26;&#x26;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> i </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> locs(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">end</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">></span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> hthreshold </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> fs  </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 数据点符合要求</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">		locs(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">end</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) = i;  </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 存储数据点</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">	end</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">end</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 对locs舍去头尾哨兵，保证数据连贯</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">locs = locs(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">end</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 通过计算相邻两个数据点之间的平均插值，计算两次心跳之间的间隔时间，从而计算心率。</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">RRintervals = diff(locs)/fs;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">meanInterval = mean(RRintervals);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">HR = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">60</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> /</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> meanInterval;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% pks存储了波峰对应数据点的幅度值</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">pks = ECGsignal(locs);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">figure;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">plot(time, ECGsignal, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">b</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">LineWidth</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1.2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#C5E478">hold</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D"> on;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 绘制波峰为蓝绿色的倒三角形</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">plot(time(locs), pks, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">rv</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">MarkerFaceColor</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.5</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.5</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">], </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">MarkerEdgeColor</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.5</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.5</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">], </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">MarkerSize</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">8</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 将计算得出的心率写在标题中</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">title(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">数据组</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">+index+</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D"> 模拟信号绘制与R峰标记，心率 </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> +</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> uint8(HR) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">bpm</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">xlabel(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">时间 / s</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">ylabel(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">信号幅度</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">legend(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">原始ECG信号</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">识别到的R峰</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#C5E478">grid</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D"> on;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#C5E478">hold</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D"> off;</span></span></code></pre>
+<p>运行代码，生成了信号图像，截取波形稳定的部分得到的图像如下。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">波形编号</th><th align="center">心率（bpm）</th><th>图像</th></tr></thead><tbody><tr><td align="center">#1</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>74</mn></mrow><annotation encoding="application/x-tex">74</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">74</span></span></span></span></td><td>![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Mat1.png”)</td></tr><tr><td align="center">#2</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>70</mn></mrow><annotation encoding="application/x-tex">70</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">70</span></span></span></span></td><td>![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Mat2.png”)</td></tr><tr><td align="center">#3</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>75</mn></mrow><annotation encoding="application/x-tex">75</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">75</span></span></span></span></td><td>![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Mat3.png”)</td></tr><tr><td align="center">#4</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>77</mn></mrow><annotation encoding="application/x-tex">77</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">77</span></span></span></span></td><td>![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Mat4.png”)</td></tr><tr><td align="center">#5</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>85</mn></mrow><annotation encoding="application/x-tex">85</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">85</span></span></span></span></td><td>![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Mat5.png”)</td></tr></tbody></table>
+<p>根据图像可知，代码准确地统计了波峰，并成功据此计算了心率值，且计算得出的心率和理论值差距不大，可以认为心率的统计方法有效。然而，此统计方式依赖于幅度阈值与时间阈值的选取，虽然对本次实验数据有效，但泛用性不强。</p>
+<p>在科研中，分析心电图的最佳方法是 Pan-Tompkins 算法。查询可知，它首先利用带通滤波器滤除基线漂移、工频干扰及肌电噪声，随后对信号进行一阶微分处理以强化 QRS 波群的斜率信息。为了进一步突出波峰并消除负向波的影响，算法对微分后的信号进行平方运算，将斜率特征转化为非负的能量脉冲。在获得能量特征后，算法采用移动窗口积分器对平方后的信号进行平滑处理，积分窗口的宽度通常根据典型的 QRS 复波时限设定，旨在获得一个反映波群包络的脉冲信号。最后，算法结合双重自适应阈值机制与回溯检测策略，通过对信号电平和噪声电平的实时估算，从积分结果中精确定位 R 波的位置。这种变换流程利用了 QRS 波群在高频成分、斜率及能量分布上的特征，确保了检测在复杂背景噪声下的稳健性。</p>
+<p>![Pan-Tompkins算法示意图，图源实验报告](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\Pasted image 20260409215545.png)</p>
+<p>本实验通过 <code>pan_tompkins_detector</code> 函数实现了以上功能，具体代码如下。</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="matlab"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">index = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">filename = </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">...\Number</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> +</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> index </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">.csv</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">data = readtable(filename);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">ECGsignal = data{:,</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">};</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">fs = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">500</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">Ndata = length( ECGsignal );</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">time = ( </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> :</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Ndata-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> fs;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 调用 pan_tompkins_detector函数来获取所需的波峰位置，函数在末尾会定义</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">[locs, HR] = pan_tompkins_detector(ECGsignal, fs);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">pks = ECGsignal(locs);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">figure;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">plot(time, ECGsignal, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">b</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">LineWidth</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1.2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#C5E478">hold</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D"> on;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">plot(time(locs), pks, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">rv</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">MarkerFaceColor</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.5</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.5</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">], </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">MarkerEdgeColor</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, [</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.5</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.5</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">], </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">MarkerSize</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">8</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">title(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">数据组</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">+index+</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D"> 模拟信号绘制与R峰标记，心率 </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> +</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> uint8(HR) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">bpm</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">xlabel(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">时间 / s</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">ylabel(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">信号幅度</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">legend(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">原始ECG信号</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">识别到的R峰</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#C5E478">grid</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D"> on;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">text_x = time(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">end</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">*</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.5</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">text_y = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">8700000</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#C5E478">hold</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D"> off;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">function</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB"> [</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D7DBE0">r_peaks</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#D7DBE0">avg_HR</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> = </span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">pan_tompkins_detector</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D7DBE0">ecg</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#D7DBE0">fs</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">	</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">	% 原始数据处理和变量定义</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">	ecg = ecg(:);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">	ecg_raw = ecg;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">	N = length(ecg);    </span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    % 为了方便后续的积分，对数据先进行归一化。</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    ecg = ecg </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> mean(ecg); </span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    ecg = ecg </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> max(abs(ecg)); </span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    %% 带通滤波器的实现</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    % 低通滤波器，设定在15Hz截止。低通滤波器主要用来消除肌电干扰。</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    N_lpf = round(fs </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 30</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">); </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> N_lpf </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x3C;</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, N_lpf = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">; </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">end</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    lpf_tmp = zeros(N, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">); </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 初始化中间变量与输出序列</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    ecg_lpf = zeros(N, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">); </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 初始化中间变量与输出序列</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n = N_lpf:N</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        lpf_tmp(n) = sum(ecg(n-N_lpf+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> :</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n)) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> N_lpf;</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    end</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"> % 第一级滑动平均，初步平滑信号，抑制高频噪声</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n = N_lpf:N</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        ecg_lpf(n) = sum(lpf_tmp(n-N_lpf+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> :</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n)) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> N_lpf;</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    end</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"> % 第二级滑动平均，进一步增强滤波效果，使波形更平滑</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    delay_lpf = N_lpf </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">; </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 计算群延迟，在后面会进行对齐</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    % 高通滤波器 ，设定在5Hz截止。高通滤波器主要用来消除基线漂移的情形。</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    N_hpf = round(fs </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 5</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">); </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> N_hpf </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x3C;</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, N_hpf = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">; </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">end</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    delay_hpf = round((N_hpf </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">); </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 计算滑动平均器的中心延迟</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    ecg_hpf = zeros(N, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n = N_hpf:N</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        ma = sum(ecg_lpf(n-N_hpf+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> :</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n)) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> N_hpf; </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 计算当前窗口内的均值（代表基线分量）</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        ecg_hpf(n) = ecg_lpf(n </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> delay_hpf) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ma; </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 从原始信号中减去基线分量，实现高通滤波效果</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    end</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    %% 求导的实现</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    ecg_diff = zeros(N, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">5</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:N</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        ecg_diff(n) = (</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">/</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">8</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">)*(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">*ecg_hpf(n) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ecg_hpf(n-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ecg_hpf(n-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">*ecg_hpf(n-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">4</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">));</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    end</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    delay_diff = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">; </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 理论群延迟</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    %% Step 3: 对信号进行平方处理，放大高频成分</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    ecg_sq = ecg_diff </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.^</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    %% Step 4: 对信号进行滑动窗口积分</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    win_size = round(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0.150</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> fs); </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 150ms 窗口理论上可以完全覆盖整个QRS能量</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    ecg_mwi = zeros(N, </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n = win_size:N</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        ecg_mwi(n) = sum(ecg_sq(n-win_size+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> :</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n)) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> win_size;</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    end</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    delay_mwi = round((win_size </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">); </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 计算理论延迟</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">      </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    %% Step 5: 自适应阈值状态机 (精简稳定版)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    r_locs = [];</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    SPKI = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    NPKI = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    % 初始化阈值为前2秒最大值的 30%</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    threshold_I1 = max(ecg_mwi(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:min(round(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">*fs), N))) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">*</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">; </span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    refractory_samples = round(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0.250</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> fs); </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 在250ms以内不接受新的波峰</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> i = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:length(ecg_mwi)-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">        if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ecg_mwi(i) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">></span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ecg_mwi(i-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x26;&#x26;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ecg_mwi(i) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">>=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ecg_mwi(i+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">            PIAKI = ecg_mwi(i);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">            </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">            if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> PIAKI </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">></span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> threshold_I1</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">                % 如果和上一个数据点的差距小于 250ms ，且比上一个数据点的峰值更小，则不录入这个数据</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">                if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> isempty(r_locs) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">||</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (i </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> r_locs(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">end</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">)) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">></span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> refractory_samples</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">                    r_locs(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">end</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) = i;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">                    SPKI = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0.125</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">*PIAKI </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.875</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">*SPKI;</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">                else</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">                    % 如果在250ms内又出现了高大的峰，通常视为噪声或波形畸变，更新噪声均值</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">                    NPKI = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0.125</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">*PIAKI </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.875</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">*NPKI;</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">                end</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">            else</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">                NPKI = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0.125</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">*PIAKI </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.875</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">*NPKI;</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">            end</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">            </span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">            threshold_I1 = NPKI </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 0.25</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">*(SPKI </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> NPKI);</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">        end</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    end</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    %% 补偿前面进行过的延迟，进行局部去基线波峰搜索</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    r_peaks = zeros(size(r_locs));</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    % 汇总前述所有步骤的理论延迟，计算出总延迟</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    total_delay = delay_lpf </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> delay_hpf </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> delay_diff </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> delay_mwi;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    search_radius = round(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0.12</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> fs); </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% ±120ms 搜索半径</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    for</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> i = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:length(r_locs)</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">        % 补偿延迟，定位回原始物理时间点</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        true_loc = r_locs(i) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> total_delay;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        true_loc = max(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, min(N, true_loc));</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">        % 确定搜索窗口，以补偿后的位置为中心，在指定半径内寻找极值</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        idx_start = max(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, true_loc </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> search_radius);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        idx_end   = min(N, true_loc </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> search_radius);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        win = idx_start </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> idx_end;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        </span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        local_sig = ecg_raw(win); </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">% 获取原始心电信号中的局部波形</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">        % 局部线性去趋势，消除搜索窗口内的残余基线漂移干扰</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        slope = (local_sig(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">end</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> local_sig(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">)) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (length(local_sig) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        baseline = local_sig(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> slope </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">*</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:length(local_sig)-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        local_sig_detrend = local_sig </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> baseline;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">        % 在去除了漂移干扰的局部信号中找最大值索引</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        [~, max_idx] = max(local_sig_detrend); </span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        r_peaks(i) = win(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">+</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> max_idx </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    end</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    %% Step 7: HR 计算</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> length(r_peaks) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">></span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        rr = diff(r_peaks) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">/</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> fs;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        HR = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">60</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> ./</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> rr;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        avg_HR = mean(HR);</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    else</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">        avg_HR = </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">0</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">; </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    end</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">end</span></span></code></pre>
+<p>运行代码，生成了信号图像，截取波形稳定的部分得到的图像如下。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">波形编号</th><th align="center">心率（bpm）</th><th>图像</th></tr></thead><tbody><tr><td align="center">#1</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>74</mn></mrow><annotation encoding="application/x-tex">74</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">74</span></span></span></span></td><td>![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Mat1.png”)</td></tr><tr><td align="center">#2</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>71</mn></mrow><annotation encoding="application/x-tex">71</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">71</span></span></span></span></td><td>![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\B2.png”)</td></tr><tr><td align="center">#3</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>75</mn></mrow><annotation encoding="application/x-tex">75</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">75</span></span></span></span></td><td>![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\B3.png”)</td></tr><tr><td align="center">#4</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>78</mn></mrow><annotation encoding="application/x-tex">78</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">78</span></span></span></span></td><td>![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\B4.png”)</td></tr><tr><td align="center">#5</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>84</mn></mrow><annotation encoding="application/x-tex">84</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">84</span></span></span></span></td><td>![](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\B5.png”)</td></tr></tbody></table>
+<p>根据 <code>Nsample</code> 的设定值，五组测量数据得到心率的理论值应当为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>21600</mn><mtext>Nsample</mtext></mfrac></mrow><annotation encoding="application/x-tex">\frac{21600}{\text{Nsample}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3262em;vertical-align:-0.4811em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">Nsample</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">21600</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4811em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>，分别是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>71.76</mn><mo separator="true">,</mo><mn>69.45</mn><mo separator="true">,</mo><mn>74.22</mn><mo separator="true">,</mo><mn>77.14</mn><mo separator="true">,</mo><mn>83.07</mn></mrow><annotation encoding="application/x-tex">71.76, 69.45, 74.22, 77.14, 83.07</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">71.76</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">69.45</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">74.22</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">77.14</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">83.07</span></span></span></span>，下表对两种数据测得的心率值和理论值进行了对比。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">波形编号</th><th align="center">心率理论值</th><th align="center">人工统计测量值</th><th align="center">Pan-Tompkins算法计算值</th></tr></thead><tbody><tr><td align="center">#1</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>71.76</mn></mrow><annotation encoding="application/x-tex">71.76</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">71.76</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>74</mn></mrow><annotation encoding="application/x-tex">74</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">74</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>74</mn></mrow><annotation encoding="application/x-tex">74</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">74</span></span></span></span></td></tr><tr><td align="center">#2</td><td align="center">69.45</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>70</mn></mrow><annotation encoding="application/x-tex">70</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">70</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>71</mn></mrow><annotation encoding="application/x-tex">71</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">71</span></span></span></span></td></tr><tr><td align="center">#3</td><td align="center">74.22</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>75</mn></mrow><annotation encoding="application/x-tex">75</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">75</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>75</mn></mrow><annotation encoding="application/x-tex">75</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">75</span></span></span></span></td></tr><tr><td align="center">#4</td><td align="center">77.14</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>77</mn></mrow><annotation encoding="application/x-tex">77</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">77</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>78</mn></mrow><annotation encoding="application/x-tex">78</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">78</span></span></span></span></td></tr><tr><td align="center">#5</td><td align="center">83.07</td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>85</mn></mrow><annotation encoding="application/x-tex">85</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">85</span></span></span></span></td><td align="center"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>84</mn></mrow><annotation encoding="application/x-tex">84</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">84</span></span></span></span></td></tr></tbody></table>
+<p>分析表格可以发现，人工统计测量值和Pan-Tompkins算法计算值相对心率理论值的偏差均较小。这是因为本次实验生成的MIT-BIH心电波形整齐，相对干扰较少，因此可以设定单一的R峰阈值来准确判断波峰，Pan-Tompkins算法无法发挥相对优势。在人体 ECG信号采集分析的过程中，由于基线漂移的干扰，较难在一个较长的测量范围内对心电数据找到单一的R峰阈值，此时Pan-Tompkins算法将会发挥优势。</p>
+<h2 id="二人体ecg信号采集-1">（二）人体ECG信号采集</h2>
+<p>按照实验指导书图片左侧的方式连接了导联线，即将 <code>L</code> 极连接在左胸乳头下方，<code>R</code> 极连接在右胸乳头下方，<code>F</code> 极连接在右小腹，静息进行了60s心电波形数据采集，采集界面截屏如下。</p>
+<p>![人体ECG信号采集界面截屏](“E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\Human1_normal.png”)</p>
+<p>在上图中可观察到，P波和R波都是向下的尖峰，而T波向上且偏大，不符合标准心电图的形状。考虑到P波和R波向下的可能原因是导联线接反，将 <code>L</code> 极和 <code>R</code> 极调换以后重新开始记录心电波形数据，获得波形如下。下图是调换 <code>L</code> 极和 <code>R</code> 极前后的波形对比。</p>
+<p>![调换前波形](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\HH1.png)
+![调换后波形](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\HH2.png)</p>
+<p>由上图可知，调换 <code>L</code> 极和 <code>R</code> 极前后，获得了反转的波形。因此可以推断，在本次实验中，绿色电极在系统中充当了参考地线，本次实验测量的是 <code>L</code> 极和 <code>R</code> 极的电位差，这验证了本次实验测量的是双极胸导联，或改良Ⅰ导联的陈述。在初始接线时，可能是连接导联线极性错误，导致P和R波向下。</p>
+<p>R波和T波的方向相反，是因为在近心端的横向探测中，心室复极的向量方向经常与除极向量形成较大的夹角。在本步骤的连接方式中，T波倒置是正常生理投影。同时，T波偏大是因为乳头正下方距离心尖和左心室前壁较近，在这里检测到的T波的局部向量非常强，这是本实验步骤导联方式的正常结果。</p>
+<p>为了分析心率并测试Pan-Tompkins算法，本步骤采用调换 <code>L</code> 极和 <code>R</code> 极后的反转波形进行分析，如此可以统计向上的R峰，这种统计方式具有现实意义。</p>
+<p>按照步骤（一）的方式将对应数据导入Matlab进行数据可视化，结果如下。</p>
+<p>![30s人体ECG图像|137](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\HB3.png)</p>
+<p>通过观察上图可以发现，人体ECG数据中包含了不断变化的基线漂移成分，即使可以在一个区间内找到R波波峰的阈值（在本波形图中约为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>8.48</mn><mo>×</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">8.48 \times 10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">8.48</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span>），在整段测量时间内也难以获得一个固定阈值来区分R波波谷和波形的其他部分。</p>
+<p>为了验证以上陈述，设定波峰阈值为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>8.48</mn><mo>×</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">8.48 \times 10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">8.48</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span>，对 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span> 至 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>35</mn><mi>s</mi></mrow><annotation encoding="application/x-tex">35s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">35</span><span class="mord mathnormal">s</span></span></span></span> 的心电数据进行手动统计，获得统计图像如下。</p>
+<p>![手动统计R波波峰及心率图像](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\HB2.png)</p>
+<p>由上图可知，在 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>30</mn></mrow><annotation encoding="application/x-tex">30</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">30</span></span></span></span> 至 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>35</mn><mi>s</mi></mrow><annotation encoding="application/x-tex">35s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">35</span><span class="mord mathnormal">s</span></span></span></span> 的波峰统计纳入了许多处于设定阈值之上但不属于R波的波峰，且心率计算也不正确，这说明手动统计方法确实遇到了基线漂移的技术瓶颈。为了突破瓶颈，采用步骤（一）提到的Pan-Tompkins算法重新统计，得到的图像如下。</p>
+<p>![Pan-Tompkins法统计R波波峰及心率图像](E:\THU\Courses\2026Spring\30260231 电子电路与系统基础实验1\实验报告\实验3\data\hb4.png)</p>
+<p>此方法正确地统计得到了R波波峰，计算得出心率为75bpm，证明了Pan-Tompkins算法对实际ECG信号处理和统计的有效性。</p>
+<h1 id="五实验总结">五、实验总结</h1>
+<p>本次实验真实地构建了“模拟信号验证 - 真实信号采集”的工程闭环。实验初期，利用 <code>Analog Discovery 3 (AD3)</code> 口袋仪器作为标准信号源，将 MIT-BIH 数据库中的标准心电波形输入 <code>ADS1292R</code> 采集系统。通过定量对比预设心率与实际采集心率，验证了硬件系统在信号放大与模数转换过程中的准确性。在确保硬件可靠的基础上，实验进一步开展了不同导联方式下的人体心电信号采集，并重点探究了实际生理信号中存在的干扰抑制与算法提取问题。</p>
+<p>实验结果显示，<code>ADS1292R</code> 模块能够稳定获取 24 位高分辨率心电数据，采样率设定为 500sps。尽管原始数据存在约 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>23</mn></msup></mrow><annotation encoding="application/x-tex">2^{23}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">23</span></span></span></span></span></span></span></span></span></span></span></span> 的直流偏置（系统采用偏移二进制码导致），但在应用差分处理或去均值算法后，波形特征（P波、QRS波群、T波）清晰可见，心电数据满足分析需求。</p>
+<p>在人体采集环节，通过对比 L/R 极调换前后的波形，验证了实验所采用的双极胸导联（CC5导联）特性。实验观察到，在该导联下 T 波振幅较大且与 R 波方向相反，这反映了探测电极靠近心尖部时，心室复极向量在局部投影较强的生理特征。</p>
+<p>本实验还对比了手动阈值统计方法和Pan-Tompkins算法在不同场景下的表现。由于 MIT-BIH 标准信号背景纯净、基线平稳，简单的幅度阈值法即可准确提取 R 峰，两种方法所得心率值与理论值偏差极小。在实际采集人体 ECG 信号过程中，信号受到明显的基线漂移和工频干扰影响。固定阈值无法适应起伏的基线，导致在基线抬升处出现误检。而对比之下，Pan-Tompkins算法通过级联带通滤波、微分、平方及移动窗口积分，有效地识别了 QRS 波群的斜率信息，并准确标注出了R峰的位置。实验证明，该算法配合自适应阈值机制，能够有效克服基线漂移，准确锁定人体实时心率。</p>
+<p>通过本次实验，掌握了生物电信号采集的硬件配置、导联规范及 Matlab 信号处理全流程。实验过程中针对电极极性、基线干扰等问题的排查，加深了对模拟电路与数字算法交叉应用的理解。</p>
+<h1 id="六对实验的建议">六、对实验的建议</h1> </article> <hr class="my-6 border-dashed"> <!-- Previous/Next Post Buttons --> <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">   </div> </main> <footer class="app-layout mt-auto"> <div class="py-6 sm:py-4 border-t border-border flex flex-col items-center justify-between sm:flex-row-reverse"> <div class="flex flex-wrap items-center gap-1"> <a href="https://github.com/concavecat" title="GitHub" class="group inline-flex items-center gap-1 hover:text-accent p-2 hover:rotate-6 sm:p-1">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110 "><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">GitHub</span>  </a><a href="https://x.com/Ggggork" title="X" class="group inline-flex items-center gap-1 hover:text-accent p-2 hover:rotate-6 sm:p-1">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110 "><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">X</span>  </a><a href="https://user.qzone.qq.com/3983660250" title="QQ" class="group inline-flex items-center gap-1 hover:text-accent p-2 hover:rotate-6 sm:p-1">  <svg width="800px" height="800px" viewBox="0 0 192 192" fill="none" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110 "><path stroke="currentColor" stroke-linejoin="round" stroke-width="16" d="M153.933 114.718c-2.953-9.509-6.349-17.5-11.573-30.58C143.172 49.786 128.922 22 96.101 22c-33.189 0-47.125 28.34-46.24 62.139-5.241 13.097-8.62 21.033-11.573 30.579-6.276 20.256-4.246 28.636-2.695 28.821 3.323.407 12.94-15.243 12.94-15.243 0 9.064 4.651 20.886 14.73 29.413-4.873 1.499-15.82 5.532-13.217 9.953 2.105 3.57 36.217 2.275 46.056 1.165 9.838 1.11 43.95 2.405 46.055-1.165 2.602-4.403-8.362-8.454-13.217-9.953 10.078-8.546 14.73-20.367 14.73-29.413 0 0 9.617 15.65 12.94 15.243 1.569-.203 3.6-8.583-2.677-28.821Z" /></svg> <span class="sr-only">QQ</span>  </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span></span> <span class="hidden sm:inline"></span> <span></span> </div> </div> </footer>  </div> <!-- Load full theme logic --> <script type="module">const d="theme",r="light",m="dark";function i(){const e=localStorage.getItem(d);return e||(window.matchMedia("(prefers-color-scheme: dark)").matches?m:r)}let t=window.theme?.themeValue??i();function c(){localStorage.setItem(d,t),o()}function o(){document.firstElementChild?.setAttribute("data-theme",t),document.querySelector("#theme-btn")?.setAttribute("aria-label",t);const e=document.body;if(e){const n=window.getComputedStyle(e).backgroundColor;document.querySelector("meta[name='theme-color']")?.setAttribute("content",n)}}window.theme?(window.theme.setPreference=c,window.theme.reflectPreference=o):window.theme={themeValue:t,setPreference:c,reflectPreference:o,getTheme:()=>t,setTheme:e=>{t=e}};o();function s(){o(),document.querySelector("#theme-btn")?.addEventListener("click",()=>{t=t===r?m:r,window.theme?.setTheme(t),c()})}s();document.addEventListener("astro:after-swap",s);document.addEventListener("astro:before-swap",e=>{const a=e,n=document.querySelector("meta[name='theme-color']")?.getAttribute("content");n&&a.newDocument.querySelector("meta[name='theme-color']")?.setAttribute("content",n)});window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",({matches:e})=>{t=e?m:r,window.theme?.setTheme(t),c()});</script> <script type="module">let e=50,t=50;document.addEventListener("mousemove",n=>{const r=n.clientX/window.innerWidth*100,i=n.clientY/window.innerHeight*100,o=()=>{e+=(r-e)*.05,t+=(i-t)*.05,document.body.style.setProperty("--mouse-x",`${e}%`),document.body.style.setProperty("--mouse-y",`${t}%`),requestAnimationFrame(o)};requestAnimationFrame(o)});</script> </body> </html> <script data-astro-rerun>
+  /** Create a progress indicator
+   *  at the top */
+  function createProgressBar() {
+    // Create the main container div
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+
+    // Create the progress bar div
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    // Append the progress bar to the progress container
+    progressContainer.appendChild(progressBar);
+
+    // Append the progress container to the document body or any other desired parent element
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  /** Update the progress bar
+   *  when user scrolls */
+  function updateScrollProgress() {
+    document.addEventListener("scroll", () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      if (document) {
+        const myBar = document.getElementById("myBar");
+        if (myBar) {
+          myBar.style.width = scrolled + "%";
+        }
+      }
+    });
+  }
+  updateScrollProgress();
+
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      // Check if --file-name-offset custom property exists
+      const computedStyle = getComputedStyle(codeBlock);
+      const hasFileNameOffset =
+        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+
+      // Determine the top positioning class
+      const topClass = hasFileNameOffset
+        ? "top-(--file-name-offset)"
+        : "-top-3";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>
