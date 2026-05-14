@@ -1,59 +1,135 @@
 <!DOCTYPE html><html dir="ltr" lang="zh-CN" data-liquid="false" class="false"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://concavecat.github.io/posts/"><meta name="generator" content="Astro v5.18.1"><!-- Load Font --><style>@font-face{font-family:LXGW-6cd680ac8f670b67;src:url("/_astro/fonts/1377ed3077310594.woff2") format("woff2");font-display:swap;font-weight:300;font-style:normal;}@font-face{font-family:LXGW-6cd680ac8f670b67;src:url("/_astro/fonts/f9948704b0f698ab.woff2") format("woff2");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:LXGW-6cd680ac8f670b67;src:url("/_astro/fonts/421872eb75ac0f99.woff2") format("woff2");font-display:swap;font-weight:500;font-style:normal;}@font-face{font-family:"LXGW-6cd680ac8f670b67 fallback: Arial";src:local("Arial");font-display:swap;font-weight:300;font-style:normal;size-adjust:107.8957%;ascent-override:86.009%;descent-override:23.7266%;line-gap-override:0%;}@font-face{font-family:"LXGW-6cd680ac8f670b67 fallback: Arial";src:local("Arial");font-display:swap;font-weight:400;font-style:normal;size-adjust:107.8957%;ascent-override:86.009%;descent-override:23.7266%;line-gap-override:0%;}@font-face{font-family:"LXGW-6cd680ac8f670b67 fallback: Arial";src:local("Arial");font-display:swap;font-weight:500;font-style:normal;size-adjust:107.8957%;ascent-override:86.009%;descent-override:23.7266%;line-gap-override:0%;}:root{--font-sans:LXGW-6cd680ac8f670b67,"LXGW-6cd680ac8f670b67 fallback: Arial",sans-serif;}</style><style>@font-face{font-family:Quicksand-0ab48f02a52517d3;src:url("/_astro/fonts/a34b6797184b2a46.ttf") format("truetype");font-display:swap;font-weight:500;font-style:normal;}@font-face{font-family:Quicksand-0ab48f02a52517d3;src:url("/_astro/fonts/a34b6797184b2a46.ttf") format("truetype");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:"Quicksand-0ab48f02a52517d3 fallback: Arial";src:local("Arial");font-display:swap;font-weight:500;font-style:normal;size-adjust:102.5122%;ascent-override:97.5494%;descent-override:24.3874%;line-gap-override:0%;}@font-face{font-family:"Quicksand-0ab48f02a52517d3 fallback: Arial";src:local("Arial");font-display:swap;font-weight:400;font-style:normal;size-adjust:102.5122%;ascent-override:97.5494%;descent-override:24.3874%;line-gap-override:0%;}:root{--font-quicksand:Quicksand-0ab48f02a52517d3,"Quicksand-0ab48f02a52517d3 fallback: Arial",sans-serif;}</style><!-- General Meta Tags --><title>笔记 | DivergentCatTree</title><meta name="title" content="笔记 | DivergentCatTree"><meta name="description" content><meta name="author" content="Ggggork"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="笔记 | DivergentCatTree"><meta property="og:description" content><meta property="og:url" content="https://concavecat.github.io/posts/"><meta property="og:image" content="https://concavecat.github.io/astropaper-og.jpg"><!-- Article Published/Modified time --><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://concavecat.github.io/posts/"><meta property="twitter:title" content="笔记 | DivergentCatTree"><meta property="twitter:description" content><meta property="twitter:image" content="https://concavecat.github.io/astropaper-og.jpg"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"笔记 | DivergentCatTree","image":"https://concavecat.github.io/astropaper-og.jpg","datePublished":"undefined","author":[{"@type":"Person","name":"Ggggork"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="DivergentCatTree" href="https://concavecat.github.io/rss.xml"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.DcSP9LZ1.js"></script><!-- Minimal inline script to prevent FOUC - sets theme immediately, delays liquid state --><!-- Minimal inline script to prevent FOUC - sets theme immediately, NO DELAYS --><!-- Minimal inline script to prevent FOUC - sets theme immediately, NO DELAYS --><!-- Minimal inline script to prevent FOUC - sets theme immediately, NO DELAYS --><!-- Minimal inline script to prevent FOUC - sets theme immediately, NO DELAYS --><!-- Minimal inline script to prevent FOUC and handle Astro routing --><!-- Minimal inline script to prevent FOUC and handle Astro routing --><script>
-      // 改良版：接收一个目标 HTML 元素进行状态写入
-      function applyAllSettings(targetHtml) {
-        if (!localStorage.getItem("liquid-glass")) {
-          localStorage.setItem("liquid-glass", "false");
-        }
+  // 改良版：接收一个目标 HTML 元素进行状态写入
+  function applyAllSettings(targetHtml) {
+    // 👇 1. 修改这里：如果本地没有记录，首次访问默认写入 "true"
+    if (!localStorage.getItem("liquid-glass")) {
+      localStorage.setItem("liquid-glass", "true");
+    }
 
-        // 1. Theme
-        const theme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-        targetHtml.setAttribute("data-theme", theme);
-        
-        // 确保护航对象只在当前活跃的 document 上挂载
-        if (targetHtml === document.documentElement) {
-          window.theme = { themeValue: theme, setTheme: (val) => { window.theme.themeValue = val; } };
-        }
+    // 👇 2. 背景模式如果想强制默认是 image，你的原代码其实已经做到了
+    // 因为这句的 fallback 就是 "image"，如果想更严谨，可以像上面那样先 setItem
+    if (!localStorage.getItem("bg-mode")) {
+      localStorage.setItem("bg-mode", "image");
+    }
 
-        // 2. Liquid Glass
-        const isLiquid = localStorage.getItem("liquid-glass") === "true"; 
-        targetHtml.classList.add("group/html"); 
-        targetHtml.setAttribute("data-liquid", isLiquid ? "true" : "false");
+    // 1. Theme (保持不变)
+    const theme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    targetHtml.setAttribute("data-theme", theme);
+    
+    // 确保护航对象只在当前活跃的 document 上挂载
+    if (targetHtml === document.documentElement) {
+      window.theme = { themeValue: theme, setTheme: (val) => { window.theme.themeValue = val; } };
+    }
 
-        // 3. Background
-        const bgMode = localStorage.getItem("bg-mode") || "image"; 
-        targetHtml.setAttribute("data-bg", bgMode);
+    // 2. Liquid Glass (读取刚刚设置好的值)
+    const isLiquid = localStorage.getItem("liquid-glass") === "true"; 
+    targetHtml.classList.add("group/html"); 
+    targetHtml.setAttribute("data-liquid", isLiquid ? "true" : "false");
 
-        targetHtml.classList.add('no-transitions');
-  
-        setTimeout(() => {
-          targetHtml.classList.remove('no-transitions');
-        }, 50); // 极短延迟后恢复动画能力
-      }
+    // 3. Background (读取刚刚设置好的值)
+    const bgMode = localStorage.getItem("bg-mode") || "image"; 
+    targetHtml.setAttribute("data-bg", bgMode);
 
-      // 初次硬加载：对当前屏幕上的 HTML 立即执行
-      applyAllSettings(document.documentElement);
+    targetHtml.classList.add('no-transitions');
 
-      // ⭐ 终极修复：完美融合 before-swap 拦截与 localStorage 真实数据
-      if (!window.hasSetupAstroSettings) {
-        window.hasSetupAstroSettings = true;
-        
-        document.addEventListener("astro:before-swap", (e) => {
-          // 在新页面的 DOM 被 Astro 插入屏幕前，直接将正确的状态注入进去！
-          // 这样新页面渲染出来的第一帧就自带 data-liquid="true"，彻底封杀 CSS 闪烁！
-          applyAllSettings(e.newDocument.documentElement);
-        });
-      }
-    </script><style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media(prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
-</style>
-<link rel="stylesheet" href="/_astro/about.5C6B0RDl.css">
+    setTimeout(() => {
+      targetHtml.classList.remove('no-transitions');
+    }, 50); // 极短延迟后恢复动画能力
+  }
+
+  // 初次硬加载：对当前屏幕上的 HTML 立即执行
+  applyAllSettings(document.documentElement);
+
+  // ⭐ 终极修复：完美融合 before-swap 拦截与 localStorage 真实数据
+  if (!window.hasSetupAstroSettings) {
+    window.hasSetupAstroSettings = true;
+    
+    document.addEventListener("astro:before-swap", (e) => {
+      applyAllSettings(e.newDocument.documentElement);
+    });
+  }
+</script><link rel="stylesheet" href="/_astro/about.C8_lC1wh.css">
 <style>:where([data-astro-image]){object-fit:var(--fit);object-position:var(--pos);height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}
-</style></head> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"> <body class="bg-background dark:bg-background group-data-[liquid=true]/html:bg-zinc-50 dark:group-data-[liquid=true]/html:bg-zinc-950 text-base min-h-screen relative transition-colors duration-200"> <!-- ⭐ 新增：支持双模式切换的高清图片背景层 --> <div class="fixed inset-0 z-[-2] w-full h-full pointer-events-none transition-opacity duration-1000 ease-in-out
+@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media(prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
+</style><style>[data-astro-transition-scope="astro-dfdruhzs-1"] { view-transition-name: main-glass-card; }@layer astro { ::view-transition-old(main-glass-card) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(main-glass-card) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(main-glass-card) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(main-glass-card) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-dfdruhzs-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-dfdruhzs-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-dfdruhzs-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-dfdruhzs-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-dfdruhzs-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-dfdruhzs-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-dfdruhzs-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-dfdruhzs-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-y6zrfi46-2"] { view-transition-name: main-glass-card; }@layer astro { ::view-transition-old(main-glass-card) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(main-glass-card) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(main-glass-card) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(main-glass-card) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-y6zrfi46-2"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-y6zrfi46-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-y6zrfi46-2"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-y6zrfi46-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-y6zrfi46-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-y6zrfi46-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-y6zrfi46-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-y6zrfi46-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"> <body class="bg-background dark:bg-background group-data-[liquid=true]/html:bg-zinc-50 dark:group-data-[liquid=true]/html:bg-zinc-950 text-base min-h-screen relative transition-colors duration-200"> <!-- ⭐ 新增：支持双模式切换的高清图片背景层 --> <div class="fixed inset-0 z-[-2] w-full h-full pointer-events-none transition-opacity duration-1000 ease-in-out
               opacity-0 group-data-[bg=image]/html:opacity-100"> <!-- 图片 1：非 Liquid Glass (普通模式) 的壁纸 --> <img src="/lighted.jpg" alt="Normal Background" class="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-200 ease-in-out
              opacity-100"> <!-- 护眼遮罩 --> <div class="absolute inset-0 bg-black/10 dark:bg-black/40 backdrop-saturate-150 pointer-events-none transition-colors duration-200"></div> </div> <div class="group-data-[bg=image]/html:!opacity-0 fixed inset-0 z-[-1] overflow-hidden pointer-events-none opacity-0 group-data-[liquid=true]/html:opacity-100 transition-opacity duration-200"> <div class="absolute w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen opacity-50 dark:opacity-20 transition-opacity" style="background: radial-gradient(circle, rgba(99,102,241,0.8) 0%, rgba(168,85,247,0) 70%); left: calc(var(--mouse-x, 50%) - 30vw); top: calc(var(--mouse-y, 50%) - 30vw);"></div> <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-300/40 dark:bg-purple-800/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[80px] animate-blob"></div> <div class="absolute top-[20%] right-[-10%] w-[45vw] h-[45vw] bg-blue-300/40 dark:bg-blue-800/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[80px] animate-blob" style="animation-delay: 2s;"></div> <div class="absolute bottom-[-20%] left-[20%] w-[60vw] h-[60vw] bg-pink-300/40 dark:bg-pink-800/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] animate-blob" style="animation-delay: 4s;"></div> </div> <div class="flex flex-col md:flex-row w-full min-h-screen"> <aside class="w-full md:w-sm shrink-0 p-4 md:p-8 md:h-screen md:sticky md:top-0"> <!-- 注意这里新增了 glare-container 类名 --> <div class="glare-container relative overflow-hidden transition-all duration-200 h-full rounded-3xl p-1 md:p-6
-        group-data-[liquid=true]/html:bg-white/5 dark:group-data-[liquid=true]/html:bg-white/[0.02] 
-        group-data-[liquid=true]/html:backdrop-blur-[30px] group-data-[liquid=true]/html:backdrop-saturate-[100%]
-        group-data-[liquid=true]/html:border-transparent group-data-[liquid=true]/html:shadow-[0_30px_30px_rgba(0,0,0,0.12)]
-      "> <!-- --- 2. 表面动态眩光层 --- --> <!-- 注意 style 里使用了 --local-x 和 --local-y，去掉了之前的百分比和 calc --> <div class="absolute inset-0 z-0 pointer-events-none opacity-0 group-data-[liquid=true]/html:opacity-10 transition-opacity duration-200" style="background: radial-gradient(800px circle at var(--local-x) var(--local-y), rgba(255,255,255,0.15), transparent 40%);"></div> <!-- --- 3. 菲涅尔高光边缘层 --- --> <div class="absolute inset-0 z-0 rounded-3xl pointer-events-none opacity-0 group-data-[liquid=true]/html:opacity-100 transition-opacity duration-200
+        group-data-[liquid=true]/html:bg-white/5 dark:group-data-[liquid=true]/html:bg-black/[0.1]
+        group-data-[liquid=true]/html:backdrop-blur-[60px] group-data-[liquid=true]/html:backdrop-saturate-[100%]
+        group-data-[liquid=true]/html:border-transparent group-data-[liquid=true]/html:shadow-[0_60px_120px_rgba(0,0,0,0.12)]
+      " data-astro-transition-scope="astro-dfdruhzs-1"> <!-- --- 2. 表面动态眩光层 --- --> <!-- 注意 style 里使用了 --local-x 和 --local-y，去掉了之前的百分比和 calc --> <div class="absolute inset-0 z-0 pointer-events-none opacity-0 group-data-[liquid=true]/html:opacity-10 transition-opacity duration-200" style="background: radial-gradient(800px circle at var(--local-x) var(--local-y), rgba(255,255,255,0.15), transparent 40%);"></div> <!-- --- 3. 菲涅尔高光边缘层 --- --> <div class="absolute inset-0 z-0 rounded-3xl pointer-events-none opacity-0 group-data-[liquid=true]/html:opacity-100 transition-opacity duration-200
              shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),inset_0_-1px_1px_rgba(255,255,255,0.05),inset_1px_0_1px_rgba(255,255,255,0.1),inset_-1px_0_1px_rgba(255,255,255,0.1)]"></div> <div class="relative z-10 h-full"> <a id="skip-to-content" href="#main-content" class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4">
 Skip to content
 </a> <header class="h-full w-full flex flex-col relative bg-transparent"> <div class="flex items-center justify-between w-full py-4"> <a href="/" class="flex items-center gap-3 py-1 md:py=4 px-4 whitespace-nowrap focus-outline" id="profile-avatar" draggable="true"> <span class="inline-block w-10 h-10"> <svg viewBox="0 1.219 119.973 118.766" width="800px" height="800px" class="w-full h-full object-contain dark:invert">
@@ -61,14 +137,19 @@ Skip to content
 </svg> </span> <span class="text-zinc-800 dark:text-zinc-100 text-xl md:text-2xl font-[500] font-heading">
 Ggggork
 </span> </a> <button id="menu-btn" class="focus-outline p-2 pr-4 md:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden size-6" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> </div> <div class="hidden md:flex pt-8 items-center justify-between gap-4 px-3 py-3 border-t-0 md:border-t border-zinc-200 dark:border-zinc-800 md:border-none md:pt-0"> <div class="pt-8 flex items-center gap-4 px-0 py-0 border-t border-zinc-200 dark:border-zinc-800 md:border-none md:pt-0"> <a href="https://github.com/concavecat" title="GitHub" class="group inline-flex items-center gap-1 hover:text-accent group focus-outline flex items-center justify-center p-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 transition-all duration-300 group-hover:stroke-accent group-hover:opacity-100 sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">GitHub</span>  </a><a href="https://x.com/Ggggork" title="X" class="group inline-flex items-center gap-1 hover:text-accent group focus-outline flex items-center justify-center p-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 transition-all duration-300 group-hover:stroke-accent group-hover:opacity-100 sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">X</span>  </a><a href="https://user.qzone.qq.com/3983660250" title="QQ" class="group inline-flex items-center gap-1 hover:text-accent group focus-outline flex items-center justify-center p-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors">  <svg width="800px" height="800px" viewBox="0 0 192 192" fill="none" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 transition-all duration-300 group-hover:stroke-accent group-hover:opacity-100 sm:scale-110"><path stroke="currentColor" stroke-linejoin="round" stroke-width="16" d="M153.933 114.718c-2.953-9.509-6.349-17.5-11.573-30.58C143.172 49.786 128.922 22 96.101 22c-33.189 0-47.125 28.34-46.24 62.139-5.241 13.097-8.62 21.033-11.573 30.579-6.276 20.256-4.246 28.636-2.695 28.821 3.323.407 12.94-15.243 12.94-15.243 0 9.064 4.651 20.886 14.73 29.413-4.873 1.499-15.82 5.532-13.217 9.953 2.105 3.57 36.217 2.275 46.056 1.165 9.838 1.11 43.95 2.405 46.055-1.165 2.602-4.403-8.362-8.454-13.217-9.953 10.078-8.546 14.73-20.367 14.73-29.413 0 0 9.617 15.65 12.94 15.243 1.569-.203 3.6-8.583-2.677-28.821Z" /></svg> <span class="sr-only">QQ</span>  </a> </div> </div> <hr class="hidden md:block w-full my-6 border-t-0 md:border-t border-border"> <nav id="menu-items" class="hidden md:flex flex-col flex-1 w-full mt-2 pb-4"> <ul class="flex flex-col space-y-1 w-full mb-2"> <li> <a href="/tree" class="block w-full px-4 py-2 md:py-3 rounded-2xl transition-colors hover:bg-background/50"> <p class="text-base font-[500] font-sans">笔记</p> </a> </li> <li> <a href="/about" class="block w-full px-4 py-2 md:py-3 rounded-2xl transition-colors hover:bg-background/50"> <p class="text-base font-[500] font-sans">关于</p> </a> </li>  </ul> <ul class="flex flex-col space-y-2 w-full py-0 md:py-3 mb-4 "></ul> <div id="sidebar-search-container" class="hidden flex-col w-full mb-2 max-h-[50vh] overflow-y-auto px-4 md:px-0"> <hr class="hidden md:block w-full border-t border-border mb-4 py-3"> <div id="pagefind-sidebar-search" class="w-full"></div> </div> <div class="mt-auto flex items-center gap-4 px-2 border-t-0 md:border-t border-border md:border-none md:pt-0"> <button id="search-toggle-btn" class="focus-outline flex items-center justify-center p-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors group group-data-[bg=image]/html:text-white" title="搜索笔记" aria-label="search"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6 transition-colors group-hover:stroke-accent"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span class="sr-only">Toggle Search</span> </button> <button id="theme-btn" class="focus-outline relative flex items-center justify-center size-10 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors group group-data-[bg=image]/html:text-white" title="切换明暗" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute scale-100 rotate-0 transition-all duration-200 dark:scale-0 dark:-rotate-90 group-hover:stroke-accent"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute scale-0 rotate-90 transition-all duration-200 dark:scale-100 dark:rotate-0 group-hover:stroke-accent"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> <!-- 液态玻璃 Toggle 按钮 --> <button id="liquid-toggle" aria-label="Toggle Liquid Glass Effect" class="focus-outline relative flex items-center justify-center size-10 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors group group-data-[bg=image]/html:text-white" title="切换液态玻璃"> <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="text-skin-base opacity-90 transition-colors duration-200 group-hover:text-accent group-hover:opacity-100"> <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path> </svg> </button> <button id="bg-toggle-btn" class="focus-outline relative flex items-center justify-center size-10 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors group group-data-[bg=image]/html:text-white" title="切换背景壁纸"> <!-- 极简风的图片/相册图标 --> <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="text-skin-base opacity-80 transition-colors duration-200 group-hover:text-accent group-hover:opacity-100"> <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect> <circle cx="8.5" cy="8.5" r="1.5"></circle> <polyline points="21 15 16 10 5 21"></polyline> </svg> </button> </div> </nav> </header> <script type="module">function u(){const t=document.querySelector("#menu-btn"),n=document.querySelector("#menu-items"),o=document.querySelector("#menu-icon"),c=document.querySelector("#close-icon");if(!t||!n||!o||!c)return;const e=t.cloneNode(!0);t.parentNode?.replaceChild(e,t),e.addEventListener("click",()=>{const s=e.getAttribute("aria-expanded")==="true";e.setAttribute("aria-expanded",s?"false":"true"),e.setAttribute("aria-label",s?"Open Menu":"Close Menu"),n.classList.toggle("hidden"),o.classList.toggle("hidden"),c.classList.toggle("hidden")})}u();document.addEventListener("astro:after-swap",u);</script> <script type="module" src="/_astro/Header.astro_astro_type_script_index_1_lang.BmKM2ACL.js"></script> <script type="module">document.addEventListener("astro:page-load",()=>{document.getElementById("liquid-toggle")?.addEventListener("click",()=>{const t=document.documentElement,e=!(t.getAttribute("data-liquid")==="true");t.setAttribute("data-liquid",e.toString()),localStorage.setItem("liquid-glass",e.toString())})},{once:!1});</script> <script type="module">function o(){const t=document.getElementById("bg-toggle-btn");t&&(t.hasAttribute("data-bound")||(t.setAttribute("data-bound","true"),t.addEventListener("click",()=>{const e=document.documentElement,n=(e.getAttribute("data-bg")||"blob")==="image"?"blob":"image";e.setAttribute("data-bg",n),localStorage.setItem("bg-mode",n)})))}document.addEventListener("astro:page-load",o);</script>  </div> </div> </aside> <main class="flex-1 flex justify-center items-stretch p-4 md:p-8"> <article class="glare-container relative w-full max-w-4xl min-h-[90vh] rounded-3xl p-4 md:p-12 transition-all duration-200 overflow-hidden
-        bg-background/90 dark:bg-background/90 backdrop-blur-xl border border-white/20
+        bg-background/90 dark:bg-background/90 border border-white/20
         group-data-[liquid=true]/html:bg-white/5 dark:group-data-[liquid=true]/html:bg-white/[0.02] 
-      "> <div class="absolute inset-0 z-0 rounded-3xl pointer-events-none transition-all duration-200 ease-out
-          opacity-0 group-data-[liquid=true]/html:opacity-100
-          backdrop-blur-[30px] backdrop-saturate-[150%] 
-          transform-gpu backface-hidden will-change-[opacity,transform]
-          group-data-[liquid=true]/html:bg-white/5 dark:group-data-[liquid=true]/html:bg-white/[0.02]
-          ring-1 ring-transparent"></div> <!-- 
+      "> <div class="absolute inset-0 z-0 rounded-3xl pointer-events-none
+           opacity-0
+           group-data-[liquid=true]/html:opacity-100
+           group-data-[liquid=true]/html:backdrop-blur-[60px]
+           group-data-[liquid=true]/html:backdrop-saturate-[100%]
+           group-data-[liquid=true]/html:bg-white/5
+           dark:group-data-[liquid=true]/html:bg-black/[0.1]
+           group-data-[liquid=true]/html:border-transparent
+           group-data-[liquid=true]/html:shadow-[0_60px_120px_rgba(0,0,0,0.12)]
+           transform-gpu backface-hidden will-change-[opacity,transform]
+           " data-astro-transition-scope="astro-y6zrfi46-2"></div> <!-- 
           开启液态特效时显示的光学层 
           注意：以下所有层都带有 opacity-0 和 group-data-[liquid=true]/html:opacity-100 来受控于你的全局开关
         --> <!-- --- 2. 表面动态眩光层 (Surface Glare) --- 
