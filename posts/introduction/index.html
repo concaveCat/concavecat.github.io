@@ -11,7 +11,7 @@
         }
 
         // 2. Liquid Glass
-        const isLiquid = localStorage.getItem("liquid-glass") !== "false"; 
+        const isLiquid = localStorage.getItem("liquid-glass") !== "true"; 
         targetHtml.classList.add("group/html"); 
         targetHtml.setAttribute("data-liquid", isLiquid ? "true" : "false");
 
