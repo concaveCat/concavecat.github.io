@@ -16,7 +16,7 @@
         targetHtml.setAttribute("data-liquid", isLiquid ? "true" : "false");
 
         // 3. Background
-        const bgMode = localStorage.getItem("bg-mode") || "blob"; 
+        const bgMode = localStorage.getItem("bg-mode") || "image"; 
         targetHtml.setAttribute("data-bg", bgMode);
 
         targetHtml.classList.add('no-transitions');
