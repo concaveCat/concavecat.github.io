@@ -11,7 +11,7 @@
         }
 
         // 2. Liquid Glass
-        const isLiquid = localStorage.getItem("liquid-glass") == "false"; 
+        const isLiquid = localStorage.getItem("liquid-glass") !== "false"; 
         targetHtml.classList.add("group/html"); 
         targetHtml.setAttribute("data-liquid", isLiquid ? "true" : "false");
 
@@ -33,7 +33,7 @@
           applyAllSettings(e.newDocument.documentElement);
         });
       }
-    </script><link rel="stylesheet" href="/_astro/about.C6QeZBrA.css">
+    </script><link rel="stylesheet" href="/_astro/about.uiOb0iw3.css">
 <style>:where([data-astro-image]){object-fit:var(--fit);object-position:var(--pos);height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}
 </style></head> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"> <body class="bg-background dark:bg-background group-data-[liquid=true]/html:bg-zinc-50 dark:group-data-[liquid=true]/html:bg-zinc-950 text-base min-h-screen relative transition-colors duration-500"> <!-- ⭐ 新增：支持双模式切换的高清图片背景层 --> <div class="fixed inset-0 z-[-2] w-full h-full pointer-events-none transition-opacity duration-1000 ease-in-out
               opacity-0 group-data-[bg=image]/html:opacity-100"> <!-- 图片 1：非 Liquid Glass (普通模式) 的壁纸 --> <img src="/lighted.jpg" alt="Normal Background" class="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ease-in-out
@@ -70,7 +70,7 @@ Ggggork
         --> <div class="absolute inset-0 z-0 opacity-0 group-data-[liquid=true]/html:opacity-[0.03] mix-blend-overlay pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div> <!-- 原有的内容层 --> <div class="relative z-10">  <main class="app-layout flex-1"> <section class="pt-8 pb-6"> <h1 class="text-2xl font-[500] sm:text-3xl tracking-wider">浏览笔记</h1>  <ul class="grid gap-6 p-0 m-0 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));"> <li class="list-none m-0 p-0 h-full"> <a href="/posts/introduction/" title="Introduction" class="group glare-container relative overflow-hidden flex flex-row items-start justify-start gap-4 h-full w-full max-w-full rounded-3xl text-center cursor-pointer no-underline 
                       transition-colors transition-transform transition-shadow transition-opacity duration-500 ease-out will-change-transform hover:-translate-y-2
                       /* 原有的兜底样式(在非 liquid 模式下的降级显示) */
-                      border border-border shadow-sm hover:shadow-lg hover:border-accent
+                      border border-border group-data-[liquid=true]/html:border-0 shadow-sm hover:shadow-lg hover:border-accent
                       group-data-[liquid=true]/html:bg-white/5 dark:group-data-[liquid=true]/html:bg-white/[0.02] 
                       group-data-[liquid=true]/html:hover:border-transparent"> <div class="absolute inset-0 z-0 pointer-events-none transition-opacity duration-500 ease-out
                   opacity-0 group-data-[liquid=true]/html:opacity-100

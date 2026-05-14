@@ -11,7 +11,7 @@
         }
 
         // 2. Liquid Glass
-        const isLiquid = localStorage.getItem("liquid-glass") == "false"; 
+        const isLiquid = localStorage.getItem("liquid-glass") !== "false"; 
         targetHtml.classList.add("group/html"); 
         targetHtml.setAttribute("data-liquid", isLiquid ? "true" : "false");
 
@@ -35,7 +35,7 @@
       }
     </script><style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media(prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
 </style>
-<link rel="stylesheet" href="/_astro/about.C6QeZBrA.css">
+<link rel="stylesheet" href="/_astro/about.uiOb0iw3.css">
 <style>:where([data-astro-image]){object-fit:var(--fit);object-position:var(--pos);height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}
 </style></head> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"> <body class="bg-background dark:bg-background group-data-[liquid=true]/html:bg-zinc-50 dark:group-data-[liquid=true]/html:bg-zinc-950 text-base min-h-screen relative transition-colors duration-500"> <!-- ⭐ 新增：支持双模式切换的高清图片背景层 --> <div class="fixed inset-0 z-[-2] w-full h-full pointer-events-none transition-opacity duration-1000 ease-in-out
               opacity-0 group-data-[bg=image]/html:opacity-100"> <!-- 图片 1：非 Liquid Glass (普通模式) 的壁纸 --> <img src="/lighted.jpg" alt="Normal Background" class="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ease-in-out
