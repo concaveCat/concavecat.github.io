@@ -1,0 +1,1 @@
+import{s as t}from"./themeStore.Bp9Tvcp0.js";document.getElementById("ht-btn-light").addEventListener("click",()=>{t("light")});document.getElementById("ht-btn-dark").addEventListener("click",()=>{t("dark")});

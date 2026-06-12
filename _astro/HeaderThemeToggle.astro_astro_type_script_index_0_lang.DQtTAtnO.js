@@ -1,0 +1,1 @@
+import{g as e,s as d}from"./themeStore.Bp9Tvcp0.js";const r=document.getElementById("header-theme-toggle");function n(){const t=e();r.style.background=t==="dark"?"var(--hht-light)":"var(--hht-dark)"}n();r.addEventListener("click",()=>{const o=e()==="dark"?"light":"dark";d(o),n()});
