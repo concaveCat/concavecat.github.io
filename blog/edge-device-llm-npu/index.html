@@ -1,0 +1,509 @@
+<!DOCTYPE html><html lang="zh-CN" data-astro-cid-losip7nv style=""> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="这又是一篇纯codex生成的读书笔记。"><title>边缘设备怎样为LLM选择 NPU：从 Prefill/Decode 到自动设计与芯片验证 | DivergentCatTree</title><link rel="icon" type="image/svg+xml" href="/favicon.svg"><!-- MathJax: client-side LaTeX rendering, handles _ subscripts in markdown --><script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$']],
+          displayMath: [['$$', '$$']],
+          processEscapes: true,
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+        },
+      };
+    </script><script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script><script>
+      (function(){
+        try {
+          var theme = localStorage.getItem('blog-theme');
+          if (!theme) {
+            var match = document.cookie.match(/(?:^|; )blog-theme=([^;]*)/);
+            theme = match ? decodeURIComponent(match[1]) : null;
+          }
+          if (!theme) {
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            theme = prefersDark ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch(e) {}
+      })();
+    </script><script>
+      (function(){
+        try {
+          var savedFont = localStorage.getItem('blog-font-family');
+          if (savedFont === 'default') {
+            document.documentElement.setAttribute('data-font-family', 'default');
+          } else {
+            document.documentElement.setAttribute('data-font-family', 'wenkai');
+            var fontStylesheet = document.createElement('link');
+            fontStylesheet.id = 'lxgw-wenkai-webfont';
+            fontStylesheet.rel = 'stylesheet';
+            fontStylesheet.href = 'https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css';
+            document.head.appendChild(fontStylesheet);
+          }
+        } catch(e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.42DAD5RT.css">
+<style>.tag-pill[data-astro-cid-marlabwr]{transition:all .15s ease}a[data-astro-cid-marlabwr].tag-pill:hover{color:#fff!important;background:#1a1a2e!important}html[data-theme=dark] .tag-pill[data-astro-cid-marlabwr]{color:#e2e8f0!important;border-color:#e2e8f0!important}html[data-theme=dark] a[data-astro-cid-marlabwr].tag-pill:hover{color:#150f2a!important;background:#e2e8f0!important}
+.post[data-astro-cid-jhtkc2rc]{max-width:100%}.header[data-astro-cid-jhtkc2rc]{margin-bottom:var(--space-2xl);padding-bottom:var(--space-xl);border-bottom:1px solid #1a1a2e}.date[data-astro-cid-jhtkc2rc]{display:block;font-family:Google Sans Code,Cascadia Code,monospace;font-size:.75rem;font-weight:400;letter-spacing:.04em;text-transform:uppercase;color:#1a1a2e;margin-bottom:var(--space-md)}.title[data-astro-cid-jhtkc2rc]{margin-bottom:var(--space-md);font-size:2rem;line-height:1.3;font-weight:800;color:#1a1a2e}.body[data-astro-cid-jhtkc2rc]{font-size:1.125rem;line-height:1.8}.tags[data-astro-cid-jhtkc2rc]{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem}.body[data-astro-cid-jhtkc2rc] h2{margin-top:var(--space-2xl);margin-bottom:var(--space-md);font-size:1.5rem;font-weight:800}.body[data-astro-cid-jhtkc2rc] h3{margin-top:var(--space-xl);margin-bottom:var(--space-sm);font-weight:800}.body[data-astro-cid-jhtkc2rc] p{margin-bottom:var(--space-md);line-height:1.8}.body[data-astro-cid-jhtkc2rc] ul,.body[data-astro-cid-jhtkc2rc] ol{margin-bottom:var(--space-md);padding-left:var(--space-xl)}.body[data-astro-cid-jhtkc2rc] li{margin-bottom:var(--space-xs)}.body[data-astro-cid-jhtkc2rc] table{width:100%;margin:var(--space-lg) 0 var(--space-xl);border-collapse:collapse;border-top:2px solid #8a8a8a;border-bottom:2px solid #8a8a8a;text-align:left}.body[data-astro-cid-jhtkc2rc] th,.body[data-astro-cid-jhtkc2rc] td{padding:.85rem 1rem;vertical-align:top;text-align:left}.body[data-astro-cid-jhtkc2rc] thead{border-bottom:1px solid #b5b5b5}.body[data-astro-cid-jhtkc2rc] th{font-weight:650}.body[data-astro-cid-jhtkc2rc] .table-mono{font-family:var(--font-mono)}.body[data-astro-cid-jhtkc2rc] blockquote{border-left:2px solid #1a1a2e;padding-left:var(--space-md);margin:var(--space-lg) 0;color:#555;font-style:italic}.body[data-astro-cid-jhtkc2rc] img{max-width:100%;height:auto;margin:var(--space-lg) 0}.body[data-astro-cid-jhtkc2rc] hr{border:none;border-top:1px solid #1a1a2e;margin:var(--space-2xl) 0}html[data-theme=dark] .header[data-astro-cid-jhtkc2rc]{border-color:#334155}html[data-theme=dark] .date[data-astro-cid-jhtkc2rc]{color:#94a3b8}html[data-theme=dark] .title[data-astro-cid-jhtkc2rc]{color:#e2e8f0}html[data-theme=dark] .body[data-astro-cid-jhtkc2rc] blockquote{color:#94a3b8;border-color:#e2e8f0}html[data-theme=dark] .body[data-astro-cid-jhtkc2rc] hr{border-color:#334155}html[data-theme=dark] .body[data-astro-cid-jhtkc2rc] table{border-color:#94a3b8}html[data-theme=dark] .body[data-astro-cid-jhtkc2rc] thead{border-color:#64748b}
+</style></head> <body data-astro-cid-losip7nv style=""> <header data-astro-cid-losip7nv style=""> <nav aria-label="主导航" class="nav" data-astro-cid-losip7nv style=""> <div class="nav-inner" data-astro-cid-losip7nv style=""> <a href="/" class="nav-logo" data-astro-cid-losip7nv style="">DivergentCatTree</a> <div class="nav-right" data-astro-cid-losip7nv style=""> <ul class="nav-links" data-astro-cid-losip7nv style=""> <li data-astro-cid-losip7nv style=""><a href="/archive" data-astro-cid-losip7nv style="">.Archive</a></li> <li data-astro-cid-losip7nv style=""><a href="/tags" data-astro-cid-losip7nv style="">#Tags</a></li> <li class="font-picker" id="font-picker" data-astro-cid-774bkcky> <button class="font-trigger" id="font-trigger" type="button" aria-label="选择字体" aria-haspopup="menu" aria-expanded="false" aria-controls="font-menu" title="字体：默认" data-astro-cid-774bkcky> <span class="font-mark" aria-hidden="true" data-astro-cid-774bkcky>_Font</span> </button> <div class="font-menu" id="font-menu" role="menu" aria-label="选择字体" hidden data-astro-cid-774bkcky> <button class="font-option" type="button" role="menuitemradio" aria-checked="true" data-font-option="default" data-astro-cid-774bkcky> <span data-astro-cid-774bkcky>默认</span><span class="font-check" aria-hidden="true" data-astro-cid-774bkcky>✓</span> </button> <button class="font-option font-option-wenkai" type="button" role="menuitemradio" aria-checked="false" data-font-option="wenkai" data-astro-cid-774bkcky> <span data-astro-cid-774bkcky>霞鹜文楷</span><span class="font-check" aria-hidden="true" data-astro-cid-774bkcky>✓</span> </button> </div> </li> <script type="module">const u=document.getElementById("font-picker"),a=document.getElementById("font-trigger"),d=document.getElementById("font-menu"),n=Array.from(document.querySelectorAll("[data-font-option]")),l="blog-font-family",m="lxgw-wenkai-webfont",g="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css";if(u&&a&&d){let s=function(){if(document.getElementById(m))return;const e=document.createElement("link");e.id=m,e.rel="stylesheet",e.href=g,document.head.appendChild(e)},c=function(e,o=!1){const t=e==="wenkai"?"wenkai":"default";if(t==="wenkai"?(document.documentElement.dataset.fontFamily="wenkai",s()):document.documentElement.dataset.fontFamily="default",o)try{localStorage.setItem(l,t)}catch{}n.forEach(f=>{const y=f.dataset.fontOption===t;f.setAttribute("aria-checked",String(y))}),a.title=t==="wenkai"?"字体：霞鹜文楷":"字体：默认"},i=function(e){d.hidden=!e,a.setAttribute("aria-expanded",String(e))},r="wenkai";try{r=localStorage.getItem(l)||"wenkai"}catch{}c(r),a.addEventListener("click",()=>{const e=d.hidden;e&&s(),i(e),e&&n.find(o=>o.getAttribute("aria-checked")==="true")?.focus()}),n.forEach(e=>{e.addEventListener("click",()=>{c(e.dataset.fontOption||"default",!0),i(!1),a.focus()})}),d.addEventListener("keydown",e=>{const o=n.indexOf(document.activeElement);let t=o;if(e.key==="ArrowDown")t=(o+1)%n.length;else if(e.key==="ArrowUp")t=(o-1+n.length)%n.length;else if(e.key==="Home")t=0;else if(e.key==="End")t=n.length-1;else return;e.preventDefault(),n[t]?.focus()}),document.addEventListener("pointerdown",e=>{u.contains(e.target)||i(!1)}),document.addEventListener("keydown",e=>{e.key==="Escape"&&!d.hidden&&(i(!1),a.focus())}),window.addEventListener("storage",e=>{e.key===l&&c(e.newValue||"default")})}</script> </ul> <button id="header-theme-toggle" class="theme-btn" style="--hht-light: #ffffff; --hht-dark: #150f2a" aria-label="切换明暗主题" title="切换明暗主题" data-astro-cid-2fujm7wc></button> <script type="module">const n="light",o="blog-theme",c=o;function i(t){document.cookie=`${c}=${encodeURIComponent(t)}; path=/; max-age=31536000; SameSite=Lax`}function u(){const t=document.cookie.match(new RegExp(`(?:^|; )${c}=([^;]*)`));return t?decodeURIComponent(t[1]):null}function r(){if(typeof window>"u"||typeof localStorage>"u")return n;const t=localStorage.getItem(o);if(t)return t;const e=u();return e||n}function m(t){if(!(typeof window>"u")){try{localStorage.setItem(o,t)}catch{}try{i(t)}catch{}document.documentElement.setAttribute("data-theme",t);try{window.dispatchEvent(new CustomEvent("theme-changed",{detail:t}))}catch{}}}const d=document.getElementById("header-theme-toggle");function a(){const t=r();d.style.borderColor=t==="dark"?"var(--hht-light)":"var(--hht-dark)"}a();d.addEventListener("click",()=>{const e=r()==="dark"?"light":"dark";m(e),a()});</script> <button class="nav-toggle" id="navToggle" aria-label="切换菜单" aria-expanded="false" data-astro-cid-losip7nv style=""> <span class="hamburger-line" data-astro-cid-losip7nv style=""></span> <span class="hamburger-line" data-astro-cid-losip7nv style=""></span> <span class="hamburger-line" data-astro-cid-losip7nv style=""></span> </button> </div> </div> <div class="mobile-menu" id="mobileMenu" data-astro-cid-losip7nv style=""> <ul class="mobile-nav-links" data-astro-cid-losip7nv style=""> <li data-astro-cid-losip7nv style=""><a href="/archive" data-astro-cid-losip7nv style="">.Archive</a></li> <li data-astro-cid-losip7nv style=""><a href="/tags" data-astro-cid-losip7nv style="">#Tags</a></li> </ul> </div> </nav> </header> <main data-astro-cid-losip7nv style="">  <article class="post" data-astro-cid-jhtkc2rc> <header class="header" data-astro-cid-jhtkc2rc> <time class="date" datetime="2026-10-12T00:00:00.000Z" data-astro-cid-jhtkc2rc>2026/10/12</time> <h1 class="title" data-astro-cid-jhtkc2rc>边缘设备怎样为LLM选择 NPU：从 Prefill/Decode 到自动设计与芯片验证</h1> <ul class="tags" data-astro-cid-jhtkc2rc> <li data-astro-cid-jhtkc2rc><a href="/tags/LLM" class="tag-pill" style="display:inline-block;font-family:'Google Sans Code',monospace;font-size:0.7rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;color:#1a1a2e;background:transparent;border:1.5px solid #1a1a2e;padding:3px 10px;border-radius:0;line-height:1;" aria-label="查看标签「LLM」的所有文章" data-astro-cid-marlabwr>LLM</a></li><li data-astro-cid-jhtkc2rc><a href="/tags/NPU" class="tag-pill" style="display:inline-block;font-family:'Google Sans Code',monospace;font-size:0.7rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;color:#1a1a2e;background:transparent;border:1.5px solid #1a1a2e;padding:3px 10px;border-radius:0;line-height:1;" aria-label="查看标签「NPU」的所有文章" data-astro-cid-marlabwr>NPU</a></li> </ul> </header> <div class="body" data-astro-cid-jhtkc2rc> <h2 id="摘要">摘要</h2>
+<p>边缘设备上的大语言模型先处理整段输入（Prefill），再逐个生成后续 token（Decode）。Prefill 能让多个 token 共用同一份模型权重；Decode 每生成一个 token，都要再次访问权重，并读取已经积累的注意力缓存（KV）。所以，两阶段对计算能力、外部内存带宽和片上存储的需求不同。</p>
+<p>本文要回答的问题是： 如何按模型的实际需求选择或生成 NPU？ 文章先解释 Prefill/Decode 的流量和计算差异，再讨论移动设备测量、专用芯片、参数化硬件、编译器和自动搜索。本文有三个主要判断。</p>
+<ol>
+<li>模型推理中最拖慢速度的环节会随运行条件变化，例如一次处理多少请求（batch）、上下文有多长、使用什么精度，以及数据怎样流动。因此，压缩权重、减少 KV 缓存、把多个算子合并执行、增加并行计算单元，解决的是不同问题。</li>
+<li>评价一款 NPU，不能只看硬件参数，还要看编译器能不能把模型有效地安排到硬件上。片上 SRAM 的大小会影响一次能暂存多少数据、哪些算子可以合并执行，以及还要从外存搬运多少数据。</li>
+<li>生成硬件、搜索配置和检查设计是不同步骤。评估一项设计时，要追踪同一个候选方案：模型如何映射到硬件、生成了什么电路（RTL）、布局布线后的结果如何，以及芯片实测表现怎样。</li>
+</ol>
+<p>为了让 NPU 更适合大语言模型，已有研究尝试了几条路线：有的让 Prefill 和 Decode 分别采用更合适的处理方式，有的自动搜索硬件配置，还有的把设计推进到布局布线阶段。FlexiGen 证明了 Prefill 和 Decode 可以各用一套更合适的数据流动方式，但它给出的加速比没有把片外内存的搬运开销算进去，所以偏乐观。BinaryLLM 把模型准备、可配置 SoC、多保真搜索和物理实现串成一条设计流程，用不同精细度的评估逐级收敛到可实现的硬件。FSGen 把阶段化 attention、融合与稀疏表达统一在一个设计表示里，并自动生成、编译、测试，最终综合到 RTL。这些工作支持在限定的模型与硬件范围内做集成设计，但还不能证明更大搜索空间中的 Pareto 前沿质量，也没有形成完整的芯片测量反馈闭环。NPX6 的现有资料说明了它面向 Transformer 的优化背景，并给出特定 Llama 部署速度；目前收集到的材料还没有提供足以解释 decoder-only 模型各阶段瓶颈的流量和利用率数据。</p>
+<p><strong>关键词：</strong> decoder-only 大语言模型；Prefill；Decode；边缘 NPU；存储层次；设计空间探索；硬件生成器；编译与验证</p>
+<h2 id="常见词汇解释">常见词汇解释</h2>
+<p>本节先解释后文会反复用到的术语。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>术语</th><th>简单解释</th></tr></thead><tbody><tr><td><span class="table-mono">token</span></td><td>模型处理和生成的文本单位。一个词可能对应一个或多个 token。</td></tr><tr><td><span class="table-mono">Prefill</span></td><td>模型一次处理用户输入的提示词，并为生成第一个 token 做准备。</td></tr><tr><td><span class="table-mono">Decode</span></td><td>模型继续逐个生成 token；每一步都会利用此前的上下文。</td></tr><tr><td><span class="table-mono">KV cache</span></td><td>注意力计算保存的历史 Key/Value 数据。后续生成可以读取它，避免重新计算全部历史。</td></tr><tr><td>权重 / 激活（<span class="table-mono">weight / activation</span>）</td><td>权重是模型训练好后固定下来的参数；激活是每一层计算得到的中间结果，会作为下一层的输入。</td></tr><tr><td>数据复用（<span class="table-mono">data reuse</span>）</td><td>同一份数据在片上多留一段时间，服务更多次计算，从而少从外存重复搬运。</td></tr><tr><td>算术强度（<span class="table-mono">arithmetic intensity</span>）</td><td>每从外存搬运一个字节能完成的运算次数，用来判断一个算子更可能受带宽限制还是计算限制。</td></tr><tr><td><span class="table-mono">GEMM / GEMV</span></td><td>矩阵乘的两种形式：GEMM 是矩阵×矩阵（Prefill 常见，token 多、矩阵大）；GEMV 是矩阵×向量（Decode 常见，每步只有一个 token，很难填满阵列）。</td></tr><tr><td><span class="table-mono">NPU / PE</span></td><td>NPU 是面向神经网络计算的处理器；PE 是其中执行计算的处理单元。</td></tr><tr><td><span class="table-mono">SRAM / LPDDR</span></td><td>SRAM 通常是芯片内的小容量高速存储；LPDDR 是芯片外的主存。两者容量、带宽和访问成本不同。</td></tr><tr><td><span class="table-mono">tile</span>（数据块）</td><td>把大张量切成较小部分来计算，以适应片上存储并复用数据。</td></tr><tr><td><span class="table-mono">compiler</span>（编译器）</td><td>把模型运算转换成某种硬件能执行的指令、数据布局和调度。</td></tr><tr><td><span class="table-mono">DSE</span></td><td>设计空间探索：批量尝试不同硬件配置和映射，再比较它们的性能、功耗和面积。</td></tr><tr><td><span class="table-mono">PPA / Pareto</span> 前沿</td><td>PPA 指功耗、性能和面积。Pareto 前沿上的配置各有取舍，没有另一配置能在所有指标上同时胜过它。</td></tr><tr><td><span class="table-mono">TTFT / TPOT</span></td><td>TTFT 是从请求开始到第一个 token 出现的时间；TPOT 是后续每个 token 的平均生成间隔。</td></tr></tbody></table>
+<h2 id="1-为什么要研究-npu-的自动设计">1 为什么要研究 NPU 的自动设计</h2>
+<p>NPU 的峰值算力高，不一定能让大语言模型生成得快。逐 token 生成时，处理器可能大部分时间都在等待数据。反过来，计算阵列较小的 NPU，如果数据搬运和调度更合适，也可能有更低的延迟。</p>
+<p>设计边缘 NPU 时，关键是决定有限的面积、功耗和外存带宽应该优先投到哪里。这需要先把模型运行时产生的计算量和数据流量算清楚，再将它们和硬件资源对应起来。</p>
+<p>沿这条思路，相关工作通常依次考察四个环节：在现有 NPU 上编译模型，观察计算和数据搬运的瓶颈；把计算阵列、存储、互连和数据流做成可配置的硬件家族（NPU family）；根据模型工作负载和 PPA 约束搜索合适配置；用硬件生成器和软件工具链实现候选配置，再通过验证、物理实现和芯片测量检查预测。</p>
+<p>这四个环节各自解决不同问题。固定芯片上的测量帮助了解需求；参数化生成器决定哪些硬件可以制造；搜索器决定评估哪些候选；编译器决定模型能否有效映射到候选硬件；物理实现则会暴露早期模型没有考虑到的面积、时序和布线代价。</p>
+<p>选择 NPU 时，要看数据能否及时送到计算单元，并在后续计算中重复使用。“及时送到”指数据供应速度要跟得上计算单元的消耗，也就是常说的 data supply 或“供数”：如果 DMA 或外存带宽供不上，再强的计算阵列也只能空等。“重复使用”指同一份数据在片上多留一段时间，服务更多次计算，即 data reuse（数据复用）：如果权重刚算完就被丢弃，下一次还要重新从外存搬到片上，带宽就被白白浪费。两者一个决定会不会等，一个决定要搬多少，都会影响最终的延迟。算力与带宽的比例只能提供一个粗略起点。实际效果还取决于 SRAM 能否容纳所需数据块、互连是否支持共享、精度通路是否合适，以及编译器能否生成相应映射。同一个数学模型经过不同编译后，外存流量可能不同；同一块硬件处理 Prefill 和 Decode 时，也可能需要不同的数据流。</p>
+<p>本文依次讨论工作负载、实测证据、自动搜索和设计验证，并回答几个问题：移动 NPU 上实测到的瓶颈，为什么换一套软件栈或运行条件就会变？专用芯片又是怎么把瓶颈挪走的？硬件生成、映射搜索和架构搜索怎么配合？现有工作能否把编译、验证和实现串成同一条流程，NPX6 又能支持其中哪些实验？</p>
+<p>本文将会用三个层次来判断一项设计工作到底做到了哪一步，看它有没有形成闭环。在下文的讨论中，每项工作会放到对应层次中对照，从而看出它已经完成哪一步、还差哪一步：</p>
+<ul>
+<li><strong>生成与评估闭环：</strong> 同一配置能完成模型映射、硬件生成、测试并得到实现指标。</li>
+<li><strong>物理实现闭环：</strong> 搜索候选继续经过 PnR，并用后端结果检查早期预测。</li>
+<li><strong>芯片测量反馈闭环：</strong> 候选配置经过真实芯片测量，测量结果再用于修正模型或下一轮搜索。</li>
+</ul>
+<p>先在有限的模型和硬件范围内验证这三层闭环，是可行的研究目标。支持任意模型、自动发明新拓扑、保证全局 Pareto 最优，是更强的主张，需要另行验证。</p>
+<h2 id="2-prefill-和-decode-怎样改变硬件资源需求">2 Prefill 和 Decode 怎样改变硬件资源需求</h2>
+<h3 id="21-prefill-和-decode-各自在做什么">2.1 Prefill 和 Decode 各自在做什么</h3>
+<p>大语言模型按 token 顺序生成文本。一次完整推理分为两阶段。Prefill 处理用户输入的整段提示词，把每个 token 都送进模型，一次算完全部位置的表示，并为接下来的生成准备好第一个输出 token。因为提示词里的 token 可以并行处理，Prefill 倾向于把任务组织成较大的矩阵运算。</p>
+<p>Decode 则一个一个生成后续 token。每一步只把一个新 token 送进模型，但模型必须参考此前所有 token 的信息。为了避免重算，历史 token 的 Key 和 Value 会被保存下来，也就是 KV cache。每生成一个新 token，Decode 都要读取整段历史 KV，再把新 token 的 Key/Value 追加进去。</p>
+<p>两阶段的差别不只是“一次处理多、一次处理少”。Prefill 的每个 token 都要参与全部注意力计算，矩阵越大，权重复用越充分；Decode 每一步只有很少的新 token，但每次都要把全部权重和不断变长的 KV 读一遍。因此两者的工作量结构不同：Prefill 更多地受计算和片上数据复用约束，Decode 更多地受权重与 KV 的读取速度约束。本文后面的定量分析都要建立在这一区别上。</p>
+<h3 id="22-prefill-能复用权重decode-会反复读取权重">2.2 Prefill 能复用权重，Decode 会反复读取权重</h3>
+<p>Prefill 一次处理整段提示词，Decode 通常每步只生成一个新 token，所以两阶段重复使用模型权重的机会不同。先看最简单的单请求情形，也就是一次只有一个用户提问。设批大小（batch size）为 $B$，单请求就是 $B=1$。设提示词长度为 $S$，线性层的权重矩阵为 $W\in\mathbb{R}^{K\times M}$，其中 $K$ 是输入维度、$M$ 是输出维度；把输入写成 $X\in\mathbb{R}^{N\times K}$，$N$ 是本次参与计算的 token 数。Prefill 把这 $S$ 个 token 一次送入，参与计算的 token 数 $N=S$；Decode 每一步只处理一个新生成的 token，所以 $N=1$。</p>
+<p>在服务器上，为了分摊权重读取、提高吞吐，会把多个用户的请求攒成一批一起算，设批大小为 $B$。此时 Prefill 的 $N=BS$，Decode 的 $N=B$。后文保留一般化的 $B$，$B=1$ 就对应单用户边缘场景。若一次乘法和一次加法记作两个运算，线性层需要的运算量是：</p>
+<p>$$
+F_{\mathrm{linear}}=2NKM,\qquad
+F_{\mathrm{prefill}}=2BSKM,\qquad
+F_{\mathrm{decode}}=2BKM.
+$$</p>
+<p>一次线性层计算涉及三类数据：权重、输入和输出。假设每个权重元素占 $b_w$ 字节，每个输入元素占 $b_a$ 字节，每个输出元素占 $b_o$ 字节。如果忽略片上缓存，并且每类数据只从外存搬一次，那么三类数据的总量是：</p>
+<p>$$
+Q_{\mathrm{linear}}^{\mathrm{ideal}}
+=KM b_w+NK b_a+NM b_o.
+$$</p>
+<p>式中 $KM$ 是权重元素个数，$NK$ 是输入元素个数，$NM$ 是输出元素个数。</p>
+<p>上述公式是理想情况。真实硬件的片上存储往往放不下全部数据块，于是会重复读取权重或激活；多个算子融合执行时，又可能省去部分输出写回，实际搬运量于是和理想值有出入。</p>
+<p>在这个线性层里，权重是外存访问的主要部分。只看权重这一项，可以算出算术强度（arithmetic intensity），也就是每从外存读取一个字节的权重，能做多少次运算：</p>
+<p>$$
+I_{\mathrm{linear}}\approx\frac{2N}{b_w}.
+$$</p>
+<p>以 NPX6 部署 Llama 3.2 3B 为例，可以直观看出这个指标的作用[11]。Decode 每一步都要读一遍权重，权重是外存访问的主要部分。如果只把权重从 FP16 换成 W4A16，运算量不变而每个权重占的字节数减少到约四分之一，$2N/b_w$ 因此上升，权重读取所需的时间也随之缩短。模型卡里生成速度从 FP16 的 8.76 提升到 W4A16 的 17.46 tokens/s，方向与此一致。</p>
+<p>但速度并未恰好翻四倍。权重格式变了，激活、KV、解量化和编译路径不一定同比例变化，实际生成速度还受这些因素和带宽上限共同限制。所以这里的算术强度只能说明“权重读得少了、更划算了”，不能直接当成端到端加速比（详细讨论见 3.3 节）。</p>
+<p>Prefill 能让一份权重服务多个输入 token，而小 batch 的 Decode 每一步能共享权重的 token 较少，很难做到这一点。因此，大计算阵列可能适合较大的 Prefill 矩阵，却未必能加快单个请求的 Decode。Decode 中，运算量和权重字节都会随着模型大小增加，模型变大本身不会提高这类线性层的运算/字节比。</p>
+<p>增加 batch 能提高权重复用，但也会增加每一步需要访问的 KV。多个请求共用权重，可以提高权重复用；但每个请求都有自己的历史 KV，batch 增大时 KV 访问也会增加。等待更多请求凑成一批，还可能增加响应延迟；单用户的边缘设备也未必有足够并发。</p>
+<p>既然增加 batch 有这么多制约，另一种思路是让 Decode 一次处理更多 token。Speculative decoding（推测解码）就是这样：先用一个便宜的小模型（草稿模型）猜出若干候选 token，再让大模型一次并行检查这几个候选，接受其中正确的部分。它看起来像是“免费增加 batch”，但实际上还引入了草稿模型的额外开销、接受率高低和回退重算等问题，收益并不稳定。</p>
+<h3 id="23-权重为什么通常不能全放进片上-sram">2.3 权重为什么通常不能全放进片上 SRAM</h3>
+<p>一种自然的想法是：既然 Decode 每步都要读权重，那把所有权重放进片上 SRAM，让计算单元就地取用不就行了？现实中这条路很难走通，原因在于容量差距和存储层级的分工。</p>
+<p><strong>容量差着数量级。</strong> 以本文反复提到的 Llama 3.2 3B 为例，FP16 权重约 6 GB，W4 量化后仍有约 1.5 GB；而边缘 NPU 的片上 SRAM 通常只有几 MB（手机 NPU 多在 1–16 MB）。两者相差两个数量级，权重无法常驻。只有参数量在几亿以下、或采用二值/三值等极端量化的模型，权重才有希望留在片上——这正是 4.1 节 Slim-Llama 一类工作压缩权重的动机之一。</p>
+<p><strong>即使放得下，也不划算。</strong> SRAM 的比特密度远低于 DRAM，把 GB 级权重塞进片上会让芯片面积和成本急剧上升；大片 SRAM 即使不被访问也在漏电，对移动设备续航不利；此外片上 SRAM 的 bank 数和端口数有限，容量够大并不等于同一时刻能完成所有读写。</p>
+<p><strong>数据中心加速器是另一套解法。</strong> GPU 和 TPU 同样把权重放在外存（HBM），靠极高的 HBM 带宽缓解反复读取，片上 SRAM 仍只作缓存。少数专用架构选择把权重留在片上：Groq 的 LPU 每芯片约 230 MB SRAM，靠大量芯片级联支撑，代价是芯片数量、成本和可支持的模型规模都受限。还有一类晶圆级方案，用整片晶圆换取带宽：Cerebras 的 WSE 把大容量 SRAM 直接做进晶圆，靠片内超高带宽避免外存访问；Tesla 的 Dojo 虽也是晶圆级集成，却仍以 HBM 承载主要权重，更接近“大算力加高带宽外存”。这些方案都靠牺牲芯片面积、良率和成本换取带宽，依赖数据中心的供电与散热，难以照搬到功耗和面积都紧张的手机 NPU。</p>
+<p><strong>边缘设备的现实分工。</strong> 主流移动 NPU 把 SRAM 当暂存区：当前 tile 需要的权重块、激活和部分和放在片上，完整权重和 KV 留在 LPDDR，按需 DMA 搬入。权重复用次数越高，每次从 LPDDR 搬的越少，SRAM 的收益越大。Decode 小 batch 时复用低、权重又装不下，于是每步都要重读——这就是本文反复强调的外存带宽和供数问题。这也解释了为什么还有工作把计算搬到存储旁边（CIM/PIM，见 4.3 节），以及为什么手机 NPU 的可用带宽还会受 SoC 内其他处理单元竞争的影响。</p>
+<h3 id="24-attention-和-kv-会随上下文一起变长">2.4 Attention 和 KV 会随上下文一起变长</h3>
+<p>提示词越长，注意力部分的增长就越快。原因是：每个 token 都要和它之前的每个 token 计算相关性，两两配对。比如第 3 个 token 要和前 2 个比，第 $S$ 个要和前 $S-1$ 个比，全部加起来大约是 $S(S+1)/2$ 次，所以运算量随 $S$ 的平方增长；而 projection 和 FFN（前馈网络）大致只随 token 数线性增长。长度一大，注意力就在 Prefill 的总工作量中占主导。一个 decoder block 的运算量几乎全部来自 QKV/输出 projection、attention 和 FFN 这几块；其余算子（RMSNorm、RoPE、激活函数等）运算量占比很小，但会引入额外的访存和同步。</p>
+<p>朴素实现还要把这些中间结果（score 和 probability 矩阵）整块存下来，占用空间也随 $S^2$ 增长，可能大到放不进片上 SRAM。FlashAttention 的做法是不把整个大矩阵一次算完，而是把提示词切成小块，一块一块地算，边算边把中间结果整理到最终输出里。这样就不必在片上或外存保存那个 $S\times S$ 的大矩阵，省下大量存储和搬运。但它该做的两两比较一次也没少，计算量并没有下降[1]。所以，长提示词一方面增加权重复用，另一方面也增加 attention 在 Prefill 总工作量中的比例。只看线性层，无法判断整个 Prefill 的瓶颈。短提示词时瓶颈主要在线性层，长提示词时会转到 attention，只看其中一块都不够。</p>
+<p>Decode 每生成一个 token，都要读取历史 KV；上下文越长，读取的数据越多。设模型有 $L$ 层、$H_{kv}$ 个 KV heads，每个 head 的维度为 $d_h$，每个 KV 元素占 $b_{kv}$ 字节。普通 dense attention 每一步要读取历史 token 的 KV。若历史长度为 $n$，暂不计当前 token 的局部暂存、量化元数据和重复加载，整个模型一次历史 KV 读取量约为：</p>
+<p>$$
+Q_{\mathrm{KV,read}}(n)\approx
+2BLnH_{kv}d_h b_{kv}.
+$$</p>
+<p>Decode 每一步都要读取历史 KV，并产生当前 token 的新 KV。系数 2 是因为每个历史位置保存 Key 和 Value。每生成一个 token，新增 KV 的有效数据量约为 $2BLH_{kv}d_hb_{kv}$；这些数据是否马上写到外存，取决于存储策略。生成越久，历史长度 $n$ 越大，因此单独报告一个平均 TPOT 会掩盖短上下文和长上下文之间的差异。</p>
+<p>模型需要读取的数据量，不一定等于内存接口实际搬运的数据量。对齐、padding、分块缓存、页式布局和重复读取都可能增加实际字节数。GQA（Grouped-Query Attention，分组查询注意力）让多个 query heads 共用较少的 KV heads[2]，因此能减少 KV 的存储需求。不过，query heads 仍要和历史中的每个位置做注意力计算，这部分运算量不会跟着 KV head 数一起减少。</p>
+<p>GQA 省下的是 KV 的存储量，但不一定省外存带宽。从算法上看，一组 query heads 共用一份 K/V，这份 K/V 从外存读一次就够。但能不能真的只读一次，取决于这一整块 K/V 能否在片上待到组内所有 query head 都用完。问题在于 K/V 沿历史长度增长得很快：设一组有 $H_{kv}$ 个 KV head、每个 head 维度为 $d_h$、每个元素占 $b_{kv}$ 字节，则每个历史 token 每层就要 $2H_{kv}d_hb_{kv}$ 字节；代入常见取值（$H_{kv}=8$、$d_h=128$、$b_{kv}=2$）约为 4 KB。层数一多、历史一长，总量就达到数百 MB。而手机 NPU 的片上 SRAM 通常只有几 MB，连一层、一组的一段 KV 都可能放不下，只能把历史切成小块分批搬入。若分块方式没让组内共享在片内完成，同一份 KV 就会被反复从外存搬进来。所以只报告 KV head 数变少，不足以说明外存带宽也降了。</p>
+<p>KV 和权重的读取量会随上下文此消彼长：上下文越长、KV 越多；权重被压缩得越小，它占的比例也越小。因此长上下文场景下，优化重点需要从权重读取转向 KV（如 GQA、KV 量化和 KV 筛选）。不过这两个量只是字节数，具体哪个先成为瓶颈，还取决于两者是否共用同一条外存通道、带宽如何分配，以及 attention 的其他开销。</p>
+<h3 id="25-sram-容量会改变数据搬运量">2.5 SRAM 容量会改变数据搬运量</h3>
+<p>SRAM 容量决定哪些数据能留在芯片里重复使用，因此会影响外存读写量。外部带宽表示每秒能搬运多少数据；片上 SRAM 容量则影响哪些数据能暂存在芯片内、供后续计算重复使用。两者不是同一项资源，但数据流会把它们联系起来。</p>
+<p>分配给某个映射的 SRAM，至少要容得下三部分：当前正在使用的数据（输入、权重块、部分和与中间结果）、用于重叠搬运的双缓冲区，以及需要长期保存的状态（如 KV）。三者之和不能超过分配到的容量；超过这一约束的映射根本无法执行。此外，各存储 bank 和读写端口还可能有自己的限制——总容量够大，不代表多个读写操作能在同一时刻顺利完成。Scratchpad（片上暂存区）通常由软件显式管理，所以也不能简单用普通缓存的“命中率”来描述。</p>
+<p>SRAM 不够大时，不同算子会用不同方式增加外存访问。Prefill 的线性层可能要在处理不同 token 数据块时重复读取权重；FFN 可能把扩大的中间激活写回外存；attention 可能无法同时保留 query groups 需要的 K/V 数据块。扩大 SRAM 可能减少外存流量。</p>
+<p>回到 2.4 节提到的 FlashAttention[1]：它把注意力矩阵切成小块、边算边归约，靠“控制中间数据的存活和搬运”来减少片上存储和写回。这种方法在边缘 NPU 上同样值得借鉴——把 $S\times S$ 的大矩阵拆成能放进 SRAM 的小块，避免把它写回 LPDDR。但分块并非没有代价：块与块之间要用在线 softmax（online softmax）传递并合并归一化统计量，这带来额外的归约和同步，而且存在串行依赖、不易并行。如果硬件的归约单元少或同步开销大，这部分代价可能超过省下的写回收益。此外，SRAM 的端口数和编译器能否生成合适的分块调度，也会影响结果。</p>
+<p>和 FlashAttention 类似，还有两种做法能减少外存搬运。一种是按 head 流式执行：注意力有多个 head，不让它们全部同时处理，而是一个 head 算完就释放它占的片上空间，再算下一个，这样每个 head 的中间数据只需一小块 SRAM。另一种是融合 FFN：FFN 会把维度先扩大再缩回，产生一个很大的中间激活；把它的几个步骤合并执行，就不用把这个大中间结果写回外存再读进来。两者都通过调整执行顺序来减少搬运。</p>
+<p>但融合也有代价：它会同时把更多中间数据压在片上，可能占满寄存器、降低并行度，或让编译器更难调度。所以是否融合，要比一比省下的写回和新增的片上资源开销。</p>
+<p>算力、带宽和 SRAM 容量会通过数据映射相互影响。容量决定哪些映射可行，映射决定要搬运多少数据，数据量再与有效带宽一起决定访存时间。DSE 如果忽略这层关系，可能会选出算力/带宽比例看起来不错、却无法实现预期数据复用的 SRAM 配置。</p>
+<h3 id="26-roofline-能估算边界但不能单独预测实际速度">2.6 Roofline 能估算边界，但不能单独预测实际速度</h3>
+<p>Roofline 是一种用来判断算子“卡在计算还是卡在访存”的分析模型[37]。它的核心就是 2.2 节引入的算术强度 $I$：设 $F$ 是运算量、$Q$ 是搬运的字节数，则 $I=F/Q$，也就是每搬运一个字节能完成多少运算。</p>
+<p>这个模型可以把可达到的性能画成一条曲线：横轴是算术强度，纵轴是计算速度。曲线像一个屋顶（roofline）——在左边算术强度低的地方，速度被内存带宽压住，随算术强度线性上升；在右边算术强度高的地方，速度被计算能力封顶，变成一条水平线。屋顶的拐点，正好是带宽和计算能力势均力敌的位置。</p>
+<p>它取两条边中的较小值：带宽决定的性能上界（$\beta_{\mathrm{eff}}I$）和计算能力上界（$P_{\mathrm{compute}}$）。一个算子能达到的速度上界就是两者中较小的那个，两条边的交点则是拐点 $I_{\mathrm{crit}}$。对数据流、精度和计数口径都已经确定的算子：</p>
+<p>$$
+P_{\mathrm{attainable}}\leq\min(P_{\mathrm{compute}},\ \beta_{\mathrm{eff}}I),
+\qquad
+I_{\mathrm{crit}}=\frac{P_{\mathrm{compute}}}{\beta_{\mathrm{eff}}}.
+$$</p>
+<p>式中符号含义如下：</p>
+<ul>
+<li>$P_{\mathrm{attainable}}$：该算子实际能达到的计算速度上界；</li>
+<li>$P_{\mathrm{compute}}$：硬件的计算能力（峰值运算速度）；</li>
+<li>$\beta_{\mathrm{eff}}$：有效内存带宽；</li>
+<li>$\beta_{\mathrm{eff}}I$：由内存带宽决定的性能上界；</li>
+<li>$I_{\mathrm{crit}}$：两条边的交点；算术强度低于它时受带宽限制，高于它时受计算能力限制。</li>
+</ul>
+<p>代入 $P_{\mathrm{compute}}$ 时，精度口径必须和算子一致。同一块 NPU 用更小的位宽往往能同时算更多次，所以标注的峰值算力会随精度变化（例如 INT4 的 TOPS 通常高于 INT8）；此外，把一次 MAC 记作 1 个还是 2 个操作、是否把稀疏折算成 dense-equivalent，也会让同一个硬件报出不同的数字。这些口径不一致时，算出的 $I_{\mathrm{crit}}$ 和瓶颈判断都会失真。</p>
+<p>把计算、各级存储和数据依赖放在一起，可以估算一个子图至少要花多少时间。思路是：这个子图同时受几种资源限制——矩阵单元、向量/非线性单元、片外内存（DRAM）、片上存储（SRAM）和片上网络（NoC）——其中最慢的那一项决定了时间下限。若假设它们能完全并行重叠，理想时间就是这些时间里的最大值：</p>
+<p>$$
+T_{\mathrm{lb}}=\max\left(
+\frac{F_{\mathrm{mat}}}{P_{\mathrm{mat}}},
+\frac{F_{\mathrm{vec}}}{P_{\mathrm{vec}}},
+\frac{Q_{\mathrm{DRAM}}}{\beta_{\mathrm{DRAM}}},
+\frac{Q_{\mathrm{SRAM}}}{\beta_{\mathrm{SRAM}}},
+\frac{Q_{\mathrm{NoC}}}{\beta_{\mathrm{NoC}}},
+T_{\mathrm{dependency}}\right).
+$$</p>
+<p>每个分子是这一项的工作量（运算量 $F$ 或搬运字节数 $Q$），分母是对应的速度（吞吐率 $P$ 或带宽 $\beta$），两者相除就是该项单独需要的时间：</p>
+<ul>
+<li>$F_{\mathrm{mat}}/P_{\mathrm{mat}}$：矩阵运算的时间；$F_{\mathrm{vec}}/P_{\mathrm{vec}}$：向量/非线性运算的时间；</li>
+<li>$Q_{\mathrm{DRAM}}/\beta_{\mathrm{DRAM}}$ 等三项：数据在各层存储和互连上搬运的时间；</li>
+<li>$T_{\mathrm{dependency}}$：数据依赖和控制流程串起来的关键路径——即使资源都够快，也必须等前一步算完。</li>
+</ul>
+<p>取最大值的前提是“计算和搬运能充分重叠”，所以这是个理想下界，实际时间只会更长。反过来说，也不能把这些时间简单相加：如果调度、launch、DMA 和计算确实重叠了，相加就重复计算了。多算子融合后，要结合执行依赖图（DAG）或 trace，确认哪些步骤真的重叠、哪些是串行的。</p>
+<p>单 token Decode 偏带宽、较长 Prefill 偏计算，这个判断可以用 Roofline 的交界具体化：它相当于只比较 $T_{\mathrm{lb}}$ 里“矩阵计算”和“片外访存”两项，忽略 SRAM、NoC 和依赖。假设目标精度下的持续计算吞吐为 8 TOP/s，持续外存带宽为 16 GB/s，则 $I_{\mathrm{crit}}=500$ ops/byte。对于权重占主要流量、每份权重只读一次的 4 bit 线性层，$I\approx4N$，所以理想交界约在 $N=125$。单 token Decode 的 $N=1$ 远低于这个位置，更像是带宽限制；较长 Prefill 可能超过交界。增加计算吞吐而保持带宽不变，会把交界推到更大的 $N$，也就是需要更多 token 才能充分利用阵列。</p>
+<h3 id="27-利用率不等于实际性能">2.7 利用率不等于实际性能</h3>
+<p>阵列利用率通常指一段时间内，阵列中真正在工作的 PE（乘加单元）占全部 PE 的比例：</p>
+<p>$$
+\text{利用率}=\frac{\text{实际执行的 MAC 数}}{\text{阵列 PE 总数}\times\text{总周期数}}
+$$</p>
+<p>它由硬件规模和编译器生成的执行图共同决定：同一块硬件换一种分块或调度，利用率就可能不同。这个数字看似直观，但同一个百分比往往来自两种不同的原因，解决办法也不一样。</p>
+<ul>
+<li><strong>形状不匹配</strong>：矩阵太小（例如 GEMV，矩阵乘向量）时塞不满二维阵列，部分计算位置闲置。问题出在阵列尺寸与矩阵形状不匹配。</li>
+<li><strong>供数不足（data supply）</strong>：阵列本可填满，却因等待 SRAM 或 DMA 送数而空转。问题出在数据供给。</li>
+</ul>
+<p>把两种情况合并成一个平均利用率，就无法判断应调整阵列形状还是存储系统。因此非线性单元、DMA 和 LPDDR 的利用率也宜分别统计。</p>
+<p>此外，利用率高不等于执行速度快。稀疏计算跳过部分操作，也可能降低某项利用率指标而提高实际性能。报告利用率时应同时给出绝对吞吐、延迟、面积和能耗，单看百分比容易被误导。</p>
+<h2 id="3-为什么不同移动-npu-测试会得出不同结论">3 为什么不同移动 NPU 测试会得出不同结论</h2>
+<h3 id="31-软件栈会改变硬件实际执行的任务">3.1 软件栈会改变硬件实际执行的任务</h3>
+<p>移动设备上的研究显示，交给硬件执行的计算图可能与原始模型图不同。这里的计算图，就是把模型的运算表示成“算子节点 + 数据流”的图；编译器为了适配硬件，会改变它的结构。Fast On-device LLM Inference with NPUs 针对固定 shape（固定张量尺寸）的图、量化格式与硬件支持不匹配等问题，使用 prompt 分块、异构处理 outlier（离群值）和 block 调度来改善执行[6]。也就是说，编译器和 runtime 可以重新编排任务：将变长的输入切分为硬件支持的固定尺寸；将数值敏感的部分换用合适的精度交由 CPU 或 GPU 处理；其余张量交给 NPU。这种做法省去了为每种长度重新编译的麻烦，但也引入新的开销——多张图之间需要互相等待，切分产生了边界，不同单元之间还要同步。切分越细，调度越灵活，但启动和搬运次数也越多，块较小时这些开销不易摊薄。</p>
+<p>另一类优化针对数据供给。SoC 外存的理论峰值带宽，不等于单个处理器实际能用到的带宽[5]。论文测到，单个处理单元不一定能用满 SoC 的外存带宽；多个后端并发时，总有效带宽可能提高。原因可能包括请求并行度、访问模式和后端接口限制。因此，处理器并非越多越快：共享接口饱和后，继续并发只会导致争用。异构执行只有在确实还有空闲资源可加利用（例如某个后端未占满的外存带宽），且这份收益大于同步和数据一致性开销时才划算。</p>
+<p>优化可以从两处入手：减少无效工作，或提高现有硬件的数据供给能力。第一种是修改编译后的工作量、精度和调度，减少无效执行；第二种是组织并行访问，让现有硬件能拿到更多数据。</p>
+<p>在固定 NPU 上做软件优化，还能反过来提示硬件生成器应该支持哪些功能。例如，如果软件优化中发现，一组 query head 明明共用一份 KV，硬件却仍各自去读（因为没有分发的通路），就说明硬件需要增加一条共享通路，把这份 KV 一次读入后广播给组内所有 query head；如果量化格式转换本身很耗时，就说明硬件应支持这种格式或内置低成本的转换单元；如果搬运灵活度不够而导致供数不足，就说明需要一个更灵活的 DMA。不过，单靠软件实验无法计算新增硬件的面积和功耗，也不能直接指出最优配置。</p>
+<h3 id="32-阶段排名为什么相反">3.2 阶段排名为什么相反</h3>
+<p>两篇基于高通骁龙平台的研究，对 Prefill 和 Decode 的阶段排名给出了相反结论。它们用的硬件相近，分歧主要来自软件路径。</p>
+<p>Li 等在 Snapdragon 8 Gen 3 / Hexagon v75 上测试发现，Prefill 阶段 NPU 比 6 核 CPU 慢 1.27–1.62 倍。论文把原因归于软件：Hexagon 后端的 HVX 实现尚未像 CPU 路径那样经过充分优化；片上紧耦合内存只有 8 MiB，限制了大矩阵的分块效率；部分算子（如 FLASH_ATTN_EXT）回退到 CPU，还额外带来跨后端缓存同步和重排开销[7]。</p>
+<p>Cai 等则在四台骁龙手机上（涵盖 V75、V79、V81）横向测试了五个框架。结果一致显示，Prefill 排名取决于框架而非硬件：同一台 OnePlus 15、同一个 Qwen2.5-1.5B 模型，NPU 上用 GENIE 的 Prefill 达到 1463.7 tokens/s，MNN 为 700.9，而 llama.cpp 只有 115.1[8]。也就是说，在优化良好的 GENIE/QNN 路径上，NPU 的 Prefill 大幅领先；而在 llama.cpp 路径上，NPU 甚至不如 CPU——后者恰是 Li 等用的那类路径。两篇结论相反，主要是因为测的不是同一条软件路径。</p>
+<p>框架之间为什么差距这么大？Cai 等归结为三点。第一是分工范围：GENIE 把整张图都放在 NPU 上，MNN 却把自注意力留在 CPU、只把前馈等模块放到 NPU；后者的“NPU plugin”时间占了端到端的 98.94%，其中包含大量 CPU–NPU 远程调用和内存布局转换开销，抵消了 NPU 的计算优势[8]。第二是算子规模：QNN 在大 token 宽度（$N=256$）上的 MatMul 效率比 llama.cpp 高 27–31 倍，但在 Decode 那样的小尺度（$N\le 4$）上两者相当；Prefill 恰好是大 $N$ 的 GEMM，所以优势只在 Prefill 显现[8]。第三是激活量化支持程度，不同框架对 W4A16 这类方案的支持并不一致。Li 等那边的差异则来自 Hexagon 后端的 HVX 实现不如 CPU 路径成熟、片上 VTCM 只有 8 MiB，以及部分算子回退到 CPU[7]。</p>
+<p>两篇在 Decode 上的判断则一致：NPU 并不占优。Li 等发现，NPU 在核心 GEMV 算子上比 CPU 快 1.55–1.67 倍，但端到端只快 1.05–1.20 倍，差距来自调度开销——Decode 每生成一个 token 要调用数百个轻量算子（如 RMSNorm、加法），这些算子本身只有微秒级，但每次调用都要付一次 CPU–NPU 往返通信，实际耗时是算子计算时间的 8–22 倍；通信开销在 Prefill 阶段只占 0.2–3.2%，在 Decode 阶段却升到 9.9–13.0%[7]。Cai 等则指出，NPU 用固定大 context 的静态图执行 Decode，使每步成本由最大窗口而非实际生成长度决定，因此 CPU 通常反而最快[8]。</p>
+<p>另外，阶段对比还受评测口径影响：阶段服务指标的定义和 batch 的统计方式不同，会直接影响结论[9]。综合来看，同一阶段的速度排名不能只看“NPU 还是 CPU”，还要看跑的是哪条软件路径。</p>
+<h3 id="33-npx6-需要在生成任务上重新验证">3.3 NPX6 需要在生成任务上重新验证</h3>
+<p>NPX6 的研究主要讨论怎样让原本面向 CNN 的 NPU 更适合 Transformer[10]。论文报告的 60%–65% 利用率针对视觉 Transformer，尚未覆盖 decoder-only 模型逐 token 生成时反复读取权重和增长中的 KV 扫描，因此不能直接推广到 Llama Decode。</p>
+<p>Renesas 模型卡报告，NPX6 运行 Llama 3.2 3B 时，FP16 为 8.76 tokens/s，W4A16 为 17.46 tokens/s[11]。但模型卡没有给出阶段计时和流量，无法判断速度变化由哪个瓶颈造成：W4A16 主要改变权重表示，而激活、KV、解量化和编译路径不一定同比例变化，所以不能只按权重位宽比推算生成速度。</p>
+<p>现有 NPX6 / X5H 是固定平台，可以测编译器和 runtime 的映射与资源瓶颈，但不能改变已制造芯片的 PE 数或 SRAM 容量，因此不能用它探索新的微架构。它更直接的作用是提供真实部署场景和软件约束：为视觉 Transformer 做的资源适配是否适合小矩阵 Decode，模型卡中的速度究竟受权重、KV、阵列形状还是软件边界限制，都需要在生成任务上重新验证。</p>
+<h2 id="4-各类加速技术如何转移瓶颈">4 各类加速技术如何转移瓶颈</h2>
+<p>本文关注的主线是边缘 NPU：以 PE 阵列加片上 SRAM 暂存、从 LPDDR 流式搬运为主要形态。除此之外，还有一批技术在别的层面缓解同一类瓶颈——权重复用不足、外存访问过多、算子比例随负载变化。本节逐一分析这些技术各自改变了什么，以及瓶颈如何转移。其中 CIM/PIM 把计算放到存储附近，形态上与边缘 NPU 不同，主要面向宏级或小模型的近存计算；之所以讨论它，是因为它的权衡（片上容量、宏外接口、数据装载）同样适用于理解边缘 NPU 的存储设计。与此同时，固定芯片的实测只能说明某种机制的效果，不能直接给出设计变量，因此本节末也会说明这些结论的边界。</p>
+<h3 id="41-压缩权重后瓶颈可能转到别处">4.1 压缩权重后，瓶颈可能转到别处</h3>
+<p>压缩权重是指用比 FP16 更少的比特表示模型参数，从而减少权重的存储量和读取字节数。最直接的做法是降低位宽（通常称量化），例如从 FP16 降到 INT8、INT4，甚至二值/三值；此外还可以利用稀疏、权重共享等方式压缩。压缩后模型精度可能下降，因此通常要检查任务质量是否达标。</p>
+<p>压缩权重会先减少 Decode 从外存读取的权重数据。如果 Decode 主要在等外存权重，降低权重位宽就能缩短读取时间，也会给 KV 留出更多带宽。一旦权重不再是主要限制，下一个瓶颈就会浮现：压缩存储的权重在使用前需要解码（解量化），这一步本身也消耗时间和带宽；权重与激活精度不同时，混合精度的计算和格式转换会带来额外开销；softmax、激活函数等非线性运算不经过矩阵单元，可能成为新的瓶颈；而 Decode 每步都要扫描历史 KV，权重读取减少后，KV 读取会接替成为主要负担。</p>
+<p>这些新瓶颈并非只能逐个处理。一款 ISSCC 2025 芯片就针对上面三个方向分别设计，再让它们协同工作[12]：用活跃位分配格式（ABAF）压缩权重和 KV，只保留少量重要通道的精度，不重要通道的值限制为只有 1–3 个 “1” 位、并用组合数直接记录它们的位置，不需要码本，使权重量减少 75.7%、KV 减少 66.1%；用 CAMP-PE 把一批激活按指数相近分成小组、组内当作纯 INT 运算，于是不必把 INT 权重解量化成 FP（那样会多耗 4.6 倍功耗），把混合精度 GEMM 转化成更省电的 INT GEMM，MAC 功耗降低 4.87 倍；用泰勒展开把指数、三角函数等非线性函数改写成多项式求和，而多项式求和的结构和 GEMM 相同，同一个 PE 就能顺带完成，不必再等专门的非线性单元（SFU），PE 利用率提高 22.3%，也省去了线性与非线性内核之间的数据传输。三项合起来，在 LLaMA-2-7B 上分别带来 2.91×、1.92×、1.31× 的能效提升，平均能效达 49.5 TOPS/W，峰值 88.36 TOPS/W，是把压缩、数值通路和算子流水线放在同一设计里协同处理的一个例子。</p>
+<p>当权重压到二值或三值后，读取开销已接近极限，稀疏性和加法单元本身就成了新的优化方向。Slim-Llama 正是从这两处入手：它把 LLM 的读权重开销压得更低，整个处理器在 0.58V、25MHz 下只耗 4.69mW[13]。它的基本做法是：二值权重每个元素只取 +1 或 −1，与 8-bit 激活相乘时，结果不是 $+A$ 就是 $-A$，所以乘法实际上只是“决定加还是减”。进一步，若把几个这样的小结果（例如 3 个激活对应的 $\pm A_1 \pm A_2 \pm A_3$）预先算好、存进查找表（LUT），每次只需按权重符号查表取值、再累加即可。但二值权重全是 ±1、三值的 0 也不到 35%，没有足够的零可跳，无法用常规的稀疏计算省功耗，查找表每次都得取结果。论文的办法是找“长得像”的权重向量：如果若干个输出通道的权重向量只有少数几位符号不同，就先完整算一个作为基准，其余通道在基准结果上做几次加减即可得到，不必从头再算。本来不相干的“相似性”就这样变成了“可以少算的部分”——相当于人为制造出 67.4%（二值）、62.3%（三值）的稀疏。</p>
+<p>针对不同稀疏度，它还让同一个查找表切换两种模式：稀疏低于 38% 时用 LUT 模式，直接取预存结果；高于 38% 时改为缓冲模式，只取非零权重对应的激活。再加上把相似索引排在一起处理以减少加法树的位翻转，能效又分别提升 36% 和 21.3%。最后用 4/8/16 bit 混合激活精度：单独用 8 bit 会使困惑度上升 4.09，改用混合精度只上升 0.39，却能降低能耗。整体能效比此前的最优结果高 4.59 倍。</p>
+<h3 id="42-让同一块硬件适应不同算子">4.2 让同一块硬件适应不同算子</h3>
+<p>一个 decoder block 里既有矩阵乘，也有非线性和其他算子，它们的比例会随 token 长度和所处阶段变化。如果硬件把固定的资源分给每种运算，负载一变就会出现一部分单元空闲、另一部分排队。下面两篇工作分别用两种办法让同一块硬件适应这种变化：LLM-CIM 让同一个阵列在矩阵乘模式和非线性模式之间切换；VitaLLM 则让两个核心分工并复用数据通路。</p>
+<p>LLM-CIM 是一个 CIM 宏，它针对 LLM 的三种特点各做了一项改造[14]。</p>
+<p>第一，改变查找表里存什么、以及谁来用它。数字 CIM 的乘加可以按二进制位拆成若干“部分和”的叠加，再用一张小表代替加法。传统做法是按输入位拆：两个权重 $W_0,W_1$ 的和 $W_0+W_1$ 是固定的，可以离线算好写进表里，运行时用输入位 $I_0[i],I_1[i]$ 作索引去查，查出来就是那一部分的部分和。但表里存的是各通道自己的权重和，所以每个输出通道都得配一张表和一个预算和的加法器，表的复用次数还受输入位宽限制（4 bit 时只能复用 4 次）。LLM-CIM 把思路倒过来：表里改存与通道无关的输入和 $I_0+I_1$，用权重位作索引去查。因为一行里所有权重都乘以同一个输入，这张表能被整行的所有输出通道共用，一行只需一张，加法器也从每通道一个减到一个，复用次数从 4 提到 24。代价是输入随时在变，表内容得动态更新，不能像权重和那样离线写好。</p>
+<p>第二，LLM 的输入里有少数幅度特别大的离群通道（outlier），必须用更高的位宽（如 INT8）计算，普通通道用 INT4 就够；两种位宽混在一起会使每个含离群值的子阵列多花一个周期。它把离群值和普通值分别聚合，使子阵列同一时刻要么全算普通值、要么全算离群值，节省了这部分时间。</p>
+<p>第三，非线性函数（如倒数平方根、除法、指数）用线性插值近似，但输入范围太宽、需要的分段参数太多，片上存不下；它把输入归一化到 [1,2) 或 [0,1)，只需少数几个参数，于是同一个宏可以在矩阵乘模式和非线性模式之间重配置，按当前工作比例分配资源。</p>
+<p>这三种改造的动机是相同的：token 长度一变，矩阵乘和非线性运算的比例也会变；如果硬件把资源固定分配给某一种运算，就会出现一端等待另一端。让同一块硬件重新分配用途，可以提高利用率。</p>
+<p>与 LLM-CIM 把同一块阵列重配置为不同模式的做法不同，VitaLLM 用的是分工复用的思路。VitaLLM 面向 BitNet b1.58（三值权重、8-bit 激活）在边缘设备上的推理[17]。它用两个计算核心分工，但不重复造阵列：一个无乘法器的 TINT 核处理所有三值–INT 投影（Q/K/V、输出投影和 FFN），因为三值权重只有 {−1,0,+1}，它与激活相乘的结果只能是 $0$、$+a$、$-a$，用一个小选择器即可完成，不需要乘法器；另一个 BoothFlex 核复用 radix-4 Booth 数据通路，同时承担 INT8×INT8 的 attention 和三值–INT 运算。这样同一套阵列能兼顾两种精度，提高利用率。</p>
+<p>它还加入了一个预测性稀疏注意力机制：用 leading-one 代理和免比较的 top-K 选择器，从缓存的 $M$ 个 token 中挑出 $K$ 个候选，把 KV 读取减少约 $1-K/M$，只对这 $K$ 个做精确 attention，且不需要重新训练。系统层面用 head 级流水：一个 head 在 TINT 上算完 Q/K/V，立即在 BoothFlex 上做 attention，同时 TINT 开始下一个 head 的 Q/K/V，从而缩短中间数据的等待和存储。</p>
+<p>该芯片在 16nm、1GHz/0.8V 下，decode 达 72.46 tokens/s，prefill（64 个 token）0.88s，面积 0.214 mm²、片上存储 120 KB，可完成 BitNet b1.58 (3B) 推理。</p>
+<p>这两种做法都靠缩短中间数据在片上的存活时间来节省 SRAM 空间。但要注意，全局归约或量化 scale 等操作必须等完整向量到达，会形成融合无法消除的同步点；编译器需要理解这些依赖，才能把理论流水图变成合法执行。</p>
+<h3 id="43-cimpim-把计算放到离数据更近的位置">4.3 CIM/PIM 把计算放到离数据更近的位置</h3>
+<p>CIM（存内计算）和 PIM（存内处理）都把计算逻辑放进存储阵列，让数据不必先搬出存储再算，从而减少搬运。传统架构中计算单元和存储分离，数据要在两者之间来回搬，这正是本文反复提到的搬运瓶颈。CIM 通常指在 SRAM 阵列内做计算，PIM 通常指把计算放进 DRAM 主存，二者常被合称近存计算。</p>
+<p>这种做法把计算放到离存储更近的地方，目的是减少数据搬运。如果整套工作数据都能留在靠近计算单元的存储里，外存瓶颈就可能转变成片上带宽、局部端口和数据更新的成本。CIM/PIM 并不是同一种方案，不同形态的容量和接口差别很大：片上 SRAM-CIM 速度快，但容量只有几 MB，只能放小模型或部分权重；DRAM-PIM 能装下整个模型，但 DRAM 工艺限制使计算单元的面积和功耗代价很高；堆叠存储（如 HBM-PIM）带宽可达 TB/s 级，但成本高，主要用在数据中心。因此不能笼统地说“PIM 能提高带宽”，要看具体形态。</p>
+<p>P³-LLM 选择了 DRAM-PIM，并按 Prefill/Decode 分工：Prefill 的计算密集 GEMM 交给 NPU，Decode 的访存密集 GEMV 交给带宽更高的 PIM[18]。它用混合数值格式对不同操作数量化，并设计能处理这些低精度格式的 PIM 计算单元——因为 DRAM 工艺下晶体管密度低，高精度计算单元会占很大面积和功耗，降低精度才能在同面积下提高吞吐。此外还用算子融合减少运行时的解量化开销。相比已有的 HBM-PIM、Ecco 和 Pimba，它分别取得 4.9×、2.0×、3.4× 的加速。这里值得注意的是：它把本文第 2 节说的 Prefill/Decode 差异直接映射成了两种硬件分工。</p>
+<p>EdgeCIM 也是 CIM 路线，但重点在硬软件协同和设计空间探索[19]。它用一个 65nm 的 CIM 宏配上基于 tile 的映射策略，平衡流水线各段；再用模拟器搜索配置，针对 4B 以下的小语言模型找出延迟与能耗的 Pareto 前沿。在 LLaMA3.2-1B 上，其吞吐比 NVIDIA Orin Nano 高 7.3×、能效高 49.59×。不过这类结论建立在模拟器的假设上：如果模拟器没有准确描述宏外数据交换、片外带宽和数值转换，得到的前沿只在这些假设下成立。</p>
+<p>CIM 路线也有共同的限制。CIM 宏的行列数在制造时固定，而 LLM 各层矩阵尺寸千变万化，两者几乎不会恰好相等，只能把大矩阵切成小块、逐块计算再累加；矩阵小于阵列时，部分单元闲置。更关键的是，CIM 的权重需要常驻在阵列里，而阵列容量有限，整模型权重放不下，仍需反复从外存加载，削弱了“存内计算省搬运”的初衷。这也是 CIM 主要适合宏级或小模型、而不能直接充当整体边缘 NPU 方案的原因。</p>
+<h3 id="44-稀疏moe-和推测解码会改变工作量">4.4 稀疏、MoE 和推测解码会改变工作量</h3>
+<p>SMoLPU 处理的是混合专家（MoE）与推测解码（SD）同时使用的情形[15]。推理类任务（如思维链）会把生成序列拉长，增加外存访问；而把组量化、通道剪枝、MoE 和推测解码叠加起来，理论上最多可省 89.7% 的外存能耗。但这些技术相互拧着：组量化加通道剪枝会减少组内的 INT 乘加、增加组间的 FP 乘加，形成 INT 与 FP 并存的异构负载；MoE 又有冗余专家被反复取用、专家路由随输入变化等问题。如果只按平均乘加数分配资源，就会浪费在专家装载和比例失衡上。</p>
+<p>SMoLPU 用三项设计应对。一是 token 自适应的专家精简（TaER）：预先剔除不会用到的专家、并安排专家的加载顺序，减少冗余取数，使 Prefill 和 Decode 的能效分别提高 2.3× 和 4.2×。二是自适应 offload 的 NPU-CIM 核（ANC）：面对随时变化的 INT/FP 比例，把密集的组交给省能的 CIM、把稀疏的组交给空闲的 NPU，使端到端速度提高 3.3×。三是基于 DRAM 的可重配置 LUT-CIM：用查表代替加法，支持变化的输入尺寸，使加法树的功耗和面积分别降低 36.8% 和 26.3%。该芯片用 28nm 工艺制造，面积 20.25 mm²，每 token 每参数能耗 7.8 fJ，比之前的最优结果低 43.5%。</p>
+<p>MoE 推理速度还会受专家路由、专家复用、草稿 token 接受率和上下文长度影响。因此，NPU family 搜索应包含工作负载的分布和尾部情况，不能只使用一层平均数据。稀疏 attention 也要区分两种情况：跳过原本就是零的运算，可以保持原有计算结果；窗口化、top-K 或预测剪枝则可能改变模型结果。两类方法需要不同的正确性和质量检查。若近似方法没有报告任务质量，其加速不能全算作更高效地执行了同一计算。</p>
+<h3 id="45-芯片论文的数字不能直接比较或换算">4.5 芯片论文的数字不能直接比较或换算</h3>
+<p>这些芯片研究能帮我们找出值得拿去搜索的设计变量；但它们的工作负载和评估口径各不相同，所以不宜直接按 TOPS/W 排名。T-REX 针对外存访问（EMA）占比高和利用率低这两个问题[16]。它把每个权重矩阵分解为一个跨所有层共享的稠密矩阵 $W_S$ 和一个每层独有的高度稀疏矩阵 $W_D$：运行时 $W_S$ 只需预加载一次，大幅减少外存读取，再对两者分别压缩进一步降低流量。它还用动态 batching：检测输入长度，若比最大长度小 2×（4×），就同时处理 2（4）个输入，减少参数加载次数并提高利用率。此外，它用双向可访问的寄存器文件（TRF）支持矩阵按行或按列读写，省去多次访问 SRAM 的开销。在 16nm FinFET 上，它把 EMA 降低 31–65.9×、利用率提高 1.2–3.4×。但它测的是四类 Transformer 工作负载，不是普通 dense decoder-only Llama 的统一阶段基准，其复用和存储组织方法可以借鉴，结论仍需针对目标生成任务重新建立流量账本。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>干预方式</th><th>首先改变什么</th><th>什么情况下可能有效</th><th>之后可能出现的限制</th></tr></thead><tbody><tr><td>压缩权重、低位宽计算</td><td>权重字节数、MAC 成本</td><td>模型质量达标，硬件支持该格式</td><td>KV、解量化、混合精度累加</td></tr><tr><td>GQA、KV 量化、KV 筛选</td><td>KV 容量和读取字节</td><td>共享实现有效；近似方法通过质量检查</td><td>projection/FFN 权重、筛选和 scale 元数据</td></tr><tr><td>算子融合、head 级流水</td><td>中间写回、数据存活时间、边界开销</td><td>buffer 和端口足够，归约依赖允许重叠</td><td>局部存储争用、流水线不平衡</td></tr><tr><td>动态数据流、可复用 MAC/SFU</td><td>PE 的空间和时间利用率</td><td>重映射收益大于控制和互连成本</td><td>外存供数、时序与布线</td></tr><tr><td>CIM/PIM、异构 NPU</td><td>搬运距离、局部计算/带宽比例</td><td>数据驻留和装载适合工作集</td><td>宏外接口、容量、异构协调</td></tr></tbody></table>
+<p>VitaLLM 报告 KV 流量减少 54.86 倍，但对应的 MHA 吞吐提高 26.31%[17]。减少字节只会直接缩短相关搬运时间，权重访问、其他计算和新增筛选仍然占时间。用简化的串行 Amdahl 模型，若某项开销原本占总时间比例 $f$，把它单独加速 $r$ 倍，总加速为 $1/[(1-f)+f/r]$。这个式子只说明局部加速的上限。VitaLLM 同时改变计算和重叠关系，不能用这两个报告数字反推出 KV 延迟在总时间中的唯一占比。真正需要问的是，减少的流量是否位于关键路径，而不是要求流量降幅和吞吐增幅相等。</p>
+<p>训练加速研究能补充硬件设计方法，但它的结果要针对推理任务重新评估。TRETA 和 Hecaton 分别研究 Transformer 训练加速和可扩展 chiplet 训练系统[33,34]。训练中的大矩阵并行、反向传播、激活保存和梯度通信，与 Decode 每步访问权重和 KV 的复用结构不一样。前者有助于构造多精度、层次存储和通信的配置空间；训练吞吐或 NoP 优化结果仍要针对推理重新评估。两类任务都说明数据驻留和调度会影响资源需求，但最佳配置取决于具体执行过程。</p>
+<h2 id="5-怎样从参数化-npu-得到可编译的硬件家族">5 怎样从参数化 NPU 得到可编译的硬件家族</h2>
+<p>第 4 节讨论了各类技术改变了什么。要真正把一种设计做出来，还要经过一条链条：选定硬件参数、生成硬件、让编译器把模型映射上去，再评估这个“硬件加映射”的组合。这条链条上的环节常被混为一谈，例如把“硬件生成”和“模型编译”当成一回事，或只谈硬件规格而不说模型怎么映射。本节依次说明这些环节各自负责什么、需要对齐哪些信息。以 CGRA 为代表的更灵活硬件也放在这里讨论，因为它对编译和实现提出了额外要求。</p>
+<h3 id="51-设计时改硬件运行时改用法">5.1 设计时改硬件，运行时改用法</h3>
+<p>获得不同硬件有两种时机。一种是在设计阶段：预先做一个“硬件家族”，其中的 PE 数量、连接方式、支持精度和存储总量都是参数，选定一组参数就生成一个芯片版本，称为参数化硬件家族。它改变的是面积和资源上限，一个家族可以只生成固定数据流，也可以生成支持多种模式的阵列。另一种是在运行阶段：芯片已经做好，通过改变 tile 大小、循环顺序、运算模式或子阵列分配来适配当前负载，称为运行时重配置，它只能在已有资源内调整。</p>
+<p>商用与开源都有参数化家族的例子。NPX6 就是一个可配置的 IP 家族：MAC 数量和存储选项可按需选择，供应商选定配置后流片成具体型号（如 X5H）；而已经流片的 X5H 只能算固定平台，只能在它上面做运行时重配置。学术上最典型的是 Gemmini，它把脉动阵列的尺寸、数据类型和存储都做成参数，可以生成不同配置[27]。</p>
+<p>商用 NPU 工具也为设计阶段的硬件配置提供了参考。AMD 的经典 DPU 流程在平台构建阶段开放架构档位、存储资源、计算并行度和核数等配置，并在模型编译阶段通过 arch.json 指定与部署硬件一致的目标架构；更换 DPU 架构需要重新编译模型[20]。旧版 DNNDK 还提供任务优先级和 DPU 核亲和性接口，支持运行时任务分配。上述文档体现了已有 IP 家族内的参数化配置和部署能力。Expedera 的公开资料则说明，其依据模型用例、PPA 目标和部署需求定制 Origin IP，配套提供编译、估算、调度和分析工具，并支持多作业及 packet 级跨层执行[21]。</p>
+<p>Prefill 和 Decode 的形状不同，因此同一 NPU 可能需要不同的运行时配置。如果硬件长期服务两个阶段，把全部面积都放在适合大 GEMM 的固定二维阵列上，Decode 可能有很多单元空闲。支持不同的空间展开或计算模式，可以让已有资源适应不同形状。它也会增加选择网络、控制和验证状态。如果工作负载很稳定，固定数据流可能更高效；如果阶段和形状变化大，适当增加灵活性可能更值得。搜索空间应把这个取舍作为设计变量，而不是预设越可编程越好。</p>
+<h3 id="52-硬件生成hls-和模型编译不是一回事">5.2 硬件生成、HLS 和模型编译不是一回事</h3>
+<p>这三个词常在论文里混用，但各自产出不同。硬件生成指根据一组硬件参数自动产出硬件设计（如 RTL），产出的是硬件本身。HLS（高层次综合）指把 C/C++ 等高级语言写的程序综合成硬件，也是产出硬件，只是输入是程序而非参数。模型编译指把模型的计算图翻译成能在已有硬件上执行的指令和数据布局，产出的是“怎么在这块硬件上跑”，不是硬件。前两者都在造硬件，后者是在既有硬件上运行模型，因此不能混为一谈。</p>
+<p>接下来三个工具分别代表不同层次的任务。Gemmini 不只是参数化阵列，而是一个全栈的 DNN 加速器生成器：从灵活的架构模板生成 ASIC 加速器，同时配上编程栈和包含共享资源的完整 SoC，使设计者能评估阵列之外的成本——SoC 资源竞争、操作系统开销、编程栈的低效[27]。NNgen 从模型数据流直接构造专用 Verilog/IP，展示模型结构如何决定硬件怎样计算和搬运[36]。ScaleHLS 则基于 MLIR 的多级中间表示做高层综合：因为 HLS 设计本身带层级结构，不同优化问题适合在不同抽象层解决，它据此提供一套优化库和 DSE 引擎，自动生成优化的 HLS 实现[28]。三者分别侧重可配置硬件系统、模型专用硬件，以及程序变换与综合；可以互补，但输入输出并不相同。</p>
+<p>AutoDNNchip 和 AutoAI2C 展示了传统 DNN 的模型描述、硬件搜索和实现生成可以放进同一个流程[25,26]。两者结构相同，都包含两个组件：一个 Chip Predictor，用基于图的加速器表示来预测能耗、吞吐、延迟和面积；一个 Chip Builder，根据目标指标反复调用 Predictor，自动探索设计空间（IP 选择、block 配置、资源平衡等），最后生成可综合的 RTL 和部署代码。预测误差在 10% 以内，生成的 FPGA/ASIC 加速器相比人工基线最高提升 3.86×（AutoDNNchip）、在同资源下吞吐最高提升 2.12×或延迟降低 2.4×（AutoAI2C）。与只优化某个 kernel 的做法不同，它们让搜索和生成共享同一套结构化的设计空间。</p>
+<p>不过这两个工具针对的是 CNN/DNN：它们的验证对象是 ResNet、MobileNet 这类模型，输入形状固定，每次前向也彼此独立。而 LLM 推理多了几件事——要持续维护 KV 状态、序列长度随生成不断增长、Prefill 和 Decode 两阶段张量形状差异很大，还依赖低位宽量化和复杂非线性。AutoDNNchip 和 AutoAI2C 的框架方法（组合 IP、平衡资源）可以借鉴，但不能只把它们跑的一批 CNN 换成 LLM，就认为已经支持这些新需求。</p>
+<h3 id="53-flexigen-说明阵列能计算和数据能送到要分别检查">5.3 FlexiGen 说明“阵列能计算”和“数据能送到”要分别检查</h3>
+<p>FlexiGen 想同时解决已有硬件生成器的三个问题。一是它们通常只支持单一数据流或单一数据类型，难以适应多样的工作负载；二是它们只优化阵列本身，忽略了系统级效应，比如片上存储带宽和存储体争用；三是定制映射和配置很麻烦，编程复杂[22]。它的核心是“访问与执行解耦”的架构：计算阵列负责运算，数据访问交给单独的引擎。具体地，VersaCore 生成支持多种空间数据流和多精度的阵列；DataMaestro 生成支持任意时间数据流和 N 维访问的数据流引擎；再配上一套统一编程接口和定制 kernel 库，根据映射生成配置。这样一来，阵列如何分配运算、存储如何按时供数，可以在同一系统中分开设计、再对接起来。</p>
+<p>FlexiGen 分别评估了 LLaMA 3.2 3B 的 Prefill 和 Decode，分析阵列映射与片上供数的影响。结果显示，刚性的单一空间数据流难以充分利用大阵列处理 Decode；系统级评估还发现，时间数据流和片上 bank contention（存储体争用）也会影响有效性能。这支持第 2 节的分析：把运算分配给 PE 只是第一步，还得保证数据能及时送到。</p>
+<p>FlexiGen 用简化模型代表片外 DRAM，而且报告时间不包含 DRAM 与片上暂存区之间的 DMA 搬运（PDF 第 10 页脚注）。因此，它能说明两阶段数据流和片上供数的作用，但不能单独确定 LPDDR 限制下的端到端收益。</p>
+<h3 id="54-评估时要同时指定硬件和映射">5.4 评估时要同时指定硬件和映射</h3>
+<p>这里的“映射”指把计算摆到硬件上的具体方式：数据切成多大的块、按什么顺序遍历、每块放在哪个存储层级、各步怎样重叠。同一块硬件、同一个模型，换一种映射，搬运量、利用率和延迟都会不同。</p>
+<p>因此，评估一个架构不能只报 PE 数量和 SRAM 大小，还要给出至少一种由编译器生成的映射。否则会得出错误结论：某个架构看起来性能差，可能只是没找到合适的映射，而不是硬件本身不行；反过来，模型预测出的高速度，也可能依赖编译器根本无法生成的理想调度，实测时达不到。</p>
+<p>Timeloop 和 MAESTRO 都把数据如何映射到硬件作为性能评估的一部分[38,40]。它们把评估对象从单独的硬件规格扩展到“硬件加映射”。Accelergy 把组件属性、动作次数和单次动作能耗联系起来[39]，提供从流量或活动统计估算能耗的方法。</p>
+<p>LLMCompass 是一个针对 LLM 的硬件评估框架[3]。它包含一个自动寻找性能最优映射的 mapper 和一个基于面积的成本模型，既能给出延迟，也能帮助设计者比较不同硬件方案的成本。它的延迟由性能模型预测得出；与实测相比，平均误差为：各类算子 10.9%、整模型推理 4.1%。相比传统 DNN 的评估工具，它专门为 LLM 的算子、存储和互连建立抽象，并对结果做了校准。不过，它的算子集合还没覆盖 LLM 的全部情况：要接进硬件生成器，还需要补充动态 KV 长度、量化转换、归约和串行控制这些描述。</p>
+<h3 id="55-cgra-更灵活也会增加编译和实现成本">5.5 CGRA 更灵活，也会增加编译和实现成本</h3>
+<p>CGRA 是由可编程计算单元、互连和本地存储组成的阵列，能运行形状多变的矩阵和非线性计算。但它能执行哪些操作，仍由具体功能单元、连接网络和配置存储决定，并非什么都能跑。更丰富的互连可能减少映射失败，也会增加选择器、布线、功耗和时序压力；互连较少可以降低成本，却可能使并行运算串行执行。</p>
+<p>一篇工作基于 R-Blocks 异构 CGRA，把 LLM 推理的性能建模和映射做成端到端流程[31]。它在原有 CGRA 上扩展了浮点运算，并为 FP32 和 INT8 两种 Llama2 提供完整的编译与映射，还给出解析式性能模型，周期估计平均误差 0.9%；在 22nm 下，它的峰值性能功耗比比 REVAMP 高 1.8×、比 CFEACT 高 2.8×。PICACHU 关注另一类运算：LLM 里的非线性函数（如 softmax、激活）会显著拉高推理延迟，且很难用固定精度高效处理；它把 CGRA 做成可插拔的加速器，配上定制算法和专用编译工具链，专门处理这些非线性运算，而不是重做全部矩阵数据通路，相对已有最优加速器提速 1.86× 和 1.55×[32]。ML-CGRA 则解决映射这一环：它基于 MLIR 搭建端到端的编译框架，利用高层模型的语义信息把模型映射到 CGRA，在 4×4 和 8×8 的 CGRA 上分别比传统方法快 3.15× 和 6.02×[42]。</p>
+<p>CGRA 和 NPU 生成器都需要描述可执行操作、存储和互连，并为它们生成合法映射。评价时要计入重配置、配置数据搬运和映射失败，还要比较增加的灵活性是否值得额外面积。仅说“采用类 CGRA”还无法判断它是否适合某个 workload。</p>
+<h2 id="6-自动搜索在找什么怎样判断结果可靠">6 自动搜索在找什么，怎样判断结果可靠</h2>
+<h3 id="61-配置搜索和架构发现不是同一个问题">6.1 配置搜索和架构发现不是同一个问题</h3>
+<p>自动搜索听起来是一件事，其实包含不同类型。先要分清：它只是调整已有硬件的参数，还是会连结构一起改。</p>
+<p>前者叫配置搜索，它从现有模板生成候选，能直接复用已有编译器来映射。后者叫架构发现，它还会改变连接方式和功能单元，因此必须额外验证新结构是否真能执行目标操作。无论哪种，搜索算法都只能从生成器允许的候选中挑选：扩大候选范围可能找到更好的设计，也会增加评估成本和无效候选。</p>
+<p>自动搜索要同时决定三件事：硬件长什么样（硬件配置 $A$，如 PE 数和 SRAM 大小）、模型怎么摆到硬件上（映射 $m$，包括融合和调度）、用什么精度（量化或近似方案 $q$）。模型和请求的分布 $\mathcal W$ 则代表给定的工作负载。</p>
+<p>搜索的目标是让一组指标尽量小：TTFT（首 token 时间）、TPOT（每 token 时间）、$E_{\mathrm{token}}$（每 token 能耗）和面积：</p>
+<p>$$
+\min_{A,m,q}\ \mathbf f(A,m,q;\mathcal W)
+=\bigl(\mathrm{TTFT},\mathrm{TPOT},E_{\mathrm{token}},\mathrm{Area}\bigr).
+$$</p>
+<p>但搜索不能随便选，必须满足几个约束：</p>
+<p>$$
+\begin{aligned}
+\mathrm{s.t.}\quad
+&#x26;\mathrm{Quality}(q)\geq Q_{\min},\
+&#x26;m\in\mathcal M_{\mathrm{compiler}}(A,q),\
+&#x26;\mathrm{MemoryFeasible}(A,m,\mathcal W),\
+&#x26;\mathrm{Correct}(A,m,q),\
+&#x26;\mathrm{Timing/PowerFeasible}(A).
+\end{aligned}
+$$</p>
+<p>逐条说，这些约束是：量化后的模型质量不能低于门槛 $Q_{\min}$；映射必须落在编译器在给定硬件和精度下真正能生成的集合 $\mathcal M_{\mathrm{compiler}}$ 里，不能假设一个无法实现的理想调度；这个映射的内存需求要在硬件上装得下；功能要正确；硬件本身的时序和功耗要满足要求。</p>
+<p>搜索目标要按具体应用来定，不必每项研究都同时优化所有指标。平均功率和每 token 能量也不是一回事：功率降了但执行时间大幅延长，未必就更省能。编译成功和功能正确通常当作候选的硬约束；整个流程的通过率则是工具可靠性的统计结果，不能和单个候选的连续 PPA 指标混为一谈。</p>
+<p>候选映射必须能被目标硬件和编译器支持。架构搜索和映射搜索在数学上相互嵌套，在工程上也会共用编译器。比较两个架构时，应给它们合理且一致的映射优化预算，否则性能差异可能来自调度器，而非硬件。搜索失败也应区分硬件结构不可行、编译器暂不支持和评估超时，因为它们需要不同的改进。</p>
+<h3 id="62-binaryllm-和-fsgen-推进了不同环节">6.2 BinaryLLM 和 FSGen 推进了不同环节</h3>
+<p>上一节把搜索写成“在约束下找最优配置”。但一个候选最终能不能变成可评估、可实现的硬件，还取决于工具链把生成、编译、测试和实现接到了哪一步。下面两篇工作分别推进了这条链条的不同环节：BinaryLLM 从模型一直做到物理实现，并在此过程中用多保真方法改善估计；FSGen 则把 attention 的设计空间一直接到 RTL 生成和综合。</p>
+<p>BinaryLLM 面向二值 LLM，提供了一条从模型到芯片的敏捷设计流程[41]。它先把模型二值化（权重变成 +1/−1），再设计一个专门算二值网络的脉动阵列加速器，把它和一颗可配置的 RISC-V 处理器组成完整 SoC，最后在 ASAP7 工艺上做综合、布局布线和功耗分析。它不只是设计一种低比特 PE：早期模型评估成本低、后端结果成本高，论文用多保真方法在不同精度等级的评估结果之间学习映射关系，改善后期指标（如 PPA）的估计。</p>
+<p>FSGen 用统一的设计表示描述 attention、融合、稀疏和数据流，并把它接到硬件生成环节[24]。它的 attention 表达区分 Prefill 和 Decode，还包含 GQA、循环顺序、tile、中间缓存和多级稀疏；使用时只需给出三样配置：attention 的类型、数据流（循环顺序、tiling、cache 大小）和稀疏方式（位置、稀疏集合、tiling）。它据此用 Chisel 生成硬件描述，转成 Verilog，再做 TSMC 40 nm 综合；配套的编译器把模型各层翻译成硬件可执行的 kernel，测试平台既能测单个 kernel（如 attention、FFN），也能测完整层。这样，设计空间里假设的复用方式能直接对应到生成的硬件，评估也更可信。它还把网络切成多个阶段，并按各阶段的输入、输出速率选择不同的 tile 大小和队列深度，让各段速度匹配——否则上游产数据太慢，下游 PE 就只能干等，流水线平衡能用较少资源换得。它另外用一套基于“基本单元”的功耗模型估算能耗：因为功耗还取决于数据是否频繁变化，所以稀疏网络的耗电不能只按 MAC 数量计算。不过，FSGen 的搜索主要针对单层 MHA，带宽和存储容量在实验中是固定的；它搜索了数据流和稀疏组织，却没有同时开放外部带宽和容量，因此只覆盖了算力、带宽和容量联合匹配问题的一部分。即使支持模型和 full-layer 测试，单层 attention 的 FoM 也不能直接当作整模型 TTFT/TPOT。</p>
+<h3 id="63-llm-可以帮助搜索也可以是被加速的模型">6.3 LLM 可以帮助搜索，也可以是被加速的模型</h3>
+<p>近几年，LLM 也被用作硬件设计本身的工具。它可以参与搜索、生成候选或 RTL，也可能只是被加速的对象。要注意区分这两种角色：当 LLM 被用来提建议、写代码时，它是设计里的“助手”；当它是推理任务的主体时，它才是本文前面讨论的被加速模型。本节讨论前者，也就是用 LLM 辅助硬件设计和搜索的几条路线。</p>
+<p>一项研究把 LLM 引入贝叶斯优化（BO），用于硬件设计空间探索[23]。它不直接把 LLM 当成优化器，而是以可控的方式让 LLM 引导 BO：用一条概率式的“信任日程”和基于代理模型的过滤，决定何时、以多强的程度采纳 LLM 的建议。具体来说，当早期数据少、代理模型不准时，多听 LLM；随着评估数据积累，逐步转回纯数据驱动的搜索。它在参数化数字基带生成器和脉动阵列 NPU 上比代表性 BO 基线收敛更快、Pareto 前沿更好。这里的 LLM 只是搜索工具，研究目标并不是 decoder-only 推理。</p>
+<p>引入领域知识能帮搜索器避开明显不平衡的配置，例如阵列越大就越需要足够的存储和 DMA 供数；但先验也可能排除依赖特殊复用或异构结构的好设计。不过这类辅助并非总能全面改善：在它的表格里，$\lambda=0.4$ 的 ADRS 反而高于 $\lambda=0$，尽管 HV 更高，说明覆盖范围和距离这两个指标可以不同向，要分开看。</p>
+<p>TPU-Gen 和 SA-DS 探索了用 LLM 生成阵列 RTL 或设计数据集[29,30]。TPU-Gen 能从高层规格生成 Verilog，并走通 RTL 到 GDSII 的流程；SA-DS 则提供一个基于 Gemmini 模板的数据集，供 LLM 生成硬件时参考。SA-DS 本身是一个数据集而非搜索流程：因为当时没有可用的设计指标评估器，生成数据时固定了 memory 参数，每个固定值下有六种变体；PPA 验证被留给后续使用它的框架（用第三方工具做 RTL 到 GDSII 的评估）。</p>
+<h3 id="64-pareto-前沿要说明在哪个范围内成立">6.4 Pareto 前沿要说明在哪个范围内成立</h3>
+<p>Pareto 最优只对明确界定的候选范围成立：在一个给定候选集里，如果没有另一个设计能在所有目标上都不差、且至少一个更好，它就是非支配点。因此有限空间里的 Pareto 最优结论本身有效，但必须说明候选从哪里来、评估了多少点、用什么误差。搜索结果受三类误差影响：硬件生成器的表示范围、搜索预算、性能评估准确度；更好的优化器主要减少搜索误差，扩展生成器主要扩大表示范围，用综合、PnR 或芯片测量校准主要提高评估准确度，改善其中一项不会自动解决另外两项。</p>
+<p>简化模型、综合和布局布线还可能给候选排出不同名次：更大的 crossbar 在解析模型里可能减少搬运，PnR 后却可能因布线和时序降低频率；更大的 SRAM 会减少外存流量，也会增加访问和静态功耗。所以除了报告搜索到多少候选，还要说明多少在后期仍处于非支配状态、预测误差多大。比较前沿时可以看 hypervolume（非支配解覆盖的目标空间体积）、到参考集合的距离、覆盖率，以及不同随机种子和预算下的波动；如果参考集合本身也是抽样或模型生成的，就只能称为经验前沿。LLMShare 和 CASCADE 也在做资源与需求的匹配，但它们分别面向推理服务系统和 chiplet 封装，目标层级和候选单位不同，比较前要先对齐边界[4,35]。</p>
+<h2 id="7-编译验证和物理实现怎样连成一条流程">7 编译、验证和物理实现怎样连成一条流程</h2>
+<h3 id="71-工具之间要统一解释">7.1 工具之间要统一解释</h3>
+<p>要让性能模型、编译器、RTL 和芯片测量共同描述同一项设计，先得让它们对三件事有一致说法：跑的是哪个模型、硬件是什么配置、数据用什么精度和算法。若不一致，各环节单独看都对，接起来仍会出错。例如，性能模型假设 GQA 的多个 query groups 共用一次 KV 读取，编译器却把 KV 重复读了多次；generator 生成的 SRAM 更小，映射器却仍使用需要大 SRAM 的 tile；功耗模型按 dense 运算活动估算，RTL 却采用稀疏路由。</p>
+<p>让不同工具接力工作，至少要让它们共用同一份配置，说明模型、硬件和运行方式。workload 说明还要固定模型版本、权重/激活/KV 格式、Prefill/Decode 长度和请求分布；指标说明要固定延迟和能耗的测量边界。共享 schema（配置格式）能减少接口错配，但有相同的配置文件不等于语义一致，仍要逐级比较模型预测、compiler trace 和 RTL 行为。</p>
+<h3 id="72-正确性还包括跨-token-保存的状态">7.2 正确性还包括跨 token 保存的状态</h3>
+<p>单个矩阵乘结果正确，只能完成整模型验证的一小部分。整层还要检查归一化、RoPE（旋转位置编码）、mask、融合和量化顺序。跨 token 运行还要检查 KV append（追加缓存）、历史长度、padding/tail、不同请求的状态是否隔离，以及 SRAM/DMA 的读写和同步。一个 kernel 在几组输入上通过测试，不能证明这些跨阶段状态也正确。</p>
+<p>验证时，参考模型和硬件必须采用相同的精度与计算顺序。对 INT4 或二值硬件，如果只把输出和 FP16 结果比较，量化误差和硬件错误会混在一起。可以先和相同格式的参考实现比较算子输出及状态，再单独用任务质量评价量化或近似方案。生成文本对微小 logits 差异可能敏感，所以逐 token 完全一致不一定适合作为唯一精度标准；容差、采样设置和任务指标需要分别规定。</p>
+<p>仿真、边界测试和形式验证能查出不同类型的硬件错误。ready/valid 协议、地址边界、reset 和部分状态不变量适合用形式化方法检查，完整 LLM 的数值过程则难以整体做等价证明。因此验证要按性质分工：把可形式化的部分交给形式验证，其余的用仿真和边界测试覆盖，并明确各自的范围。参数化硬件家族还要能拒绝非法配置，并检查配置边界上的代表性设计是否满足这些性质。</p>
+<h3 id="73-pnrtapeout-和芯片测量代表不同阶段">7.3 PnR、tapeout 和芯片测量代表不同阶段</h3>
+<p>综合、布局布线、制造提交和芯片测量代表不同的实现阶段。PnR（布局布线）会进一步体现布局、互连和时钟成本，也可能改变候选的排序。GDS 是后端设计文件；tapeout 是把设计提交制造；芯片测量则能提供实际频率、功耗和运行行为。要判断硬件能不能制造，还要检查 SRAM macro、DFT、PVT 时序和物理签核等约束；自动调用 EDA 工具只是其中一步。</p>
+<p>通过少量有代表性的芯片实现和测量，可以校准关键预测。对这些配置完成实现和测量后，检查延迟、功耗和瓶颈预测，再更新组件模型或误差范围，看看候选排名会不会改变。关键是把从 workload、配置、compiler/RTL 版本到实现条件和测量结果的对应关系保存下来。某一芯片的校准也只支持它实际覆盖的工作点和结构，不能自动推广到整个硬件家族。</p>
+<h2 id="8-文献中常见的实验方法">8 文献中常见的实验方法</h2>
+<h3 id="81-用资源变化区分看起来相似的低利用率">8.1 用资源变化区分看起来相似的低利用率</h3>
+<p>要判断低利用率来自计算、存储还是软件，文献中常见的做法是挑选不同类型的子图做对比。代表性选择包括 QKV projection、QKᵀ–softmax–PV、GQA KV 访问、SwiGLU/FFN、RMSNorm/RoPE 和完整 decoder block，再分别测 Prefill 和 Decode 形状。子图实验用来分析融合和状态管理的成本；全模型实验用来确认局部优化是否仍在端到端关键路径上。</p>
+<p>这类实验通常要区分外存供数不足、片上容量不足和软件调度开销过大这三种解释。如果外存供数不足，提高有效带宽应该降低延迟，增加计算单元的收益可能较小。如果 tile 或容量不足，增加 SRAM 跨过某个边界后，重复读取或中间写回应同时减少。如果固定 shape、launch 或 CPU fallback 是主要开销，改变编译图或增大可摊销的执行块应减少边界时间，提高外存带宽则可能作用有限。这些瓶颈可以在不同长度区间分别出现，需要找出切换位置和原因。</p>
+<p>一个硬件参数可能同时改变计算速度、数据复用和功耗，所以要把这些变化都记录下来。比如 DVFS 会同时改变计算、互连和功耗；更换 tile 也会同时改变复用和并行度。应记录实际频率、带宽、流量和编译图，尽量用可控的模拟或 RTL 实验来分离影响，再到真实平台验证趋势。</p>
+<h3 id="82-固定芯片测量不能代替硬件家族探索">8.2 固定芯片测量不能代替硬件家族探索</h3>
+<p>在现有芯片上，实验可以调整模型和软件映射，但通常不能改变 PE 数、SRAM 容量或外存接口。在 NPX6/X5H 等现有芯片上，可以改变模型形状、batch、上下文、精度、分块、融合和异构调度，也可以调整平台实际开放的频率/功耗模式。PE 数、SRAM 总容量和 DDR 物理接口通常已经固定。如果只能用软件限制 buffer 或节流带宽来模拟另一种条件，应说明它只是运行条件的模拟，不能等同于另一款 SRAM 更小、接口更窄的芯片的面积、功耗和时序。</p>
+<p>搜索 PE、SRAM、片上网络和外存接口等硬件配置，需要可变硬件模型或可生成的硬件家族。文献中一种可行的流程是先用固定 NPU 测量校准 workload 和软件开销，再在开放的硬件家族中搜索结构，最后选取能生成和实现的候选。NPX6 的作用是提供真实部署场景和软件约束；在不能改变其硬件配置的前提下，结论只适用于该平台的 workload 匹配和可迁移机制。</p>
+<p>没有流量计数器时，流量只能估算，需要用多种独立信息来约束结果。可以记录 DMA 请求、tensor 布局和执行 trace，再用独立的带宽 microbenchmark 限定模型范围。仅靠延迟反推流量通常得不到唯一答案，因为带宽、缓存复用和计算重叠可能造成相似的耗时。结果要区分逻辑字节数、模型估算字节数和硬件实测字节数；无法辨识的部分要如实说明，不能把拟合值当成直接观测。</p>
+<h3 id="83-让候选逐级通过更真实的评估">8.3 让候选逐级通过更真实的评估</h3>
+<p>文献中常见的做法是按评估成本逐级筛选候选：先用算子形状和 Roofline 模型排除明显不匹配的配置，再用 mapping/周期模型评估融合和片上争用，最后对可能改变选择的设计做高保真评估。对于预测前沿和不确定性较大的区域，挑少量候选运行 compiler、RTL 测试、综合和 PnR。这样能把高成本评估用在可能改变选择的设计上，同时保存被筛掉的候选和失败原因，避免只报告成功案例。</p>
+<p>校准数据和评估数据要分开，才能判断模型能否预测没见过的工作负载。需要同时报告算子延迟/流量误差、阶段 TTFT/TPOT 误差，以及候选到了后端后是否仍可行、是否仍在 Pareto 前沿；量化和稀疏方案也要通过同样的模型质量要求。</p>
+<p>自动搜索的价值可以体现在更准确地定位瓶颈、减少高保真评估，或提高实现通过率。比较时要使用相同 workload、模型质量门槛、硬约束和评估预算。这样的证据足以判断自动配置是否有用，不需要无法验证的全局最优声明。</p>
+<h2 id="9-现有研究的成熟度处在哪一步">9 现有研究的成熟度处在哪一步</h2>
+<p>如果以第 1 节的三层闭环为尺度，现有研究可以大致分为三档。</p>
+<ul>
+<li><strong>已经基本闭环：生成与评估。</strong> 从模型描述、映射搜索到硬件生成和测试，这一层已有可运行的工具链。AutoDNNchip、AutoAI2C、Gemmini、FlexiGen 和 FSGen 都能从较高层的描述出发，生成可评估的硬件和软件配置。这一环节正在活跃探索，且已具备较完整的方法基础。</li>
+<li><strong>正在打通：物理实现。</strong> 一些工作已经把候选推进到综合甚至布局布线。BinaryLLM 在 ASAP7 上完成综合、PnR 和功耗分析；FSGen 做到 40 nm 综合和门级分析。这些工作说明后端保真度可以接入设计流程，但它们仍是在给定模型和硬件模板下的局部验证，还没把后端结果稳定地反馈回搜索器。</li>
+<li><strong>尚未形成：芯片测量反馈。</strong> 这是目前最明显的缺口。ISSCC、VLSI、JSSC 等芯片工作提供了真实的电路测量，但它们各自的 workload 和口径不同，还没有和同一套自动搜索流程串起来；FlexiGen 等生成器评估时甚至未计入片外 DMA 搬运。因此，还没有工作能把同一候选的芯片测量结果送回搜索器，去修正模型或下一轮候选。</li>
+</ul>
+<p>整体上看，从 workload 分析到硬件生成这一层已有较多成果，物理实现层的证据正陆续出现，而测量反馈层的完整闭环尚未建立。这既是当前研究的边界，也是评价后续工作时的共同参照。</p>
+<h2 id="10-结论">10 结论</h2>
+<p>Prefill 和 Decode 对硬件的需求不同，因为它们复用权重的方式不同，且 Decode 每步都要读取历史 KV。batch、上下文长度、精度和数据流变化时，权重与 KV 的流量占比、计算与多层带宽的限制，以及软件串行路径都可能变化。SRAM 容量会通过 tile 和融合改变流量；编译器的支持范围和映射能力决定这些复用能否落地。因此选择 NPU 配置需要同时考虑硬件、编译映射和真实 workload。</p>
+<p>现有研究分别提供了阶段适配、瓶颈优化、硬件搜索和实现验证的方法。移动 NPU 研究揭示了编译后执行图和有效带宽有多重要；专用芯片展示了压缩、数值通路和动态资源配比怎样移动瓶颈。FlexiGen 证明了 Prefill/Decode 可以各用一套更合适的数据流动方式，但它给出的加速比没有把片外内存的搬运开销算进去，所以偏乐观。BinaryLLM 推进了多保真搜索和物理实现；FSGen 推进了阶段化融合/稀疏表示与生成、编译和综合。评价这些工作时，应对齐搜索空间、模型质量、映射方式和实现层级。</p>
+<p>NPX6 的视觉 Transformer 测试和 Llama 部署数据提供了参考，但还不足以定位生成各阶段的瓶颈。要回答这个问题，有待把算子流量、代表性子图、compiler 和 generator 用统一的配置说明串起来，并用物理实现与测量结果反馈校准搜索。</p>
+<h2 id="参考文献">参考文献</h2>
+<h3 id="llm-workload性能模型与系统测量">LLM workload、性能模型与系统测量</h3>
+<ol>
+<li>Dao, Fu, Ermon, Rudra, and Ré. <strong>FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness.</strong> NeurIPS 2022. <a href="https://arxiv.org/abs/2205.14135">arXiv:2205.14135</a>.</li>
+<li>Ainslie et al. <strong>GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints.</strong> EMNLP 2023. <a href="https://arxiv.org/abs/2305.13245">arXiv:2305.13245</a>.</li>
+<li>Zhang et al. <strong>LLMCompass: Enabling Efficient Hardware Design for Large Language Model Inference.</strong> ISCA 2024. <a href="https://doi.org/10.1109/ISCA59077.2024.00082">DOI: 10.1109/ISCA59077.2024.00082</a>.</li>
+<li>Liu et al. <strong>LLMShare: Optimizing LLM Inference Serving with Hardware Architecture Exploration.</strong> DAC 2025. <a href="https://doi.org/10.1109/DAC63849.2025.11132534">DOI: 10.1109/DAC63849.2025.11132534</a>.</li>
+<li><strong>Characterizing Mobile SoC for Accelerating Heterogeneous LLM Inference (HeteroInfer).</strong> SOSP 2025. <a href="https://doi.org/10.1145/3731569.3764808">DOI: 10.1145/3731569.3764808</a>.</li>
+<li><strong>Fast On-device LLM Inference with NPUs.</strong> ASPLOS 2025. <a href="https://doi.org/10.1145/3669940.3707239">DOI: 10.1145/3669940.3707239</a>; <a href="https://arxiv.org/abs/2407.05858">arXiv:2407.05858</a>.</li>
+<li>Li et al. <strong>When NPUs Are Not Always Faster: A Stage-Level Analysis of Mobile LLM Inference.</strong> arXiv 2026. <a href="https://arxiv.org/abs/2605.27435">arXiv:2605.27435</a>.</li>
+<li>Cai et al. <strong>Is Your NPU Ready for LLMs? Dissecting the Hidden Efficiency Bottlenecks in Mobile LLM Inference.</strong> arXiv 2026. <a href="https://arxiv.org/abs/2607.05475">arXiv:2607.05475</a>.</li>
+<li>Usami et al. <strong>Prefill/Decode-Aware Evaluation of LLM Inference on Emerging AI Accelerators.</strong> HPAI4S 2026 / arXiv 2026. <a href="https://arxiv.org/abs/2606.17104">arXiv:2606.17104</a>.</li>
+</ol>
+<h3 id="芯片存储和专用电路">芯片、存储和专用电路</h3>
+<ol start="10">
+<li>Tanurhan, Paulin, and Michiels. <strong>Generative AI on a Budget: Processing Transformer-based Neural Networks at the Edge.</strong> IEDM 2023. <a href="https://doi.org/10.1109/IEDM45741.2023.10413675">DOI: 10.1109/IEDM45741.2023.10413675</a>.</li>
+<li>Renesas. <strong>Llama 3.2 3B Instruct GGUF on X5H / NPX6.</strong> 模型卡（非同行评审论文）。<a href="https://huggingface.co/Renesas/Llama-3.2-3B-Instruct-GGUF">Hugging Face</a>.</li>
+<li>Qin et al. <strong>An 88.36TOPS/W Bit-Level-Weight-Compressed Large-Language-Model Accelerator with Cluster-Aligned INT-FP-GEMM and Bi-Dimensional Workflow Reformulation.</strong> ISSCC 2025. <a href="https://doi.org/10.1109/ISSCC49661.2025.10904774">DOI: 10.1109/ISSCC49661.2025.10904774</a>.</li>
+<li>Kim, Lee, and Yoo. <strong>Slim-Llama: A 4.69mW Large-Language-Model Processor with Binary/Ternary Weights for Billion-Parameter Llama Model.</strong> ISSCC 2025. <a href="https://doi.org/10.1109/ISSCC49661.2025.10904761">DOI: 10.1109/ISSCC49661.2025.10904761</a>.</li>
+<li>Wang et al. <strong>LLM-CIM: A 28nm 126.7TOPS/W Input-LUT-Based Digital CIM Macro with Reconfigurable Matrix Multiplication and Nonlinear Operation Modes for LLMs.</strong> VLSI Technology and Circuits 2025. <a href="https://doi.org/10.23919/VLSITechnologyandCir65189.2025.11074939">DOI: 10.23919/VLSITechnologyandCir65189.2025.11074939</a>.</li>
+<li>Ha et al. <strong>SMoLPU: An Energy-Efficient Sparse Mixture-of-Experts-Based Speculative Decoding Language Processing Unit.</strong> IEEE JSSC 2026. <a href="https://doi.org/10.1109/JSSC.2026.3726852">DOI: 10.1109/JSSC.2026.3726852</a>.</li>
+<li><strong>T-REX: A 68–567 μs/token, 0.41–3.95 μJ/token Transformer Accelerator with Reduced External Memory Access and Enhanced Hardware Utilization in 16nm FinFET.</strong> ISSCC 2025 / arXiv 2025. <a href="https://arxiv.org/abs/2503.00322">arXiv:2503.00322</a>; <a href="https://doi.org/10.1109/ISSCC49661.2025.10904793">ISSCC DOI</a>.</li>
+<li><strong>VitaLLM: A Versatile and Tiny Accelerator for Mixed-Precision LLM Inference on Edge Devices.</strong> ISCAS 2026 / arXiv 2026. <a href="https://arxiv.org/abs/2605.00320">arXiv:2605.00320</a>; <a href="https://doi.org/10.1109/ISCAS66217.2026.11562762">DOI: 10.1109/ISCAS66217.2026.11562762</a>.</li>
+<li><strong>P³-LLM: An Integrated NPU-PIM Accelerator for Edge LLM Inference Using Hybrid Numerical Formats.</strong> ISCA 2026. <a href="https://doi.org/10.1109/ISCA66397.2026.00055">DOI: 10.1109/ISCA66397.2026.00055</a>.</li>
+<li><strong>EdgeCIM: A Hardware-Software Co-Design for CIM-Based Acceleration of Small Language Models.</strong> arXiv 2026. <a href="https://arxiv.org/abs/2604.11512">arXiv:2604.11512</a>.</li>
+</ol>
+<h3 id="参数化生成dsecgra-与训练近邻">参数化生成、DSE、CGRA 与训练近邻</h3>
+<ol start="20">
+<li>AMD. <strong>Vitis AI User Guide UG1414</strong> 与 DPU customization documentation. <a href="https://docs.amd.com/r/en-US/ug1414-vitis-ai">UG1414</a> · <a href="https://docs.amd.com/r/3.3-English/pg338-dpu/Customizing-and-Generating-the-Core-in-Vitis-Integrated-Design-Environment-IDE">DPU customization</a>.</li>
+<li>Expedera. <strong>Origin E6 NPU IP</strong> 与 Origin Evolution 产品资料. <a href="https://www.expedera.com/origin-e6/">Origin E6</a> · <a href="https://www.expedera.com/blog/2025/05/20/expederas-origin-evolution-npu-ip-brings-generative-ai-to-edge-devices/">Origin Evolution</a>.</li>
+<li>Yi et al. <strong>FlexiGen: An Automated AI Accelerator Generation Framework With Decoupled-Access-Execute and Dynamic Dataflows.</strong> IEEE TCAS-I 2026. <a href="https://doi.org/10.1109/TCSI.2026.3669425">DOI: 10.1109/TCSI.2026.3669425</a>.</li>
+<li>Zhou et al. <strong>Trust-aware LLM-assisted Bayesian optimization for efficient design space exploration.</strong> Integration 110 (2026), 102782. <a href="https://doi.org/10.1016/j.vlsi.2026.102782">DOI: 10.1016/j.vlsi.2026.102782</a>.</li>
+<li>Mok, Zhang, and Xie. <strong>FSGen: Agile Fused and Sparse Accelerator Generator with Accurate Power Model for LLM Applications.</strong> DAC 2026. <a href="https://doi.org/10.1145/3770743.3804052">DOI: 10.1145/3770743.3804052</a>; <a href="https://arxiv.org/abs/2608.09252">arXiv:2608.09252</a>.</li>
+<li><strong>AutoDNNchip: An Automated DNN Chip Predictor and Builder for Both FPGAs and ASICs.</strong> FPGA 2020. <a href="https://doi.org/10.1145/3373087.3375306">DOI: 10.1145/3373087.3375306</a>; <a href="https://arxiv.org/abs/2001.03535">arXiv:2001.03535</a>.</li>
+<li><strong>AutoAI2C: An Automated Hardware Generator for DNN Acceleration on Both FPGA and ASIC.</strong> IEEE TCAD 2024. <a href="https://doi.org/10.1109/TCAD.2024.3393428">DOI: 10.1109/TCAD.2024.3393428</a>.</li>
+<li><strong>Gemmini: Enabling Systematic Deep-Learning Architecture Evaluation via Full-Stack Integration.</strong> DAC 2021. <a href="https://doi.org/10.1109/DAC18074.2021.9586216">DOI: 10.1109/DAC18074.2021.9586216</a>.</li>
+<li><strong>ScaleHLS: A New Scalable High-Level Synthesis Framework on Multi-Level Intermediate Representation.</strong> HPCA 2022. <a href="https://doi.org/10.1109/HPCA53966.2022.00060">DOI: 10.1109/HPCA53966.2022.00060</a>; <a href="https://arxiv.org/abs/2107.11673">arXiv:2107.11673</a>.</li>
+<li><strong>LLM-Driven Custom Tensor Processing Unit Generator (TPU-Gen).</strong> arXiv 2025. <a href="https://arxiv.org/abs/2503.05951">arXiv:2503.05951</a>.</li>
+<li><strong>A Dataset for Large Language Model-Driven AI Accelerator Design Generation (SA-DS).</strong> arXiv 2024 / ISCAS 2025. <a href="https://arxiv.org/abs/2404.10875">arXiv:2404.10875</a>.</li>
+<li><strong>Performance Modeling &#x26; Mapping of LLM Inference on Heterogeneous Vectorized CGRAs.</strong> PARMA-DITAM 2026. <a href="https://drops.dagstuhl.de/entities/document/10.4230/OASIcs.PARMA-DITAM.2026.8">OASIcs proceedings</a>.</li>
+<li><strong>PICACHU: Plug-In CGRA Handling Upcoming Nonlinear Operations in LLMs.</strong> ASPLOS 2025. <a href="https://doi.org/10.1145/3676641.3716013">DOI: 10.1145/3676641.3716013</a>.</li>
+<li><strong>An Efficient Training Accelerator for Transformers with Hardware-Algorithm Co-Optimization (TRETA).</strong> IEEE TVLSI 2023. <a href="https://doi.org/10.1109/TVLSI.2023.3305569">DOI: 10.1109/TVLSI.2023.3305569</a>.</li>
+<li><strong>Hecaton: Training Large Language Models with Scalable Chiplet Systems.</strong> arXiv 2024. <a href="https://arxiv.org/abs/2407.05784">arXiv:2407.05784</a>.</li>
+<li>Adiletta, Wei, and Brooks. <strong>Democratizing Customization for ML at the Edge Through Hetero-Chiplet SiP Architectures (CASCADE).</strong> IEEE JETCAS 2025. <a href="https://doi.org/10.1109/JETCAS.2025.3592677">DOI: 10.1109/JETCAS.2025.3592677</a> · <a href="https://github.com/harvard-acc/cascade">authors’ repository</a>.</li>
+</ol>
+<h3 id="补充的方法基础项目文档和集成设计">补充的方法基础、项目文档和集成设计</h3>
+<ol start="36">
+<li>NNgen project. <strong>NNgen: A Fully-Customizable Hardware Synthesis Compiler for Deep Neural Network.</strong> 开源项目文档，非独立长篇论文。<a href="https://github.com/NNgen/nngen">官方仓库</a>.</li>
+<li>Williams, Waterman, and Patterson. <strong>Roofline: An Insightful Visual Performance Model for Multicore Architectures.</strong> Communications of the ACM 52(4), 65–76, 2009. <a href="https://doi.org/10.1145/1498765.1498785">DOI: 10.1145/1498765.1498785</a>; <a href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2008/Archive/EECS-2008-134.pdf">Berkeley 技术报告版本</a>.</li>
+<li>Parashar et al. <strong>Timeloop: A Systematic Approach to DNN Accelerator Evaluation.</strong> ISPASS 2019. <a href="https://doi.org/10.1109/ISPASS.2019.00042">DOI: 10.1109/ISPASS.2019.00042</a>.</li>
+<li>Wu, Emer, and Sze. <strong>Accelergy: An Architecture-Level Energy Estimation Methodology for Accelerator Designs.</strong> ICCAD 2019. <a href="https://doi.org/10.1109/ICCAD45719.2019.8942149">DOI: 10.1109/ICCAD45719.2019.8942149</a>; <a href="https://dspace.mit.edu/entities/publication/69ae8f1b-e637-4b71-90e5-c98e82d3f8b9">MIT 作者稿记录</a>.</li>
+<li>Kwon, Chatarasi, Pellauer, Parashar, Sarkar, and Krishna. <strong>Understanding Reuse, Performance, and Hardware Cost of DNN Dataflows: A Data-Centric Approach.</strong> MICRO 2019. <a href="https://doi.org/10.1145/3352460.3358252">DOI: 10.1145/3352460.3358252</a>; <a href="https://par.nsf.gov/servlets/purl/10168817">作者稿</a>.</li>
+<li>Chen et al. <strong>An Agile Framework for Efficient LLM Accelerator Development and Model Inference (BinaryLLM).</strong> ICCAD 2024. <a href="https://doi.org/10.1145/3676536.3676753">DOI: 10.1145/3676536.3676753</a>; <a href="https://www.cse.cuhk.edu.hk/~byu/papers/C234-ICCAD2024-BinaryLLM.pdf">作者稿</a>.</li>
+<li><strong>ML-CGRA: An Integrated Compilation Framework to Enable Efficient Machine Learning Acceleration on CGRAs.</strong> DAC 2023. <a href="https://doi.org/10.1109/DAC56929.2023.10247873">DOI: 10.1109/DAC56929.2023.10247873</a>; <a href="https://www.pnnl.gov/publications/ml-cgra-integrated-compilation-framework-enable-efficient-machine-learning">PNNL 论文记录</a>.</li>
+</ol>
+<p><strong>题录与来源说明：</strong> 本轮直接核对的关键结果及 PDF 页码列于审阅记录。补入的基础论文和 ML-CGRA 以原始出版/机构记录支持有限的方法描述，未全部新增本地 PDF；本地 30 份 PDF 与本文 42 项参考资料的数量口径不同。产业资料和 NNgen 项目文档已明确类型。正式投稿前仍需按目标期刊格式补齐各条作者、卷期和页码，并在既定检索截止日期重新确认版本。</p> </div> </article>  </main> <footer data-astro-cid-losip7nv style=""> <div class="footer-inner" data-astro-cid-losip7nv style=""> <p data-astro-cid-losip7nv style="">&copy; 2026 DivergentCatTree。使用 Astro 构建。</p> </div> </footer> <script type="module">function a(){const e=document.getElementById("navToggle"),t=document.getElementById("mobileMenu");!e||!t||(e.addEventListener("click",n=>{n.stopPropagation();const i=e.getAttribute("aria-expanded")==="true";e.setAttribute("aria-expanded",(!i).toString()),t.classList.toggle("active")}),document.addEventListener("click",()=>{e.setAttribute("aria-expanded","false"),t.classList.remove("active")}),t.addEventListener("click",n=>{n.stopPropagation()}))}a();document.addEventListener("astro:after-swap",a);</script> <script>
+      (function(){
+        window.addEventListener('storage', function(e) {
+          if (e.key === 'blog-theme' && e.newValue) {
+            document.documentElement.setAttribute('data-theme', e.newValue);
+          }
+        });
+
+        document.addEventListener('astro:after-swap', function() {
+          var theme = localStorage.getItem('blog-theme');
+          if (!theme) {
+            var match = document.cookie.match(/(?:^|; )blog-theme=([^;]*)/);
+            theme = match ? decodeURIComponent(match[1]) : null;
+          }
+          if (theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+          }
+        });
+      })();
+    </script> </body> </html>
